@@ -2,6 +2,7 @@
 
 ## Contributors
 Kobe Middleton
+
 Collin Katz
 
 Software Development Project for Loyola University Maryland, Computer Science Capstone CS496
