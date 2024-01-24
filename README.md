@@ -1,4 +1,4 @@
-# sportsmanagementsoftware
+# Sports Management Software
 
 ## Contributors
 Kobe Middleton
