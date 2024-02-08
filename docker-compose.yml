@@ -1,0 +1,41 @@
+version: "3.9"
+   
+services:
+  # db:
+  #   image: postgres
+  #   # volumes:
+  #   #   - ./data/db:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432" # Default postgres port
+  #   environment:
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   healthcheck: # Test for service health when database ready
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 1s
+  #     timeout: 1s
+  #     retries: 20
+  backend:
+    build: ./sportsserver
+    # volumes:
+    #   - ./geodjango:/usr/src/app/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    # links:
+    #   - db
+    # depends_on:
+    #   db:
+    #     condition: service_healthy # Only start backend once database is up
+  frontend:
+    build: ./reactinterface
+    ports:
+      - "3000:3000"
+    # volumes:
+    #   - ./geoviewer:/usr/src/app/frontend
+    depends_on:
+      - backend
