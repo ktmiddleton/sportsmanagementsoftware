@@ -1,3 +1,20 @@
+:root { /* Define color scheme */
+  --loyola-green:#005a3c;
+  --hounds-grey:#d2d2d2;
+  --black:#000000;
+  --dark-green:#002d1e;
+  --dark-grey:#4c4c4c;
+  --bright-green:#0aa776;
+}
+
+.hide-for-small-only {display:none;}
+.show-for-small-only {display:block;}
+
+@media screen and (min-width: 40em) {
+  .hide-for-small-only {display:block;}
+  .show-for-small-only {display:none;}
+}
+
 .App {
   text-align: center;
 }
