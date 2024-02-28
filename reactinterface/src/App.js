@@ -89,8 +89,9 @@ function App() {
           <Flex
             direction="row"
           >
-            <Sidebar />
-            
+            <div className='Sidebar hide-for-small-only'>
+              <Sidebar />
+            </div>
           </Flex>
         </ChakraProvider>
       </BrowserRouter>

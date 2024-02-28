@@ -4,7 +4,7 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function Sidebar() {
+function Sidebar(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -21,10 +21,9 @@ function Sidebar() {
     }
 
     return (
-        <div className='Sidebar hide-for-small-only'>
             <Flex
-                h="100vh"
-                w="20vw"
+                h={props.mobile ? "100%" : "100vh"}
+                w={props.mobile ? "100%" : "20vw"}
             >
                 <Box // Sidebar background
                     as="aside"
@@ -44,7 +43,6 @@ function Sidebar() {
                     </VStack>
                 </Box>
             </Flex>
-        </div>
     );
 }
 

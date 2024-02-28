@@ -21,21 +21,21 @@ const Navbar = () => {
 
   return (
     <Flex
-        as="nav"
-        align="center"
-        justify="start"
-        wrap="wrap"
-        px="1rem"
-        bg="brand.loyolaGreen"
-        color="white"
+      as="nav"
+      align="center"
+      justify="start"
+      wrap="wrap"
+      px="1rem"
+      bg="brand.loyolaGreen"
+      color="white"
     >
         {/* Hamburger button */}
         <div className='show-for-small-only'>
           <IconButton
-              size="md"
-              icon={<HamburgerIcon />}
-              aria-label={'Open Menu'}
-              onClick={onOpen}
+            size="md"
+            icon={<HamburgerIcon />}
+            aria-label={'Open Menu'}
+            onClick={onOpen}
           />
         </div>
         
@@ -46,14 +46,11 @@ const Navbar = () => {
         {/* Add Flex/Box components with your navigation links here */}
         
         {/* Mobile Menu */}
-        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={"xs"}>
         {/* <DrawerOverlay /> */}
         <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerBody>
-                <ChakraLink as={ReactRouterLink} to="/home">Click me lol</ChakraLink>
-            {/* Add your mobile navigation links here */}
-            </DrawerBody>
+            {/* <DrawerCloseButton zIndex={10} boxSize="3rem" color="black" background="white" /> */}
+            <Sidebar mobile={true}/>
         </DrawerContent>
         </Drawer>
     </Flex>
