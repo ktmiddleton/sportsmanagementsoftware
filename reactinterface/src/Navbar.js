@@ -26,7 +26,7 @@ const Navbar = () => {
       justify="start"
       wrap="wrap"
       px="1rem"
-      bg="brand.loyolaGreen"
+      bg="brand.houndsGrey"
       color="white"
     >
         {/* Hamburger button */}

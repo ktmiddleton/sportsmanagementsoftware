@@ -33,12 +33,36 @@ function Sidebar(props) {
                 >
                     <VStack align="stretch" spacing="0px">
                         {/* Sidebar content here */}
-                        <Button onClick={handleNavigate("/")} variant={whichButtonVariant("/")}>Dashboard</Button>
-                        <Button onClick={handleNavigate("/classes")} variant={whichButtonVariant("/classes")}>Classes</Button>
-                        <Button onClick={handleNavigate("/intramural")} variant={whichButtonVariant("/intramural")}>Intramural</Button>
-                        <Button onClick={handleNavigate("/clubsports")} variant={whichButtonVariant("/clubsports")}>Club Sports</Button>
-                        <Button onClick={handleNavigate("/forms")} variant={whichButtonVariant("/forms")}>Forms</Button>
-                        <Button onClick={handleNavigate("/schedule")} variant={whichButtonVariant("/schedule")}>Schedule</Button>
+                        <Button
+                            onClick={handleNavigate("/")}
+                            variant={whichButtonVariant("/")}
+                            aria-label='Open Dashboard'
+                        >Dashboard</Button>
+                        <Button
+                            onClick={handleNavigate("/classes")}
+                            variant={whichButtonVariant("/classes")}
+                            aria-label='Open Classes'
+                        >Classes</Button>
+                        <Button
+                            onClick={handleNavigate("/intramural")}
+                            variant={whichButtonVariant("/intramural")}
+                            aria-label='Open Intramural Sports'
+                        >Intramural</Button>
+                        <Button
+                            onClick={handleNavigate("/clubsports")}
+                            variant={whichButtonVariant("/clubsports")}
+                            aria-label='Open Club Sports'
+                        >Club Sports</Button>
+                        <Button
+                            onClick={handleNavigate("/forms")}
+                            variant={whichButtonVariant("/forms")}
+                            aria-label='Open Forms'
+                        >Forms</Button>
+                        <Button
+                            onClick={handleNavigate("/schedule")}
+                            variant={whichButtonVariant("/schedule")}
+                            aria-label='Open Schedule'
+                        >Schedule</Button>
                         {/* Add more Links as needed */}
                     </VStack>
                 </Box>
