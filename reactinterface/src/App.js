@@ -2,7 +2,7 @@ import './css/App.css';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
 // --loyola-green:#005a3c;
 //   --hounds-grey:#d2d2d2;
@@ -93,19 +93,11 @@ const theme = extendTheme({
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
         <ChakraProvider theme={theme}>
-          <Navbar />
-          <Flex
-            direction="row"
-          >
-            <div className='Sidebar hide-for-small-only'>
-              <Sidebar />
-            </div>
-            <Dashboard />
-          </Flex>
+          <Routes> {/* Add routes to pages below */}
+            <Route path='/' element={<Dashboard />} />
+          </Routes>
         </ChakraProvider>
-      </BrowserRouter>
     </div>
   );
 }
