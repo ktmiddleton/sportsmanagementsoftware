@@ -22,7 +22,8 @@ function Sidebar(props) {
 
     return (
             <Flex
-                h={props.mobile ? "100%" : "100vh"}
+                minHeight="100vh"
+                h={props.mobile ? "100%" : "100%"}
                 w={props.mobile ? "100%" : "20vw"}
             >
                 <Box // Sidebar background

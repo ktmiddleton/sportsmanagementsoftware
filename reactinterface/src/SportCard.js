@@ -7,8 +7,9 @@ function SportCard(props) {
             <Card
                 as="button" // makes it clickable
                 variant="elevated"
-                size="lg"
-                width="400px"
+                size={{base: "sm", sm: "md", md: "lg"}}
+                width={{base: "40vw", sm: "30vw", lg: "20vw"}} // It's a little messed up the 10 one doesn't activate for any size of screen
+                aspectRatio="400 / 323.2"
                 onClick={() => {console.log("Clicked Sports Card")}} // TODO: finish this onclick function
                 overflow="hidden" // Ensures stuff extending outside is hidden
                 transition="0.1s"
@@ -23,15 +24,15 @@ function SportCard(props) {
             >
                 <Image
                     src={props.image ? props.image : "./Placeholder.png"}
-                    height="200px"
+                    height="50%"
                     width="100%"
                     objectFit="cover"
                 />
                 <CardBody>
-                    <Heading textAlign="start">
+                    <Heading fontSize={{base: "small", sm: "small", lg: "large"}} textAlign="start">
                         {props.header}
                     </Heading>
-                    <Text textAlign="start">
+                    <Text fontSize={{base: "small", sm: "small", lg: "large"}} textAlign="start">
                         {props.description}
                     </Text>
                 </CardBody>
