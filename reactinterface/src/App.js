@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
 import { BrowserRouter } from 'react-router-dom'
+import Dashboard from './pages/Dashboard';
 // --loyola-green:#005a3c;
 //   --hounds-grey:#d2d2d2;
 //   --black:#000000;
@@ -34,7 +35,7 @@ const theme = extendTheme({
         darkGreen: "#002d1e",
         darkGrey: "#4c4c4c",
         brightGreen: "#0aa776",
-      }
+      },
     },
   },
   components: {
@@ -89,8 +90,10 @@ function App() {
           <Flex
             direction="row"
           >
-            <Sidebar />
-            
+            <div className='Sidebar hide-for-small-only'>
+              <Sidebar />
+            </div>
+            <Dashboard />
           </Flex>
         </ChakraProvider>
       </BrowserRouter>
