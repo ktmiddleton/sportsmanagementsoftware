@@ -1,6 +1,5 @@
 import './css/App.css';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Sidebar from './components/Sidebar';
 import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
@@ -14,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 const theme = extendTheme({
   colors: {
     brand: {
+      white: "#FFFFFF",
       loyolaGreen: "#005a3c",
       houndsGrey: "#d2d2d2",
       black: "#000000",
