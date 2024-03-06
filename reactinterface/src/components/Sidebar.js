@@ -1,8 +1,4 @@
 import React from 'react';
-// import { Box, Button, Flex, Spacer, Text, VStack } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom'
-import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react'
 import {
     Flex,
@@ -29,6 +25,7 @@ import { GrSchedules } from "react-icons/gr";
 
 export default function Sidebar() {
     const [navSize, changeNavSize] = useState("large")
+    
     return (
         <Flex
             pos="sticky"
@@ -63,12 +60,12 @@ export default function Sidebar() {
                             changeNavSize("small")
                     }}
                 />
-                <NavItem navSize={navSize} icon={TfiDashboard} title="Dashboard" description="This is the description for the dashboard." active />
-                <NavItem navSize={navSize} icon={IoFitness} title="Classes" />
-                <NavItem navSize={navSize} icon={FaFootballBall} title="Intramural" />
-                <NavItem navSize={navSize} icon={PiBarbellFill} title="Club Sports" />
-                <NavItem navSize={navSize} icon={FaClipboardList} title="Forms" />
-                <NavItem navSize={navSize} icon={GrSchedules} title="Schedule" />
+                <NavItem navSize={navSize} icon={TfiDashboard} title="Dashboard" active navigationSuffix="/"/>
+                <NavItem navSize={navSize} icon={IoFitness} title="Classes" navigationSuffix="/classes"/>
+                <NavItem navSize={navSize} icon={FaFootballBall} title="Intramural" navigationSuffix="/intramural"/>
+                <NavItem navSize={navSize} icon={PiBarbellFill} title="Club Sports" navigationSuffix="/clubsports"/>
+                <NavItem navSize={navSize} icon={FaClipboardList} title="Forms" navigationSuffix="/forms"/>
+                <NavItem navSize={navSize} icon={GrSchedules} title="Schedule" navigationSuffix="/schedule"/>
             </Flex>
 
             <Flex

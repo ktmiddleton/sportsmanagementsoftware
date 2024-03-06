@@ -1,7 +1,10 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import {
     Flex,
     Text,
+    IconButton,
     Icon,
     Link,
     Menu,
@@ -13,12 +16,18 @@ import {
 import { ReactComponent as LoyolaMDLogo } from '../assets/LoyolaMDLogo.svg';
 import { FaUserCircle } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
-import {useState} from 'react';
 
 
 
 export default function Header({}) 
 {
+    const navigate = useNavigate();
+
+    function handleNavigate(path) 
+    {
+        return () => navigate(path);
+    }
+
     return (
     <div>
         <Flex
@@ -30,26 +39,38 @@ export default function Header({})
         bg="brand.loyolaGreen"
         >
             <div className="headerlogo">
-                <Icon 
+                <IconButton 
+                aria-label='Home'
                 as={LoyolaMDLogo} 
                 boxSize={64} 
                 ml={5}
                 color={"brand.white"}
+                bg={"transparent"}
+                _hover={{textDecor: 'none', backgroundColor:"transparent"}}
+                onClick={handleNavigate("/")}
                 />
             </div>
             <Spacer/>
             <div className="headerbuttons">
-                <Icon 
+                <IconButton
+                aria-label='Settings'
                 as={IoSettingsSharp} 
                 boxSize={16}
                 mr={5}
                 color={"brand.white"}
+                bg={"brand.loyolaGreen"}
+                onClick={handleNavigate("/settings")}
+                _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
                 />
-                <Icon 
+                <IconButton 
+                aria-label='Profile'
                 as={FaUserCircle} 
                 boxSize={16}
                 mr={10}
                 color={"brand.white"}
+                bg={"brand.loyolaGreen"}
+                onClick={handleNavigate("/profile")}
+                _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
                 />
             </div>
         </Flex>

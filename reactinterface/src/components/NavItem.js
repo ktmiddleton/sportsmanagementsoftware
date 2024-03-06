@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import {
     Flex,
     Text,
@@ -9,7 +10,13 @@ import {
     MenuList
 } from '@chakra-ui/react'
 
-export default function NavItem({ icon, title, description, active, navSize }) {
+export default function NavItem({ icon, title, active, navSize, navigationSuffix}) {
+    const navigate = useNavigate();
+
+    function handleNavigate(path) 
+    {
+        return () => navigate(path);
+    }
     return (
         <Flex
             mt={30}
@@ -24,6 +31,7 @@ export default function NavItem({ icon, title, description, active, navSize }) {
                     borderRadius={8}
                     _hover={{ textDecor: 'none', backgroundColor: "brand.hover.loyolaGreen"}}
                     w={navSize == "large" && "100%"}
+                    onClick={handleNavigate(navigationSuffix)}
                 >
                     <MenuButton w="100%">
                         <Flex>
