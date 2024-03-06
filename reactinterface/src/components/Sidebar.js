@@ -52,6 +52,7 @@ export default function Sidebar() {
                 <IconButton
                     background="none"
                     color="brand.white"
+                    boxSize={9}
                     mt={5}
                     _hover={{ background: 'none' }}
                     icon={<FiMenu />}
