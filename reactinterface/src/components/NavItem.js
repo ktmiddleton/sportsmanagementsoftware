@@ -26,7 +26,7 @@ export default function NavItem({ icon, title, active, navSize, navigationSuffix
         >
             <Menu placement="right">
                 <Link
-                    backgroundColor={active && "brand.active.darkGreen"}
+                    backgroundColor={active == "True" ? "brand.active.darkGreen" : "none"}
                     p={3}
                     borderRadius={8}
                     _hover={{ textDecor: 'none', backgroundColor: "brand.hover.loyolaGreen"}}

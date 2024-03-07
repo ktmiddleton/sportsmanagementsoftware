@@ -15,7 +15,7 @@ function Dashboard(props) {
                     direction="row"
                 >
                     <div className="navigation">
-                            <Sidebar/>
+                            <Sidebar activePage={'Dashboard'}/>
                     </div>
                     <Grid
                         templateColumns={{base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)"}}

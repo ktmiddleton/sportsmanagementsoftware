@@ -3,6 +3,13 @@ import Sidebar from './components/Sidebar';
 import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
+import Classes from './pages/Classes';
+import Clubsports from './pages/Clubsports';
+import Forms from './pages/Forms';
+import Intramural from './pages/Intramural';
+import Schedule from './pages/Schedule';
+
+
 // --loyola-green:#005a3c;
 //   --hounds-grey:#d2d2d2;
 //   --black:#000000;
@@ -96,6 +103,11 @@ function App() {
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
             <Route path='/' element={<Dashboard />} />
+            <Route path='/classes' element={<Classes />}/>
+            <Route path='/intramural' element={<Intramural />}/>
+            <Route path='/clubsports' element={<Clubsports />}/>
+            <Route path='/forms' element={<Forms />}/>
+            <Route path='/schedule' element={<Schedule />}/>
           </Routes>
         </ChakraProvider>
     </div>
