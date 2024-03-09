@@ -1,9 +1,8 @@
 import React from "react";
 import SportCard from "../components/SportCard";
 import { Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
-import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-
 
 function Dashboard(props) {
     return (
@@ -15,7 +14,7 @@ function Dashboard(props) {
                     direction="row"
                 >
                     <div className="navigation">
-                            <Sidebar activePage={'Dashboard'}/>
+                            <Navbar activePage={'Dashboard'}/>
                     </div>
                     <Grid
                         templateColumns={{base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)"}}

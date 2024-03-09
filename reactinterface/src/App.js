@@ -1,5 +1,5 @@
 import './css/App.css';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Navbar';
 import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
@@ -20,6 +20,8 @@ import Schedule from './pages/Schedule';
 const theme = extendTheme({
   colors: {
     brand: {
+      red: "#f72828",
+      yellow: "#f7db74",
       white: "#FFFFFF",
       loyolaGreen: "#005a3c",
       houndsGrey: "#d2d2d2",
@@ -83,6 +85,45 @@ const theme = extendTheme({
             border: "2px solid white",
           },
         },
+        Register: 
+        {
+          bg: "brand.brightGreen",
+          color: "brand.white",
+          fontSize: "1.3rem",
+          borderRadius: "0px",
+          _active: 
+          {
+            color: "brand.black",
+          },
+          _hover: 
+          {
+            color: "brand.black",
+          },
+          _focus: 
+          {
+            border: "2px solid black",
+          },
+        },
+        Waitlist: 
+        {
+          bg: "brand.yellow",
+          color: "brand.white",
+          fontSize: "1.3rem",
+          borderRadius: "0px",
+          _active: 
+          {
+            color: "brand.black",
+          },
+          _hover: 
+          {
+            color:"brand.black",
+          },
+          _focus: 
+          {
+            color: "brand.black",
+            border: "2px solid black",
+          },
+        }
       },
     },
   },

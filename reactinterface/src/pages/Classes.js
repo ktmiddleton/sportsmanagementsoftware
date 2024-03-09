@@ -1,62 +1,51 @@
 import React from "react";
+import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
 import { Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
-import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
 export default function Classes(props) 
 {
     return (
     <div className="classes">
-        <div className="header">
-            <Header/>
-        </div>
-        <Flex
-            direction="row"
+        <Grid
+        templateAreas={`"header header header"
+                        "nav main sidebar"
+                        "nav main sidebar"`}
+        gridTemplateRows={{base: '150px 1fr 150px'}}
+        gridTemplateColumns={{base:'.25fr 3fr 2fr'}}
+        h='100vh'
+        gap='0'
+        color='blackAlpha.700'
+        fontWeight='bold'
+        overflow="hidden"
         >
-            <div className="navigation">
-                    <Sidebar activePage={'Classes'}/>
-            </div>
-            <Grid
-                templateColumns={{base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)"}}
-            >
-                <div className="cardGrid">
-                    <Grid
-                        m="1rem"
-                        gap="2rem"
-                        templateColumns='repeat(2, 1fr)'
-                    >
-                        <GridItem>
-                            <SportCard image="" header="Zumba" description="Join to get lit!" />
-                        </GridItem>
-                        <GridItem>
-                            <SportCard image="" header="Cycling" description="Learn how to cycle!" />
-                        </GridItem>
-                        <GridItem>
-                            <SportCard image="" header="Dance" description="Basics of dance are taught" />
-                        </GridItem>
-                        <GridItem>
-                            <SportCard image="" header="Singing" description="Work on your voice!" />
-                        </GridItem>
-                    </Grid>
-                </div>
-                <div className="searchZone">
-                    <Grid
-                        bg="brand.hover.houndsGrey"
-                        minHeight="100vh"
-                        m="1rem"
-                    >
-                        <Heading
-                            color="brand.brightGreen"
-                            textAlign="left"
-                            m="1rem"
-                        >
-                            Look for a Class
-                        </Heading>
-                    </Grid>
-                </div>
-            </Grid>
-        </Flex>
+            <GridItem area={'header'}>
+                <Header/>
+            </GridItem>
+            <GridItem area={'nav'}>
+                <Navbar activePage={"Classes"}/>
+            </GridItem>
+            <GridItem area={'main'}>
+                <VStack
+                 alignItems={"stretch"}
+                >
+                    <Heading>Available Classes</Heading>
+                    <ListItem className="Dancing!" description="come dance the night away!" action="full"/>
+                    <ListItem className="Singing" description="Here, we will sing to our heart's content!" action="open"/>
+                    <ListItem className="Lifting" description="Lift heavy thing, eat protein, flex muscle for lady" action="waitlist"/>
+                </VStack>
+            </GridItem>
+            <GridItem bg="brand.houndsGrey" area={'sidebar'}>
+                <Heading
+                    color="brand.brightGreen"
+                    textAlign="center"
+                >
+                    Look for a Class
+                </Heading>
+            </GridItem>
+        </Grid>
     </div>
     )
 }
