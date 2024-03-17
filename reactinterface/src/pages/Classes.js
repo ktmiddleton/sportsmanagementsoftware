@@ -19,7 +19,7 @@ export default function Classes(props)
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
-        overflow="hidden"
+        overflow="scroll"
         >
             <GridItem area={'header'}>
                 <Header/>
