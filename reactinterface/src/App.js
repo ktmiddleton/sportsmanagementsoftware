@@ -123,6 +123,13 @@ const theme = extendTheme({
             color: "brand.black",
             border: "2px solid black",
           },
+        },
+        Full: 
+        {
+          bg: "brand.houndsGrey",
+          color: "brand.black",
+          fontSize: "1.3rem",
+          borderRadius: "0px",
         }
       },
     },

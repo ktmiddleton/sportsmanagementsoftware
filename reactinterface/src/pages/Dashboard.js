@@ -1,68 +1,75 @@
 import React from "react";
 import SportCard from "../components/SportCard";
-import { Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Wrap, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
 function Dashboard(props) {
     return (
         <div className="dashboard">
-                <div className="header">
+            <Grid
+            templateAreas={`"header header header"
+                            "nav main sidebar"`}
+            gridTemplateRows={{base: '150px 100vh'}}
+            gridTemplateColumns={{base:'{{sm: "100px", md: "200px", lg: "250px"}} 3fr 2fr'}}
+            gap='0'
+            color='blackAlpha.700'
+            fontWeight='bold'
+            >
+                <GridItem area={'header'}>
                     <Header/>
-                </div>
-                <Flex
-                    direction="row"
-                >
-                    <div className="navigation">
-                            <Navbar activePage={'Dashboard'}/>
-                    </div>
-                    <Grid
-                        templateColumns={{base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)"}}
+                </GridItem>
+
+                <GridItem area={'nav'}>
+                    <Navbar activePage={"Dashboard"}/>
+                </GridItem>
+
+                <GridItem area={'main'}>
+                    <VStack
+                    align={"baseline"}
                     >
-                        <div className="cardGrid">
-                            <Grid
+                        <Heading
+                        color="brand.black"
+                        textAlign="left"
+                        m="1rem"
+                        >
+                            Your Registrations
+                        </Heading>
+                        <Wrap
+                        m="2rem"
+                        spacing="1rem"
+                        >
+                            <SportCard image="" header="Basketball" description="Club Basketball team" />
+                            <SportCard image="" header="Baseball" description="Club Baseball team" />
+                            <SportCard image="" header="Esports" description="Club Esports team" />
+                            <SportCard image="" header="Rugby" description="Club Rugby team" />
+                        </Wrap>
+                    </VStack>
+                </GridItem>
+
+                <GridItem area={"sidebar"}>
+                        <Grid
+                            bg="brand.hover.houndsGrey"
+                            h="100vh"
+                            w="25vw"
+                        >
+                            <Heading
+                                color="brand.brightGreen"
+                                textAlign="left"
                                 m="1rem"
-                                gap="2rem"
-                                templateColumns='repeat(2, 1fr)'
                             >
-                                <GridItem>
-                                    <SportCard image="" header="Basketball" description="Club Basketball team" />
-                                </GridItem>
-                                <GridItem>
-                                    <SportCard image="" header="Baseball" description="Club Baseball team" />
-                                </GridItem>
-                                <GridItem>
-                                    <SportCard image="" header="Esports" description="Club Esports team" />
-                                </GridItem>
-                                <GridItem>
-                                    <SportCard image="" header="Rugby" description="Club Rugby team" />
-                                </GridItem>
-                            </Grid>
-                        </div>
-                        <div className="importantBar">
-                            <Grid
-                                bg="brand.hover.houndsGrey"
-                                minHeight="100vh"
+                                Upcoming
+                            </Heading>
+                            <Heading
+                                color="brand.brightGreen"
+                                textAlign="left"
                                 m="1rem"
                             >
-                                <Heading
-                                    color="brand.brightGreen"
-                                    textAlign="left"
-                                    m="1rem"
-                                >
-                                    Upcoming
-                                </Heading>
-                                <Heading
-                                    color="brand.brightGreen"
-                                    textAlign="left"
-                                    m="1rem"
-                                >
-                                    TODO
-                                </Heading>
-                            </Grid>
-                        </div>
-                    </Grid>
-                </Flex>
+                                TODO
+                            </Heading>
+                        </Grid>
+                </GridItem>
+            </Grid>
         </div>
     );
 }

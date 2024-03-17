@@ -24,7 +24,7 @@ import { FaClipboardList } from "react-icons/fa";
 import { GrSchedules } from "react-icons/gr";
 
 export default function Navbar({activePage}) {
-    const [navSize, changeNavSize] = useState("large")
+    const [navSize, changeNavSize] = useState("small")
 
     function checkWhichActive() 
     {
@@ -57,6 +57,7 @@ export default function Navbar({activePage}) {
             pos="sticky"
             left="5"
             h="100vh"
+            w= {{sm: "100px", md: "200px", lg: "250px"}}
             bg="brand.darkGrey"
             // marginTop="1rem"
             // boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"

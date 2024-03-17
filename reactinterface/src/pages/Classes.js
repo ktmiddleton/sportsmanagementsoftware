@@ -11,15 +11,12 @@ export default function Classes(props)
     <div className="classes">
         <Grid
         templateAreas={`"header header header"
-                        "nav main sidebar"
                         "nav main sidebar"`}
-        gridTemplateRows={{base: '150px 1fr 150px'}}
-        gridTemplateColumns={{base:'.25fr 3fr 2fr'}}
-        h='100vh'
+        gridTemplateRows={{base: '150px 100vh'}}
+        gridTemplateColumns={{base:'{{sm: "100px", md: "200px", lg: "250px"}} 3fr 2fr'}}
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
-        overflow="scroll"
         >
             <GridItem area={'header'}>
                 <Header/>
@@ -29,21 +26,31 @@ export default function Classes(props)
             </GridItem>
             <GridItem area={'main'}>
                 <VStack
+                 w="70vw"
                  alignItems={"stretch"}
                 >
-                    <Heading>Available Classes</Heading>
+                    <Heading
+                    textAlign={"left"}
+                    >Available Classes</Heading>
                     <ListItem className="Dancing!" description="come dance the night away!" action="full"/>
                     <ListItem className="Singing" description="Here, we will sing to our heart's content!" action="open"/>
                     <ListItem className="Lifting" description="Lift heavy thing, eat protein, flex muscle for lady" action="waitlist"/>
                 </VStack>
             </GridItem>
-            <GridItem bg="brand.houndsGrey" area={'sidebar'}>
-                <Heading
-                    color="brand.brightGreen"
-                    textAlign="center"
+            <GridItem area={'sidebar'}>
+                <Grid
+                bg="brand.hover.houndsGrey"
+                h="100vh"
+                w="25vw"
                 >
-                    Look for a Class
-                </Heading>
+                    <Heading
+                        color="brand.brightGreen"
+                        textAlign="left"
+                        m="1rem"
+                    >
+                        Look for a Class
+                    </Heading>
+                </Grid>
             </GridItem>
         </Grid>
     </div>
