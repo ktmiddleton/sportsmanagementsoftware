@@ -1,9 +1,15 @@
 import './css/App.css';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Sidebar from './components/Navbar';
 import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
+import Classes from './pages/Classes';
+import Clubsports from './pages/Clubsports';
+import Forms from './pages/Forms';
+import Intramural from './pages/Intramural';
+import Schedule from './pages/Schedule';
+
+
 // --loyola-green:#005a3c;
 //   --hounds-grey:#d2d2d2;
 //   --black:#000000;
@@ -14,6 +20,9 @@ import Dashboard from './pages/Dashboard';
 const theme = extendTheme({
   colors: {
     brand: {
+      red: "#f72828",
+      yellow: "#f7db74",
+      white: "#FFFFFF",
       loyolaGreen: "#005a3c",
       houndsGrey: "#d2d2d2",
       black: "#000000",
@@ -76,6 +85,52 @@ const theme = extendTheme({
             border: "2px solid white",
           },
         },
+        Register: 
+        {
+          bg: "brand.brightGreen",
+          color: "brand.white",
+          fontSize: "1.3rem",
+          borderRadius: "0px",
+          _active: 
+          {
+            color: "brand.black",
+          },
+          _hover: 
+          {
+            color: "brand.black",
+          },
+          _focus: 
+          {
+            border: "2px solid black",
+          },
+        },
+        Waitlist: 
+        {
+          bg: "brand.yellow",
+          color: "brand.white",
+          fontSize: "1.3rem",
+          borderRadius: "0px",
+          _active: 
+          {
+            color: "brand.black",
+          },
+          _hover: 
+          {
+            color:"brand.black",
+          },
+          _focus: 
+          {
+            color: "brand.black",
+            border: "2px solid black",
+          },
+        },
+        Full: 
+        {
+          bg: "brand.houndsGrey",
+          color: "brand.black",
+          fontSize: "1.3rem",
+          borderRadius: "0px",
+        }
       },
     },
   },
@@ -96,6 +151,11 @@ function App() {
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
             <Route path='/' element={<Dashboard />} />
+            <Route path='/classes' element={<Classes />}/>
+            <Route path='/intramural' element={<Intramural />}/>
+            <Route path='/clubsports' element={<Clubsports />}/>
+            <Route path='/forms' element={<Forms />}/>
+            <Route path='/schedule' element={<Schedule />}/>
           </Routes>
         </ChakraProvider>
     </div>
