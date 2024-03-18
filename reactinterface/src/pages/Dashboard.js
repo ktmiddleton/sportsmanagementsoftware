@@ -11,7 +11,7 @@ function Dashboard(props) {
             templateAreas={`"header header header"
                             "nav main sidebar"`}
             gridTemplateRows={{base: '150px 100vh'}}
-            gridTemplateColumns={{base:'{{sm: "100px", md: "200px", lg: "250px"}} 3fr 2fr'}}
+            gridTemplateColumns={{base:'11em 3fr 2fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -51,7 +51,7 @@ function Dashboard(props) {
                         <Grid
                             bg="brand.hover.houndsGrey"
                             h="100vh"
-                            w="25vw"
+                            w="100%"
                         >
                             <Heading
                                 color="brand.brightGreen"

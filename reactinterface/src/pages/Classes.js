@@ -1,22 +1,33 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
+import Calendar from 'react-calendar';
+import {useState} from 'react';
+import moment from 'moment';
 
 export default function Classes(props) 
 {
+
+    const [dateState, setDateState] = useState(new Date())
+    const changeDate = (e) => 
+    {
+      setDateState(e) 
+    }
+
     return (
     <div className="classes">
         <Grid
         templateAreas={`"header header header"
                         "nav main sidebar"`}
         gridTemplateRows={{base: '150px 100vh'}}
-        gridTemplateColumns={{base:'{{sm: "100px", md: "200px", lg: "250px"}} 3fr 2fr'}}
+        gridTemplateColumns={{base:'11em 3fr 2fr'}}
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
+        overflowX="hidden"
         >
             <GridItem area={'header'}>
                 <Header/>
@@ -38,10 +49,10 @@ export default function Classes(props)
                 </VStack>
             </GridItem>
             <GridItem area={'sidebar'}>
-                <Grid
+                <Stack
                 bg="brand.hover.houndsGrey"
                 h="100vh"
-                w="25vw"
+                w="100%"
                 >
                     <Heading
                         color="brand.brightGreen"
@@ -50,7 +61,9 @@ export default function Classes(props)
                     >
                         Look for a Class
                     </Heading>
-                </Grid>
+                    <Calendar value={dateState} onChange={changeDate}/>
+                    <Text>{moment(dateState).format('MMMM Do YYYY')}</Text>
+                </Stack>
             </GridItem>
         </Grid>
     </div>
