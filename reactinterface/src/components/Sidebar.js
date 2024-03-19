@@ -15,10 +15,9 @@ import { FiMenu } from 'react-icons/fi';
 
 const MotionBox = motion(Box);
 
-function Sidebar(props) {
+function Sidebar({isOpen, onToggle}) {
     const navigate = useNavigate();
     const location = useLocation();
-    const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
 
     function handleNavigate(path) {
         return () => navigate(path);
@@ -30,6 +29,11 @@ function Sidebar(props) {
         } else {
             return "sidebar"
         }
+    }
+
+    function handleToggle () 
+    {
+        onToggle();
     }
 
     return (
@@ -61,10 +65,7 @@ function Sidebar(props) {
                             _focus={{
                                 border: "2px solid white",
                             }}
-                            onClick={() => {
-                                onToggle();
-                                console.log(isOpen);
-                            }}
+                            onClick={() => handleToggle()}
                         />
                         <Button
                             onClick={handleNavigate("/")}

@@ -9,7 +9,7 @@ import {useState} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 
-export default function Classes(props) 
+export default function Classes({isOpen, onToggle}) 
 {
 
     const [dateState, setDateState] = useState(new Date())
@@ -35,7 +35,7 @@ export default function Classes(props)
             </GridItem>
             <GridItem area={'nav'}>
                 {/* <Navbar activePage={"Classes"}/> */}
-                <Sidebar />
+                <Sidebar isOpen={isOpen} onToggle={onToggle}/>
             </GridItem>
             <GridItem area={'main'}>
                 <VStack

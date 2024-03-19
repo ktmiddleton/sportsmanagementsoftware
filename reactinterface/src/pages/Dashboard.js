@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
-function Dashboard(props) {
+function Dashboard({isOpen, onToggle}) {
     return (
         <div className="dashboard">
             <Grid
@@ -16,6 +16,7 @@ function Dashboard(props) {
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
+            overflowX="hidden"
             >
                 <GridItem area={'header'}>
                     <Header buttons={true}/>
@@ -23,7 +24,7 @@ function Dashboard(props) {
 
                 <GridItem area={'nav'}>
                     {/* <Navbar activePage={"Dashboard"}/> */}
-                    <Sidebar />
+                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                 </GridItem>
 
                 <GridItem area={'main'}>

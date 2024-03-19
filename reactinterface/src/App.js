@@ -1,6 +1,6 @@
 import './css/App.css';
 import Sidebar from './components/Navbar';
-import { Button, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
+import { Button, ChakraProvider, extendTheme, Flex, useDisclosure } from '@chakra-ui/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
 import Classes from './pages/Classes';
@@ -150,13 +150,15 @@ const theme = extendTheme({
 })
 
 function App() {
+  const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
+  
   return (
     <div className="App">
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
-            <Route path='/' element={<Dashboard />} />
+            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle}/>} />
             <Route path='/login' element={<Login />} />
-            <Route path='/classes' element={<Classes />}/>
+            <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramural' element={<Intramural />}/>
             <Route path='/clubsports' element={<Clubsports />}/>
             <Route path='/forms' element={<Forms />}/>
