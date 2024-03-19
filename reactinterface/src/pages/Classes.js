@@ -31,7 +31,7 @@ export default function Classes(props)
         overflowX="hidden"
         >
             <GridItem area={'header'}>
-                <Header/>
+                <Header buttons={true}/>
             </GridItem>
             <GridItem area={'nav'}>
                 {/* <Navbar activePage={"Classes"}/> */}
