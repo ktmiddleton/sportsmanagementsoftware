@@ -18,7 +18,7 @@ function Dashboard(props) {
             fontWeight='bold'
             >
                 <GridItem area={'header'}>
-                    <Header/>
+                    <Header buttons={true}/>
                 </GridItem>
 
                 <GridItem area={'nav'}>
