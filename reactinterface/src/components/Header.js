@@ -11,7 +11,9 @@ import {
     MenuButton,
     MenuList,
     HStack,
-    Spacer
+    Spacer,
+    Button,
+    MenuItem
 } from '@chakra-ui/react'
 import { ReactComponent as LoyolaMDLogo } from '../assets/LoyolaMDLogo.svg';
 import { FaUserCircle } from "react-icons/fa";
@@ -62,16 +64,23 @@ export default function Header({})
                 onClick={handleNavigate("/settings")}
                 _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
                 />
-                <IconButton 
-                aria-label='Profile'
-                as={FaUserCircle} 
-                boxSize={16}
-                mr={10}
-                color={"brand.white"}
-                bg={"brand.loyolaGreen"}
-                onClick={handleNavigate("/profile")}
-                _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
-                />
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label='Profile'
+                        icon={<FaUserCircle size={"100%"} />}
+                        boxSize={16}
+                        mr={10}
+                        color={"brand.white"}
+                        bg={"brand.loyolaGreen"}
+                        // onClick={handleNavigate("/profile")}
+                        _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
+                    />
+                    <MenuList>
+                        <MenuItem as="button" onClick={handleNavigate("/profile")}>Profile</MenuItem>
+                        <MenuItem as="button" onClick={handleNavigate("/login")}>Log out</MenuItem>
+                    </MenuList>
+                </Menu>
             </div>
         </Flex>
     </div>
