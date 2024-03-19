@@ -1,5 +1,4 @@
 import React from 'react';
-import "../css/Sidebar.css"
 import { Box, Button, Flex, Icon, IconButton, Text, VStack, background, useDisclosure } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
