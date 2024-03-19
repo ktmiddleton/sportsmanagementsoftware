@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Calendar from 'react-calendar';
 import {useState} from 'react';
 import moment from 'moment';
+import Sidebar from "../components/Sidebar";
 
 export default function Classes(props) 
 {
@@ -22,8 +23,8 @@ export default function Classes(props)
         <Grid
         templateAreas={`"header header header"
                         "nav main sidebar"`}
-        gridTemplateRows={{base: '150px 100vh'}}
-        gridTemplateColumns={{base:'11em 3fr 2fr'}}
+        gridTemplateRows={{base: '10vh 90vh'}}
+        gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
@@ -33,11 +34,11 @@ export default function Classes(props)
                 <Header/>
             </GridItem>
             <GridItem area={'nav'}>
-                <Navbar activePage={"Classes"}/>
+                {/* <Navbar activePage={"Classes"}/> */}
+                <Sidebar />
             </GridItem>
             <GridItem area={'main'}>
                 <VStack
-                 w="70vw"
                  alignItems={"stretch"}
                 >
                     <Heading
