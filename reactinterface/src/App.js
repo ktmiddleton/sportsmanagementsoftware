@@ -52,10 +52,10 @@ const theme = extendTheme({
       variants: {
         sidebar: {
           width: "100%",
-          height: "4rem",
+          height: "6rem",
           bg: "brand.darkGrey",
           color: "white",
-          fontSize: "1.3rem",
+          fontSize: "1.7rem",
           textAlign: "start",
           borderRadius: "0px",
           _hover: {
@@ -70,14 +70,17 @@ const theme = extendTheme({
         },
         activeSidebar: {
           width: "100%",
-          height: "4rem",
-          bg: "brand.loyolaGreen",
+          height: "6rem",
+          bg: "brand.darkGrey",
           color: "white",
-          fontSize: "1.3rem",
+          fontSize: "1.7rem",
           borderRadius: "0px",
-          // _hover: {
-          //   bg: "brand.hover.loyolaGreen",
-          // },
+          _hover: {
+            bg: "brand.loyolaGreen",
+          },
+          _before: {
+            content: `"|"`
+          },
           _active: {
             bg: "brand.active.loyolaGreen",
           },

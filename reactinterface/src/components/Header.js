@@ -34,7 +34,7 @@ export default function Header({})
         pos="sticky"
         justify="justify"
         align="center"
-        h="150px"
+        h="10vh"
         w="100vw"
         bg="brand.loyolaGreen"
         >

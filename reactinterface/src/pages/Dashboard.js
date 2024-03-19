@@ -3,6 +3,7 @@ import SportCard from "../components/SportCard";
 import { Wrap, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 function Dashboard(props) {
     return (
@@ -10,8 +11,8 @@ function Dashboard(props) {
             <Grid
             templateAreas={`"header header header"
                             "nav main sidebar"`}
-            gridTemplateRows={{base: '150px 100vh'}}
-            gridTemplateColumns={{base:'11em 3fr 2fr'}}
+            gridTemplateRows={{base: '10vh 90vh'}}
+            gridTemplateColumns={{base:'1fr 3fr 2fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -21,7 +22,8 @@ function Dashboard(props) {
                 </GridItem>
 
                 <GridItem area={'nav'}>
-                    <Navbar activePage={"Dashboard"}/>
+                    {/* <Navbar activePage={"Dashboard"}/> */}
+                    <Sidebar />
                 </GridItem>
 
                 <GridItem area={'main'}>
