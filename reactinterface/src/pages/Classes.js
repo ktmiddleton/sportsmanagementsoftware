@@ -8,6 +8,8 @@ import Calendar from 'react-calendar';
 import {useState} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
+import '../css/calendar.css';
+
 
 export default function Classes({isOpen, onToggle}) 
 {
@@ -54,6 +56,7 @@ export default function Classes({isOpen, onToggle})
                 bg="brand.hover.houndsGrey"
                 h="100vh"
                 w="100%"
+                align={"center"}
                 >
                     <Heading
                         color="brand.brightGreen"
