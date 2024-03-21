@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -9,6 +9,7 @@ import {useState} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
+import axios from "axios";
 
 
 export default function Classes({isOpen, onToggle}) 
@@ -19,6 +20,25 @@ export default function Classes({isOpen, onToggle})
     {
       setDateState(e) 
     }
+
+    const [classes, setClasses] = useState([]);
+
+    axios.get(
+        `http://localhost:8000/classes/`
+    )
+    .then((response) => {
+        setClasses(response.data.Classes);
+    })
+    .catch((error) => {
+        console.log("Error getting classes");
+        console.log(error);
+    })
+
+    var classesMap = "";
+
+    classesMap = classes.map( (item) => 
+        <ListItem className={item.name} description={item.description} action="full" capacity={item.capacity} registeredParticipants={item.registeredParticipants}/>
+    )
 
     return (
     <div className="classes">
@@ -45,10 +65,9 @@ export default function Classes({isOpen, onToggle})
                 >
                     <Heading
                     textAlign={"left"}
-                    >Available Classes</Heading>
-                    <ListItem className="Dancing!" description="come dance the night away!" action="full"/>
-                    <ListItem className="Singing" description="Here, we will sing to our heart's content!" action="open"/>
-                    <ListItem className="Lifting" description="Lift heavy thing, eat protein, flex muscle for lady" action="waitlist"/>
+                    >Available Classes
+                    </Heading>
+                    {classesMap}
                 </VStack>
             </GridItem>
             <GridItem area={'sidebar'}>
