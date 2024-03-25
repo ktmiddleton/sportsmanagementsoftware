@@ -9,6 +9,7 @@ import Forms from './pages/Forms';
 import Intramural from './pages/Intramural';
 import Schedule from './pages/Schedule';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 // --loyola-green:#005a3c;
@@ -163,6 +164,7 @@ function App() {
             <Route path='/clubsports' element={<Clubsports />}/>
             <Route path='/forms' element={<Forms />}/>
             <Route path='/schedule' element={<Schedule />}/>
+            <Route path='/register' element={<Register />}/>
           </Routes>
         </ChakraProvider>
     </div>
