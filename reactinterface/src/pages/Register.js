@@ -18,7 +18,8 @@ function Register() {
             `http://localhost:8000/user/register/`,
             data
         ).then((response) => {
-            console.log(response);
+            console.log(response.data);
+            window.localStorage.setItem("token", response.data.token);
         }).catch((response) => {
             console.error(response);
         });
@@ -93,12 +94,12 @@ function Register() {
                             return (
                             <Form>
                                 <Card
-                                    boxSize={"60vh"}
+                                    width={"60vh"}
                                     spacing="10rem"
                                     p="3rem"
                                 >
                                     <CardBody>
-                                        <Heading size="lg">Login</Heading>
+                                        <Heading size="lg">Create an Account</Heading>
                                             <VStack
                                                 spacing="2rem"
                                                 width="100%"
