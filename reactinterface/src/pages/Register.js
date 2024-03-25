@@ -1,31 +1,28 @@
 import { Button, Card, CardBody, CardFooter, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, IconButton, Input, InputGroup, InputRightElement, Text, VStack } from "@chakra-ui/react";
-import { Field, Form, Formik } from 'formik';
 import React from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState } from 'react';
 import Header from "../components/Header";
+import { Field, Form, Formik } from "formik";
+import axios from "axios";
 
-function Login() {
-
-    function validateEmail(value) {
-        let error
-        if (!value) {
-          error = 'Email is required 😱'
-        }
-        return error
-    }
-
-    function validatePassword(value) {
-        let error
-        if (!value) {
-            error = 'Password is required 😱'
-        }
-        return error
-    }
+function Register() {
 
     const [showPassword, setShowPassword] = useState(false);
 
     const handleShowClick = () => setShowPassword(!showPassword);
+
+    const submitForm = (formValues) => {
+        let data = {email: formValues.email, username: formValues.username, password: formValues.password};
+        axios.post(
+            `http://localhost:8000/user/register/`,
+            data
+        ).then((response) => {
+            console.log(response);
+        }).catch((response) => {
+            console.error(response);
+        });
+    }
 
     return (
         <div className="login">
@@ -51,13 +48,49 @@ function Login() {
                     <Formik
                         initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
                         onSubmit={(values, actions) => {
-                            console.log(values)
+                            console.log(values);
+                            submitForm(values);
                             setTimeout(() => {
                             actions.setSubmitting(false)
-                            }, 1000)
+                            }, 1000);
                         }}
                     >
-                        {(props) => (
+                        {(formikProps) => {
+                            function validateEmail(value) {
+                                let error
+                                if (!value) {
+                                  error = 'Email is required 😱'
+                                }
+                                return error
+                            }
+                        
+                            function validateUsername(value) {
+                                let error
+                                if (!value) {
+                                  error = 'Username is required 😱'
+                                }
+                                return error
+                            }
+                        
+                            function validatePassword(value) {
+                                let error
+                                if (!value) {
+                                    error = 'Password is required 😱'
+                                }
+                                return error
+                            }
+
+                            function validateConfirmPassword(value) {
+                                let error
+                                if (!value) {
+                                    error = 'Confirm Password is required 😱'
+                                } else if (value != formikProps.values.password) {
+                                    error = 'Password and Confirm Password fields must match'
+                                }
+                                return error
+                            }
+
+                            return (
                             <Form>
                                 <Card
                                     boxSize={"60vh"}
@@ -83,6 +116,18 @@ function Login() {
                                                     )}
                                                 </Field>
 
+                                                <Field name='username' validate={validateUsername}>
+                                                    {({ field, form }) => (
+                                                    <FormControl isInvalid={form.errors.username && form.touched.username}>
+                                                        <FormLabel fontSize="1.5rem">Username</FormLabel>
+                                                        <InputGroup>
+                                                            <Input {...field} placeholder='Username' />
+                                                        </InputGroup>
+                                                        <FormErrorMessage>{form.errors.username}</FormErrorMessage>
+                                                    </FormControl>
+                                                    )}
+                                                </Field>
+
                                                 <Field name='password' validate={validatePassword}>
                                                     {({ field, form }) => (
                                                     <FormControl isInvalid={form.errors.password && form.touched.password}>
@@ -104,29 +149,52 @@ function Login() {
                                                     )}
                                                 </Field>
 
+                                                <Field name='confirmPassword' validate={validateConfirmPassword}>
+                                                    {({ field, form }) => (
+                                                    <FormControl isInvalid={form.errors.confirmPassword && form.touched.confirmPassword}>
+                                                        <FormLabel fontSize="1.5rem">Confirm Password</FormLabel>
+                                                        <InputGroup>
+                                                            <Input {...field} type={showPassword ? 'text' : 'password'} placeholder='Password' />
+                                                            <InputRightElement>
+                                                                <IconButton
+                                                                    bg="transparent"
+                                                                    variant="ghost"
+                                                                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                                                    icon={showPassword ? <FaEye /> : <FaEyeSlash />}
+                                                                    onClick={handleShowClick}
+                                                                />
+                                                            </InputRightElement>
+                                                        </InputGroup>
+                                                        <FormErrorMessage>{form.errors.confirmPassword}</FormErrorMessage>
+                                                    </FormControl>
+                                                    )}
+                                                </Field>
+
                                             </VStack>
                                     </CardBody>
                                     <CardFooter as={VStack}>
                                         <Button
                                             colorScheme="green"
                                             w="full"
-                                            isLoading={props.isSubmitting}
-                                            type='submit'
+                                            isLoading={formikProps.isSubmitting}
+                                            type="submit"
                                         >
-                                            Sign In
+                                            Register
                                         </Button>
                                         <Text>
-                                            Don't have an account? <a href="/register" style={{ color: 'blue' }}>Sign up</a>
+                                            Already have an account? <a href="/login" style={{ color: 'blue' }}>Login</a>
                                         </Text>
                                     </CardFooter>
                                 </Card>
                             </Form>
-                        )}
+                            )
+                        }}
                     </Formik>
                 </GridItem>
             </Grid>
         </div>
     )
+
 }
 
-export default Login;
+export default Register;
