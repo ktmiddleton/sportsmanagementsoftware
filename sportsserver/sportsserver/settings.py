@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "coverage",
-    "classes"
+    "classes",
+    "user",
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "sportsserver.wsgi.application"
 
+AUTH_USER_MODEL = "user.User"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
