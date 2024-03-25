@@ -11,6 +11,14 @@ from user.models import User as api_User
 
 class UserRegister(APIView):
     #Creates the user.
+    """
+    data format:
+        {
+            "email": "",
+            "username": "",
+            "password": ""
+        }
+    """
     def post(self, request, format='json'):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
