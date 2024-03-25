@@ -5,12 +5,20 @@ import { useState } from 'react';
 import Header from "../components/Header";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
 
     const [showPassword, setShowPassword] = useState(false);
 
     const handleShowClick = () => setShowPassword(!showPassword);
+    
+    const navigate = useNavigate();
+
+    // function handleNavigate(path) 
+    // {
+    //     return () => navigate(path);
+    // }
 
     const submitForm = (formValues) => {
         let data = {email: formValues.email, username: formValues.username, password: formValues.password};
@@ -20,6 +28,7 @@ function Register() {
         ).then((response) => {
             console.log(response.data);
             window.localStorage.setItem("token", response.data.token);
+            navigate("/");
         }).catch((response) => {
             console.error(response);
         });

@@ -5,6 +5,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState } from 'react';
 import Header from "../components/Header";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
@@ -33,6 +34,7 @@ function Login() {
         ).then((response) => {
             console.log(response.data);
             window.localStorage.setItem("token", response.data.token);
+            navigate("/");
         }).catch((response) => {
             console.error(response);
         });
@@ -41,6 +43,13 @@ function Login() {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleShowClick = () => setShowPassword(!showPassword);
+
+    const navigate = useNavigate();
+
+    // function handleNavigate(path) 
+    // {
+    //     return () => navigate(path);
+    // }
 
     return (
         <div className="login">

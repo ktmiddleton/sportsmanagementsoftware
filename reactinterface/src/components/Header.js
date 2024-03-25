@@ -30,6 +30,11 @@ export default function Header(props)
         return () => navigate(path);
     }
 
+    function handleLogout() {
+        window.localStorage.removeItem("token");
+        navigate("/login");
+    }
+
     return (
     <div>
         <Flex
@@ -80,7 +85,7 @@ export default function Header(props)
                             />
                             <MenuList>
                                 <MenuItem as="button" onClick={handleNavigate("/profile")}>Profile</MenuItem>
-                                <MenuItem as="button" onClick={handleNavigate("/login")}>Log out</MenuItem>
+                                <MenuItem as="button" onClick={() => handleLogout("/login")}>Log out</MenuItem>
                             </MenuList>
                         </Menu>
                     </>
