@@ -6,6 +6,11 @@ from rest_framework.authtoken.models import Token
 from user.serializers import UserSerializer
 from django.contrib.auth.models import User
 from user.models import User as api_User
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
 
 # Create your views here.
 
@@ -27,6 +32,30 @@ class UserRegister(APIView):
                 token, created = Token.objects.get_or_create(user=user)
                 json = serializer.data
                 json['token'] = token.key
+                json['email'] = user.email
+                json['username'] = user.username
                 return Response(json, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UserLogin(ObtainAuthToken):#APIView
+    """
+    data format:
+    {
+        "email": "",
+        "password": ""
+    }
+    """
+    def post(self, request, format='json', *args, **kwargs):
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        user = authenticate(request, username=email, password=password, backend='user.backends.EmailOrUsernameModelBackend')
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'email': user.email,
+                'username': user.username
+            })
+        return Response({'error': 'Authentication failed'}, status=401)

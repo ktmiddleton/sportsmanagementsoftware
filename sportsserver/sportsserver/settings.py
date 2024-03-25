@@ -85,6 +85,11 @@ WSGI_APPLICATION = "sportsserver.wsgi.application"
 
 AUTH_USER_MODEL = "user.User"
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'user.backends.EmailOrUsernameModelBackend',
+)
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

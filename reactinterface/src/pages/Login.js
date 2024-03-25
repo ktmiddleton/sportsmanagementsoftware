@@ -4,6 +4,8 @@ import React from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState } from 'react';
 import Header from "../components/Header";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
@@ -23,9 +25,31 @@ function Login() {
         return error
     }
 
+    const submitForm = (formValues) => {
+        let data = {email: formValues.email, password: formValues.password};
+        console.log(formValues)
+        axios.post(
+            `http://localhost:8000/user/login/`,
+            data
+        ).then((response) => {
+            console.log(response.data);
+            window.localStorage.setItem("token", response.data.token);
+            navigate("/");
+        }).catch((response) => {
+            console.error(response);
+        });
+    }
+
     const [showPassword, setShowPassword] = useState(false);
 
     const handleShowClick = () => setShowPassword(!showPassword);
+
+    const navigate = useNavigate();
+
+    // function handleNavigate(path) 
+    // {
+    //     return () => navigate(path);
+    // }
 
     return (
         <div className="login">
@@ -51,7 +75,7 @@ function Login() {
                     <Formik
                         initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
                         onSubmit={(values, actions) => {
-                            console.log(values)
+                            submitForm(values)
                             setTimeout(() => {
                             actions.setSubmitting(false)
                             }, 1000)
@@ -60,7 +84,7 @@ function Login() {
                         {(props) => (
                             <Form>
                                 <Card
-                                    boxSize={"60vh"}
+                                    width={"60vh"}
                                     spacing="10rem"
                                     p="3rem"
                                 >
@@ -74,9 +98,9 @@ function Login() {
                                                 <Field name='email' validate={validateEmail}>
                                                     {({ field, form }) => (
                                                     <FormControl isInvalid={form.errors.email && form.touched.email}>
-                                                        <FormLabel fontSize="1.5rem">Email</FormLabel>
+                                                        <FormLabel fontSize="1.5rem">Email or Username</FormLabel>
                                                         <InputGroup>
-                                                            <Input {...field} placeholder='Email' />
+                                                            <Input {...field} placeholder='Email or Username' />
                                                         </InputGroup>
                                                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                                                     </FormControl>
