@@ -1,7 +1,24 @@
 import { Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, background } from "@chakra-ui/react";
+import axios from "axios";
 import React from "react";
 
 function SportCard(props) {
+
+    const handleClick = () => { // TODO: Needs to actually handle navigating to a page
+        console.log("Clicked Sports Card");
+        axios.get(
+            `http://localhost:8000/clubsports/userteams/?username=${localStorage.getItem("username")}`,
+            {username: "joj"}
+        )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log("Error getting club sports");
+            console.log(error);
+        })
+    }
+
     return (
         <div className="sportCard">
             <Card
@@ -10,7 +27,7 @@ function SportCard(props) {
                 size={{base: "sm", sm: "md", md: "lg"}}
                 width={{base: "40vw", sm: "30vw", lg: "20vw"}} // It's a little messed up the 10 one doesn't activate for any size of screen
                 aspectRatio="400 / 323.2"
-                onClick={() => {console.log("Clicked Sports Card")}} // TODO: finish this onclick function
+                onClick={handleClick} // TODO: finish this onclick function
                 overflow="hidden" // Ensures stuff extending outside is hidden
                 transition="0.1s"
                 _hover={{
