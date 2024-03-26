@@ -1,7 +1,7 @@
-from intramurals.models import IntramuralTeam
+from intramurals.models import IntramuralSport
 from rest_framework import serializers
 
-class IntramuralTeamSerializer(serializers.ModelSerializer):
+class IntramuralSportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = IntramuralTeam
+        model = IntramuralSport
         fields = '__all__'

@@ -41,8 +41,11 @@ export default function Classes({isOpen, onToggle})
 
     var classesMap = "";
 
-    classesMap = classes.map( (item) => 
-        <ListItem className={item.name} description={item.description} action={item.registeredParticipants <= item.capacity ? "open" : "full"}/>
+    classesMap = classes.map( (item) => { 
+    if (new Date(item.classTime).getDate() == dateState.getDate())
+        return <ListItem className={item.name} description={item.description} action={item.registeredParticipants <= item.capacity ? "open" : "full"}/> 
+    return <></>
+    }
     )
 
     return (
@@ -69,7 +72,9 @@ export default function Classes({isOpen, onToggle})
                  alignItems={"stretch"}
                 >
                     <Heading
-                    textAlign={"left"}
+                    color="brand.black"
+                    textAlign="left"
+                    m="1rem"
                     >Available Classes
                     </Heading>
                     {classesMap}
@@ -90,7 +95,6 @@ export default function Classes({isOpen, onToggle})
                         Look for a Class
                     </Heading>
                     <Calendar value={dateState} onChange={changeDate}/>
-                    <Text>{moment(dateState).format('MMMM Do YYYY')}</Text>
                 </Stack>
             </GridItem>
         </Grid>

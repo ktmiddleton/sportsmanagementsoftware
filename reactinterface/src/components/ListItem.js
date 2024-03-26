@@ -15,13 +15,13 @@ export default function ListItem(props) {
             element = <Button isDisabled="true" m="2" variant="Full">Full</Button>;
             break;
         case "registerOpen":
-            element = <HStack><Button m="2" variant="Register">Competitive</Button> <Button m="2" variant="Register">Casual</Button></HStack>;
+            element = <Flex><Button m="2" variant="Register">Competitive</Button> <Button m="2" variant="Register">Casual</Button></Flex>;
             break;
         case "registerClose":
-            element = <HStack><Button isDisabled="true" m="2" variant="Full">Closed</Button> <Button isDisabled="true" m="2" variant="Full">Closed</Button></HStack>
+            element = <Flex><Button isDisabled="true" m="2" variant="Full">Closed</Button> <Button isDisabled="true" m="2" variant="Full">Closed</Button></Flex>
             break;
         case "registerRequest":
-            element = <HStack><Button m="2" variant="Waitlist">By Request</Button> <Button m="2" variant="Waitlist">By Request</Button></HStack>
+            element = <Flex><Button m="2" variant="Waitlist">By Request</Button> <Button m="2" variant="Waitlist">By Request</Button></Flex>
     }
     return (
         <div className="listItem">
@@ -29,8 +29,7 @@ export default function ListItem(props) {
             w="3fr"
             bg="brand.houndsGrey"
             pl="4"
-            ml="2"
-            mr="2"
+            mx="2"
             >
                 <HStack>
                     <Avatar size="lg" src="./Placeholder.png" />

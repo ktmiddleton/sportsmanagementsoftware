@@ -5,7 +5,7 @@ import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, 
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
@@ -15,24 +15,26 @@ import axios from "axios";
 export default function Intramurals({isOpen, onToggle}) 
 {
 
-    // const [classes, setClasses] = useState([]);
+    const [intramurals, setIntramurals] = useState([]);
 
-    // axios.get(
-    //     `http://localhost:8000/classes/`
-    // )
-    // .then((response) => {
-    //     setClasses(response.data.Classes);
-    // })
-    // .catch((error) => {
-    //     console.log("Error getting classes");
-    //     console.log(error);
-    // })
+    useEffect(() => {
+        axios.get(
+            `http://localhost:8000/intramurals/`
+        )
+        .then((response) => {
+            setIntramurals(response.data.IntramuralSports);
+        })
+        .catch((error) => {
+            console.log("Error getting classes");
+            console.log(error);
+        })
+      }, []);
 
-    // var classesMap = "";
+    var intramuralsMap = "";
 
-    // classesMap = classes.map( (item) => 
-    //     <ListItem className={item.name} description={item.description} action="full" capacity={item.capacity} registeredParticipants={item.registeredParticipants}/>
-    // )
+    intramuralsMap = intramurals.map( (item) => 
+        <ListItem className={item.name} description={item.description} action={new Date(item.registrationDeadline) > new Date() ? "registerOpen" : "registerClose"}/>
+    )
 
     return (
     <div className="intramurals">
@@ -58,11 +60,12 @@ export default function Intramurals({isOpen, onToggle})
                  alignItems={"stretch"}
                 >
                     <Heading
-                    textAlign={"left"}
-                    >Available Classes
+                    color="brand.black"
+                    textAlign="left"
+                    m="1rem"
+                    >Intramural Teams
                     </Heading>
-                    <ListItem action="registerRequest"/>
-                    {/* {classesMap} */}
+                    {intramuralsMap}
                 </VStack>
             </GridItem>
         </Grid>

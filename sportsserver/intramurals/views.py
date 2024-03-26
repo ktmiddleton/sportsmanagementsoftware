@@ -2,19 +2,19 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from intramurals.serializers import IntramuralTeamSerializer
-from intramurals.models import IntramuralTeam
+from intramurals.serializers import IntramuralSportSerializer
+from intramurals.models import IntramuralSport
 
 # Create your views here.
 
-class IntramuralTeamList(APIView):
+class IntramuralSportList(APIView):
     def get(self, request):
-        teams = IntramuralTeam.objects.all()
-        serializer = IntramuralTeamSerializer(teams, many=True)
-        return Response({"IntramuralTeams": serializer.data})
+        teams = IntramuralSport.objects.all()
+        serializer = IntramuralSportSerializer(teams, many=True)
+        return Response({"IntramuralSports": serializer.data})
    
     def post(self, request):
-        serializer = IntramuralTeamSerializer(data=request.data)
+        serializer = IntramuralSportSerializer(data=request.data)
         if serializer.is_valid(): 
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
