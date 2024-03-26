@@ -59,3 +59,19 @@ class UserLogin(ObtainAuthToken):#APIView
                 'username': user.username
             })
         return Response({'error': 'Authentication failed'}, status=401)
+    
+class UserGetUsername(APIView):
+    """
+    Get a user's info by their username
+    data format (url):
+    user/getuserusername/?username=_username_
+    """
+    def get(self, request):
+        username = request.GET.get("username","default_value")
+        print(request.data)
+        user = User.objects.get(username=username)
+        if user is not None:
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)

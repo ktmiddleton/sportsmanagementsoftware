@@ -4,7 +4,7 @@ import { Button, ChakraProvider, extendTheme, Flex, useDisclosure } from '@chakr
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
 import Classes from './pages/Classes';
-import Clubsports from './pages/Clubsports';
+import Clubsports from './pages/ClubSports';
 import Forms from './pages/Forms';
 import Intramural from './pages/Intramural';
 import Schedule from './pages/Schedule';
@@ -160,10 +160,10 @@ function App() {
             <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle}/>} />
             <Route path='/login' element={<Login />} />
             <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
-            <Route path='/intramural' element={<Intramural />}/>
-            <Route path='/clubsports' element={<Clubsports />}/>
-            <Route path='/forms' element={<Forms />}/>
-            <Route path='/schedule' element={<Schedule />}/>
+            <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/clubsports' element={<Clubsports isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
           </Routes>
         </ChakraProvider>

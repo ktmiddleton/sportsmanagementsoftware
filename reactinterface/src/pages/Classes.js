@@ -5,7 +5,7 @@ import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, 
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
@@ -15,6 +15,8 @@ import axios from "axios";
 export default function Classes({isOpen, onToggle}) 
 {
 
+
+    // Saved as a date object, for calendar
     const [dateState, setDateState] = useState(new Date())
     const changeDate = (e) => 
     {
@@ -23,21 +25,27 @@ export default function Classes({isOpen, onToggle})
 
     const [classes, setClasses] = useState([]);
 
-    axios.get(
-        `http://localhost:8000/classes/`
-    )
-    .then((response) => {
-        setClasses(response.data.Classes);
-    })
-    .catch((error) => {
-        console.log("Error getting classes");
-        console.log(error);
-    })
+
+    useEffect(() => {
+        axios.get(
+            `http://localhost:8000/classes/`
+        )
+        .then((response) => {
+            setClasses(response.data.Classes);
+        })
+        .catch((error) => {
+            console.log("Error getting classes");
+            console.log(error);
+        })
+      }, []);
 
     var classesMap = "";
 
-    classesMap = classes.map( (item) => 
-        <ListItem className={item.name} description={item.description} action="full" capacity={item.capacity} registeredParticipants={item.registeredParticipants}/>
+    classesMap = classes.map( (item) => { 
+    if (new Date(item.classTime).getDate() == dateState.getDate())
+        return <ListItem className={item.name} description={item.description} action={item.registeredParticipants <= item.capacity ? "open" : "full"}/> 
+    return <></>
+    }
     )
 
     return (
@@ -64,7 +72,9 @@ export default function Classes({isOpen, onToggle})
                  alignItems={"stretch"}
                 >
                     <Heading
-                    textAlign={"left"}
+                    color="brand.black"
+                    textAlign="left"
+                    m="1rem"
                     >Available Classes
                     </Heading>
                     {classesMap}
@@ -85,7 +95,6 @@ export default function Classes({isOpen, onToggle})
                         Look for a Class
                     </Heading>
                     <Calendar value={dateState} onChange={changeDate}/>
-                    <Text>{moment(dateState).format('MMMM Do YYYY')}</Text>
                 </Stack>
             </GridItem>
         </Grid>

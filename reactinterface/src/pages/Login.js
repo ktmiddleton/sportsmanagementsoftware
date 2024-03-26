@@ -34,6 +34,8 @@ function Login() {
         ).then((response) => {
             console.log(response.data);
             window.localStorage.setItem("token", response.data.token);
+            window.localStorage.setItem("username", response.data.username);
+            window.localStorage.setItem("email", response.data.email);
             navigate("/");
         }).catch((response) => {
             console.error(response);

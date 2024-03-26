@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     "corsheaders",
     "coverage",
     "classes",
+    "clubsports",
+    "intramurals",
     "user",
+    "user_classes_commands",
 ]
 
 MIDDLEWARE = [
