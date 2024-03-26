@@ -10,11 +10,24 @@ from user.models import User
 # Create your views here.
 
 class ClubSportsTeamsList(APIView):
+    
+    """
+    List all club sports teams
+    """
     def get(self, request):
         teams = ClubSportsTeam.objects.all()
         serializer = ClubSportsTeamSerializer(teams, many=True)
         return Response({"ClubSportsTeams": serializer.data})
    
+   """
+   Create a club sports team
+   data format:
+   {
+        "name": "",
+        "description": "",
+        "registration": "open",
+    }
+   """
     def post(self, request):
         serializer = ClubSportsTeamSerializer(data=request.data)
         if serializer.is_valid(): 
@@ -25,10 +38,9 @@ class ClubSportsTeamsList(APIView):
 class UserTeamsList(APIView):
 
     """
-    data format:
-    {
-        "username": ""
-    }
+    Lists a users teams
+    data format (url):
+    clubsports/userteams/?username=_username_
     """
     def get(self, request):
         username = request.GET.get("username","default_value")
@@ -44,6 +56,7 @@ class UserTeamsList(APIView):
 class UserJoinTeam(APIView):
 
     """
+    Joins a user into a team
     data format:
     {
         "token": "",
