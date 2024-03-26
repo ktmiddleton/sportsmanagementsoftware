@@ -4,7 +4,7 @@ import { Button, ChakraProvider, extendTheme, Flex, useDisclosure } from '@chakr
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard';
 import Classes from './pages/Classes';
-import Clubsports from './pages/Clubsports';
+import Clubsports from './pages/ClubSports';
 import Forms from './pages/Forms';
 import Intramural from './pages/Intramural';
 import Schedule from './pages/Schedule';
