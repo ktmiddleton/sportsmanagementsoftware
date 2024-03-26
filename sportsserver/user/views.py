@@ -50,15 +50,16 @@ class UserLogin(ObtainAuthToken):#APIView
         email = request.data.get('email')
         password = request.data.get('password')
 
-        user = authenticate(request, username=email, password=password, backend='user.backends.EmailOrUsernameModelBackend')
-        if user is not None:
+        try:
+            user = authenticate(request, username=email, password=password, backend='user.backends.EmailOrUsernameModelBackend')
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
                 'email': user.email,
                 'username': user.username
             })
-        return Response({'error': 'Authentication failed'}, status=401)
+        except User.DoesNotExist:
+            return Response({'error': 'Authentication failed'}, status=401)
     
 class UserGetUsername(APIView):
     """
@@ -69,9 +70,9 @@ class UserGetUsername(APIView):
     def get(self, request):
         username = request.GET.get("username","default_value")
         print(request.data)
-        user = User.objects.get(username=username)
-        if user is not None:
+        try:
+            user = User.objects.get(username=username)
             serializer = UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
+        except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)

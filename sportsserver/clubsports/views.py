@@ -45,12 +45,12 @@ class UserTeamsList(APIView):
     def get(self, request):
         username = request.GET.get("username","default_value")
         print(request.data)
-        user = User.objects.get(username=username)
-        if user is not None:
+        try:
+            user = User.objects.get(username=username)
             teams = ClubSportsTeam.objects.filter(members=user.pk)
             serializer = ClubSportsTeamSerializer(teams, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
+        except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 class UserJoinTeam(APIView):
@@ -66,13 +66,15 @@ class UserJoinTeam(APIView):
     def post(self, request):
         team_id = request.data.get("teamId")
         token = request.data.get("token")
-        team = ClubSportsTeam.objects.get(id=team_id)
-        user = Token.objects.get(key=token).user
-        if user is not None and team is not None:
+        try:
+            team = ClubSportsTeam.objects.get(id=team_id)
+            user = Token.objects.get(key=token).user
             if team.registration == "open": # TODO: Make sure this is able to handle if a user has an invite
                 team.members.add(user.pk)
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND) # TODO: Change to Json response with message
+        except ClubSportsTeam.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND) # TODO: Change to Json response with message
