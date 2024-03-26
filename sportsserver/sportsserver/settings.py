@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "clubsports",
     "intramurals",
     "user",
+    "user_classes_commands",
 ]
 
 MIDDLEWARE = [
