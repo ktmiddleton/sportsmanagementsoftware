@@ -161,7 +161,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
-            <Route path='/clubsports' element={<Clubsports isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/clubsports' element={<ClubSports isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
