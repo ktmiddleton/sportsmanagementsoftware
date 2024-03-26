@@ -19,15 +19,15 @@ class ClubSportsTeamsList(APIView):
         serializer = ClubSportsTeamSerializer(teams, many=True)
         return Response({"ClubSportsTeams": serializer.data})
    
-   """
-   Create a club sports team
-   data format:
-   {
+    """
+    Create a club sports team
+    data format:
+    {
         "name": "",
         "description": "",
         "registration": "open",
     }
-   """
+    """
     def post(self, request):
         serializer = ClubSportsTeamSerializer(data=request.data)
         if serializer.is_valid(): 
