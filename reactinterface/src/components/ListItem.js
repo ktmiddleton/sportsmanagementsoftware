@@ -2,17 +2,26 @@ import {Badge, Flex, Avatar, Box, Text, Heading, HStack, VStack, Spacer, Button}
 import React from "react";
 
 export default function ListItem(props) {
-    var classState = "";
+    var element = "";
     switch (props.action) 
     {
         case "open":
-            classState = "Register"
+            element = <Button m="2" variant="Register">Register</Button>;
             break;
         case "waitlist":
-            classState = "Waitlist"
+            element = <Button m="2" variant="Waitlist">Waitlist</Button>;
             break;
         case "full":
-            classState = "Full"
+            element = <Button isDisabled="true" m="2" variant="Full">Full</Button>;
+            break;
+        case "registerOpen":
+            element = <HStack><Button m="2" variant="Register">Competitive</Button> <Button m="2" variant="Register">Casual</Button></HStack>;
+            break;
+        case "registerClose":
+            element = <HStack><Button isDisabled="true" m="2" variant="Full">Closed</Button> <Button isDisabled="true" m="2" variant="Full">Closed</Button></HStack>
+            break;
+        case "registerRequest":
+            element = <HStack><Button m="2" variant="Waitlist">By Request</Button> <Button m="2" variant="Waitlist">By Request</Button></HStack>
     }
     return (
         <div className="listItem">
@@ -22,18 +31,16 @@ export default function ListItem(props) {
             pl="4"
             ml="2"
             mr="2"
-            align="center"
-            justify="justify"
             >
+                <HStack>
                     <Avatar size="lg" src="./Placeholder.png" />
-                    <VStack alignItems={"flex-start"}>
-                        <Heading size="md" pl="2">{props.className}</Heading>
-                        <Text fontSize="sm" pl="2">{props.description}</Text>
+                    <VStack w="100%" alignItems={"baseline"}>
+                        <Heading size="md" mx="2">{props.className}</Heading>
+                        <Text fontSize="sm" noOfLines={1}>{props.description}</Text>
                     </VStack>
                     <Spacer/>
-                    <Button isDisabled={props.action == "full" || props.action == null ? true : false} mr="2" variant={classState}>
-                        {classState}
-                    </Button>
+                    {element}
+                </HStack>
             </Flex>
         </div>
     );

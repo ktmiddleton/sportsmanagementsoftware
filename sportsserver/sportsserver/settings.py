@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "coverage",
     "classes",
+    "clubsports",
+    "intramurals",
     "user",
 ]
 
