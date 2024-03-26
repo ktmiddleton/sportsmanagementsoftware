@@ -54,6 +54,8 @@ class Command(BaseCommand):
                         name='Can administer game',
                         content_type=user_type)
                 ### End Permissions
+                # TODO: Other permissions likely needed: can_promote_captain, can_promote_referee, can_promote_instructor
+                # can_modify_league, can_modify_..., can_view_..., etc.
                 
                 user, created_user = Group.objects.get_or_create(name='user')
                 # Add base user permissions to user group here
