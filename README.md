@@ -18,6 +18,19 @@ There is no "installation" required in order to run and use the app. The only ap
 2. Open a command line/terminal window.
 3. Navigate to the outtermost directory of the project `sportsmanagementsoftware/`
 4. Run the command `docker compose up` in the terminal
-5. Now if all goes well you should be able to access the frontent via <a href="https://localhost:3000">localhost:3000</a>
+5. Now if all goes well you should be able to access the frontent via <a href="https://localhost:3000">localhost:3000</a> and backend endpoints for the API run on <a href="https://localhost:8000">localhost:8000</a>
+6. To take down the application simply do ^c in the terminal window in which you ran the application
+7. Now run the command `docker compose down --rmi all` this will remove the applications docker images from your system and will allow you to re-run the application with a fresh start
 
 ## How to Test
+In order to run tests, you must have installed all the requirements to run the app locally outside of a docker container
+**You must have node and python 3 installed in order to run the tests**
+### Testing frontend
+1. Navigate to the `reactinterface/` subdirectory of the project in a terminal
+2. run `npm install` to install the node packages required for the project
+3. now run `npm test` to run the available tests for the frontend
+
+### Testing backend
+1. Navigate to the `sportsserver/` subdirectory of the project in a terminal
+2. running the command: `pip install -r requirements.txt` will install the requirements for the project
+3. Running the command: `python manage.py test` will run all available tests for django on the backend
