@@ -19,7 +19,7 @@ There is no "installation" required in order to run and use the app. The only ap
 3. Navigate to the outtermost directory of the project `sportsmanagementsoftware/`
 4. Run the command `docker compose up` in the terminal
 5. Now if all goes well you should be able to access the frontent via <a href="https://localhost:3000">localhost:3000</a> and backend endpoints for the API run on <a href="https://localhost:8000">localhost:8000</a>
-6. To take down the application simply do ^c in the terminal window in which you ran the application
+6. To take down the application simply do `^c` in the terminal window in which you ran the application
 7. Now run the command `docker compose down --rmi all` this will remove the applications docker images from your system and will allow you to re-run the application with a fresh start
 
 ## How to Test
