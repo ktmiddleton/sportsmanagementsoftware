@@ -13,5 +13,5 @@ class ClubSportsTeam(models.Model):
     name=models.CharField(max_length=50, null=True)
     description=models.CharField(max_length=1000, null=True)
     registeredParticipants=models.PositiveIntegerField(default=0)
-    members=models.ManyToManyField(User, null=True)
+    members=models.ManyToManyField(User)
     registration=models.TextField(choices=REGISTRATION_CHOICES, default="open")
