@@ -73,8 +73,8 @@ class UserJoinTeam(APIView):
                 team.members.add(user.pk)
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"error": "Unable to join this team", "registration": team.registration}, status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND) # TODO: Change to Json response with message
+            return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except ClubSportsTeam.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND) # TODO: Change to Json response with message
+            return Response({"error": "Club sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)
