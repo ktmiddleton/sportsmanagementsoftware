@@ -14,10 +14,16 @@ class ClubSportsTeamsList(APIView):
     """
     List all club sports teams
     """
-    def get(self, request): # TODO: Probably don't want to return all members when listing all teams so maybe drop members
-        teams = ClubSportsTeam.objects.all()
-        serializer = ClubSportsTeamSerializer(teams, many=True)
-        return Response({"ClubSportsTeams": serializer.data})
+    def get(self, request):
+        teamId = request.GET.get("teamId","default_value")
+        if teamId != "default_value": # Return a single team based on id
+            team = ClubSportsTeam.objects.get(pk=teamId)
+            serializer = ClubSportsTeamSerializer(team)
+            return Response(serializer.data)
+        else: # Return all teams
+            teams = ClubSportsTeam.objects.all()
+            serializer = ClubSportsTeamSerializer(teams, many=True)
+            return Response({"ClubSportsTeams": serializer.data})
    
     """
     Create a club sports team
