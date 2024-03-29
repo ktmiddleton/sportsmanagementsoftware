@@ -13,6 +13,7 @@ class ClubSportsTeamsList(APIView):
     
     """
     List all club sports teams
+    or clubsports/?teamId=_team id_
     """
     def get(self, request):
         teamId = request.GET.get("teamId","default_value")
