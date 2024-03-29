@@ -14,7 +14,7 @@ class ClubSportsTeamsList(APIView):
     """
     List all club sports teams
     """
-    def get(self, request):
+    def get(self, request): # TODO: Probably don't want to return all members when listing all teams so maybe drop members
         teams = ClubSportsTeam.objects.all()
         serializer = ClubSportsTeamSerializer(teams, many=True)
         return Response({"ClubSportsTeams": serializer.data})
@@ -52,8 +52,6 @@ class UserTeamsList(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
-class UserJoinTeam(APIView):
 
     """
     Joins a user into a team
