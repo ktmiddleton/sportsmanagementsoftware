@@ -10,7 +10,7 @@ class ClubSportsTeam(models.Model):
         ("closed", "Closed"),
     ]
 
-    name=models.CharField(max_length=50, null=True)
+    name=models.CharField(max_length=50, null=True, unique=True)
     description=models.CharField(max_length=1000, null=True)
     registeredParticipants=models.PositiveIntegerField(default=0)
     members=models.ManyToManyField(User, blank=True)
