@@ -32,6 +32,8 @@ export default function Header(props)
 
     function handleLogout() {
         window.localStorage.removeItem("token");
+        window.localStorage.removeItem("email");
+        window.localStorage.removeItem("username");
         navigate("/login");
     }
 

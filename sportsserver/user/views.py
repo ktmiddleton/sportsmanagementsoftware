@@ -11,6 +11,9 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+from django.contrib.auth.models import Group
 
 # Create your views here.
 
@@ -69,10 +72,39 @@ class UserGetUsername(APIView):
     """
     def get(self, request):
         username = request.GET.get("username","default_value")
-        print(request.data)
         try:
             user = User.objects.get(username=username)
             serializer = UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+# class UserGetGroups(APIView):
+#     """
+#     data format(url):
+#     user/getusergroups/?token=_token_
+#     """
+#     def get(self, request):
+#         token_str = request.GET.get("token","default_value")
+#         try:
+#             token = Token.objects.get(key=token_str)
+#             user = token.user
+            
+#             # user_groups = user.groups.all()
+#             user_groups = Group.objects.filter(user=user)
+#             # for group in all_groups:
+#             #     for user_group in user_groups:
+#             #         if user_group.name == group.name:
+#             print(user_groups)
+#         # """
+#         # {
+#         #     "admin": true,
+#         #     "referee": false,
+#         #     "guest": false,
+#         # }
+#         # """
+#             return Response({}, status=status.HTTP_200_OK)
+#         except User.DoesNotExist:
+#             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+#         except Token.DoesNotExist:
+#             return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)

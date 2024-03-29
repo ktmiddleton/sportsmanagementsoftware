@@ -10,6 +10,8 @@ import Intramural from './pages/Intramural';
 import Schedule from './pages/Schedule';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 // --loyola-green:#005a3c;
@@ -152,6 +154,27 @@ const theme = extendTheme({
 
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
+
+  const [ username, setUsername ] = useState(localStorage.getItem("username"))
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    // function handleChangeStorage() {
+    //   console.log("CHANGED STORAGE")
+    //   setUsername(localStorage.getItem("username"));
+    // }
+
+    // window.addEventListener('storage', handleChangeStorage);
+    // return () => window.removeEventListener('storage', handleChangeStorage);
+  }, [])
+  
   
   return (
     <div className="App">
