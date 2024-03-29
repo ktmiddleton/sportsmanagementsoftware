@@ -15,7 +15,6 @@ function ClubSports({isOpen, onToggle}) {
         )
         .then((response) => {
             setClubSports(response.data.ClubSportsTeams);
-            // getClubSportsCards();
         })
         .catch((error) => {
             console.log("Error getting Club Sports");
