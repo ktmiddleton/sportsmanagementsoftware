@@ -1,9 +1,28 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import axios from "axios";
+import SportCard from "../components/SportCard";
 
 function ClubSports({isOpen, onToggle}) {
+
+    const [clubSports, setClubSports] = useState([]);
+
+    useEffect(() => {
+        axios.get(
+            `http://localhost:8000/clubsports/`
+        )
+        .then((response) => {
+            setClubSports(response.data.ClubSportsTeams);
+            // getClubSportsCards();
+        })
+        .catch((error) => {
+            console.log("Error getting Club Sports");
+            console.log(error);
+        })
+    }, []);
+
     return (
         <div className="ClubSports">
             <Grid
@@ -25,7 +44,15 @@ function ClubSports({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'main'}>
-                    
+                    <Grid
+                        templateColumns={{base: '1fr 1fr 1fr 1fr'}}
+                        gap="1rem"
+                        p="1rem"
+                    >
+                        {clubSports.map((item, index) => (
+                            <SportCard key={index} image="" header={item.name} description={item.description} />
+                        ))}
+                    </Grid>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>
