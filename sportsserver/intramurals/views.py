@@ -33,14 +33,20 @@ class IntramuralSportTeamList(APIView):
     """
     intramurals/teams/
     or intramurals/teams/?sport=_sport name_
+    or intramurals/teams/?teamId=_team id_
     """
     def get(self, request):
         sport = request.GET.get("sport","default_value")
+        teamId = request.GET.get("teamId","default_value")
         teams = None
-        if sport == "default_value":
-            teams = IntramuralSportTeam.objects.all()
-        else:
+        if teamId != "default_value": # Return a single team based on id
+            team = IntramuralSportTeam.objects.get(pk=teamId)
+            serializer = IntramuralSportTeamSerializer(team)
+            return Response(serializer.data)
+        elif sport != "default_value": # Filter teams based on sport
             teams = IntramuralSportTeam.objects.filter(sport=sport)
+        else: # Return all teams
+            teams = IntramuralSportTeam.objects.all()
         serializer = IntramuralSportTeamSerializer(teams, many=True)
         return Response({"IntramuralSportsTeams": serializer.data})
     
