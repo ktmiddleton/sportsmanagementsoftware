@@ -17,6 +17,22 @@ class Command(BaseCommand):
                 user_type = ContentType.objects.get(app_label="user", model="user")
                 
                 ### Permissions
+                create_users = Permission.objects.create(
+                        codename='can_create_users',
+                        name='Can create users',
+                        content_type=user_type)
+                view_users = Permission.objects.create(
+                        codename='can_view_users',
+                        name='Can view users',
+                        content_type=user_type)
+                update_users = Permission.objects.create(
+                        codename='can_update_users',
+                        name='Can update users',
+                        content_type=user_type)
+                delete_users = Permission.objects.create(
+                        codename='can_delete_users',
+                        name='Can delete users',
+                        content_type=user_type)
                 create_club_team = Permission.objects.create(
                         codename='can_create_club_team',
                         name='Can create club team',
@@ -67,7 +83,12 @@ class Command(BaseCommand):
                 
                 admin, created_admin = Group.objects.get_or_create(name='admin')
                 # Add permissions to admin group here
-                admin.permissions.add(create_club_team, create_intramural_team, join_team, create_league, create_class, join_class, create_game, administer_game)
+                admin.permissions.add(create_users, view_users, update_users, delete_users,
+                                      create_club_team, create_intramural_team,
+                                      join_team,
+                                      create_league,
+                                      create_class, join_class,
+                                      create_game, administer_game)
                 
                 captain, created_captain = Group.objects.get_or_create(name='captain')
                 # Add permissions to captain group here
