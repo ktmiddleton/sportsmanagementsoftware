@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SportCard from "../components/SportCard";
 import { Wrap, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import axios from "axios";
 
 function Dashboard({isOpen, onToggle}) {
+
+    const [registeredTeams, setRegisteredTeams] = useState([]);
+
+    useEffect(() => {
+        setRegisteredTeams([])
+        axios.get( // Get Club Sports
+            `http://localhost:8000/clubsports/userteams/?username=${localStorage.getItem("username")}`
+        )
+        .then((response) => {
+            setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
+        })
+        .catch((error) => {
+            console.log("Error getting users Club Sports");
+            console.log(error);
+        });
+
+        axios.get( // Get Intramural Sports
+            `http://localhost:8000/intramurals/userteams/?username=${localStorage.getItem("username")}`
+        )
+        .then((response) => {
+            setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
+        })
+        .catch((error) => {
+            console.log("Error getting users Intramural Sports");
+            console.log(error);
+        });
+    }, []);
+
     return (
         <div className="dashboard">
             <Grid
@@ -32,7 +61,7 @@ function Dashboard({isOpen, onToggle}) {
                     align={"baseline"}
                     >
                         <Heading
-                        color="brand.black"
+                        color="brand.brightGreen"
                         textAlign="left"
                         m="1rem"
                         >
@@ -42,10 +71,9 @@ function Dashboard({isOpen, onToggle}) {
                         m="2rem"
                         spacing="1rem"
                         >
-                            <SportCard image="" header="Basketball" description="Club Basketball team" />
-                            <SportCard image="" header="Baseball" description="Club Baseball team" />
-                            <SportCard image="" header="Esports" description="Club Esports team" />
-                            <SportCard image="" header="Rugby" description="Club Rugby team" />
+                            {registeredTeams.map((item, index) => (
+                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                            ))}
                         </Wrap>
                     </VStack>
                 </GridItem>
