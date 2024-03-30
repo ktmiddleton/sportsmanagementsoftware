@@ -10,6 +10,7 @@ import Intramural from './pages/Intramural';
 import Schedule from './pages/Schedule';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ClubSportTeamPage from './pages/ClubSportTeamPage';
 
 
 // --loyola-green:#005a3c;
@@ -162,6 +163,7 @@ function App() {
             <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsports' element={<ClubSports isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/clubsportteam/:teamId' element={<ClubSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
