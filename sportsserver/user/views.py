@@ -64,16 +64,22 @@ class UserLogin(ObtainAuthToken):#APIView
         except User.DoesNotExist:
             return Response({'error': 'Authentication failed'}, status=401)
     
-class UserGetUsername(APIView):
+class UserGet(APIView):
     """
     Get a user's info by their username
     data format (url):
-    user/getuserusername/?username=_username_
+    user/getuser/?username=_username_
+    or user/getuser/?token=_token_
     """
     def get(self, request):
         username = request.GET.get("username","default_value")
+        token = request.GET.get("token","default_value")
+        user = None
         try:
-            user = User.objects.get(username=username)
+            if token != "default_value":
+                user = Token.objects.get(key=token).user
+            elif username != "default_value":
+                user = User.objects.get(username=username)
             serializer = UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
