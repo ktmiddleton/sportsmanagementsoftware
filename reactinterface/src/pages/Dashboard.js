@@ -72,12 +72,8 @@ function Dashboard({isOpen, onToggle}) {
                         spacing="1rem"
                         >
                             {registeredTeams.map((item, index) => (
-                                <SportCard key={index} image="" header={item.name} description={item.description} />
+                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
                             ))}
-                            {/* <SportCard image="" header="Basketball" description="Club Basketball team" />
-                            <SportCard image="" header="Baseball" description="Club Baseball team" />
-                            <SportCard image="" header="Esports" description="Club Esports team" />
-                            <SportCard image="" header="Rugby" description="Club Rugby team" /> */}
                         </Wrap>
                     </VStack>
                 </GridItem>
