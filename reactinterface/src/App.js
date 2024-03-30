@@ -57,6 +57,21 @@ const theme = extendTheme({
   components: {
     Button: {
       variants: {
+        submit: 
+        {
+          bg: "brand.brightGreen",
+          color: "brand.white",
+          fontSize: "1.3rem",
+          borderRadius: "6px",
+          _active: 
+          {
+            bg: "brand.active.brightGreen",
+          },
+          _hover: 
+          {
+            bg: "brand.hover.brightGreen",
+          },
+        },
         sidebar: {
           width: "100%",
           height: "6rem",
@@ -100,7 +115,7 @@ const theme = extendTheme({
           bg: "brand.brightGreen",
           color: "brand.white",
           fontSize: "1.3rem",
-          borderRadius: "0px",
+          borderRadius: "6px",
           _active: 
           {
             color: "brand.black",
@@ -119,7 +134,7 @@ const theme = extendTheme({
           bg: "brand.yellow",
           color: "brand.white",
           fontSize: "1.3rem",
-          borderRadius: "0px",
+          borderRadius: "6px",
           _active: 
           {
             color: "brand.black",
@@ -139,7 +154,7 @@ const theme = extendTheme({
           bg: "brand.houndsGrey",
           color: "brand.black",
           fontSize: "1.3rem",
-          borderRadius: "0px",
+          borderRadius: "6px",
         }
       },
     },
