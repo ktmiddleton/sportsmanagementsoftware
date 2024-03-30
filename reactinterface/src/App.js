@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ClubSportTeamPage from './pages/ClubSportTeamPage';
 import IntramuralSportTeamPage from './pages/IntramuralSportTeamPage';
+import Admin from './pages/Admin';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserProvider } from './components/UserContext';
@@ -207,6 +208,7 @@ function App() {
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
+            <Route path='/admin' element={<Admin/>}/>
           </Routes>
         </ChakraProvider>
       </UserProvider>

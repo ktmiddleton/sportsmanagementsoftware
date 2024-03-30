@@ -17,7 +17,8 @@ function CreateClubSportForm({ isOpen, onClose }) {
             `http://localhost:8000/clubsports/`,
             data
         ).then((response) => {
-            console.log(response.data);
+            isOpen = !isOpen;
+            window.location.reload();
         }).catch((response) => {
             console.error(response);
         });

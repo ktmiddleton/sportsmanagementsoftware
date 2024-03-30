@@ -85,6 +85,27 @@ class UserGet(APIView):
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
+class AllUsers(APIView):
+    """
+    Get ALL user's information.
+    data format (url):
+    user/allusers/?token=_token_
+    MUST BE ADMIN TO USE.
+    """
+
+    def get(self, request):
+        token = request.GET.get("token", "default_value")
+        user= None
+        try: 
+            if token != "default_value":
+                user = Token.objects.get(key=token).user
+            if user.has_perm('can_create_users') and user.has_perm('can_view_users') and user.has_perm('can_update_users') and user.has_perm('can_delete_users'):
+                users = User.objects.all()
+                return {"userList": UserSerializer(users, many=True)}
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
 # class UserGetGroups(APIView):
 #     """
 #     data format(url):

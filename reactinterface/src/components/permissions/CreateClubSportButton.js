@@ -28,7 +28,7 @@ function CreateClubSportButton() {
                     icon={<AddIcon />}
                     isRound={true}
                     size="lg"
-                    colorScheme="blue"
+                    bg="brand.brightGreen"
                     onClick={() => buttonClick()} // Define your click event handler
                 />
                 <CreateClubSportForm isOpen={isOpen} onClose={onClose} />

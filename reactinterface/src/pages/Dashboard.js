@@ -61,7 +61,7 @@ function Dashboard({isOpen, onToggle}) {
                     align={"baseline"}
                     >
                         <Heading
-                        color="brand.brightGreen"
+                        color="brand.black"
                         textAlign="left"
                         m="1rem"
                         >

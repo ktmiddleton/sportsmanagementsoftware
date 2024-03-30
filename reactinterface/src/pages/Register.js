@@ -21,7 +21,7 @@ function Register() {
     // }
 
     const submitForm = (formValues) => {
-        let data = {email: formValues.email, username: formValues.username, password: formValues.password};
+        let data = {email: formValues.email, username: formValues.username, password: formValues.password, groups:[]};
         axios.post(
             `http://localhost:8000/user/register/`,
             data
@@ -88,6 +88,9 @@ function Register() {
                                 let error
                                 if (!value) {
                                     error = 'Password is required 😱'
+                                }
+                                else if (value.length < 8) {
+                                    error = 'Password must be 8 or more characters 😱'
                                 }
                                 return error
                             }
