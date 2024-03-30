@@ -34,7 +34,7 @@ class ClubSportsTeamsList(APIView):
         "description": "",
         "registration": "open",
     }
-    """
+    """ # TODO: Protect this endpoint with permissions
     def post(self, request):
         serializer = ClubSportsTeamSerializer(data=request.data)
         if serializer.is_valid(): 
