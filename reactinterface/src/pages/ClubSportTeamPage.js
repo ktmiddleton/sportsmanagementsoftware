@@ -32,7 +32,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     }, []);
 
     return (
-        <div className="ClubSports">
+        <div className="ClubSportTeamPage">
             <Grid
             templateAreas={`"header header header"
                             "nav main sidebar"`}
