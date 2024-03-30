@@ -208,7 +208,7 @@ function App() {
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
-            <Route path='/admin' element={<Admin/>}/>
+            <Route path='/admin' element={<Admin isOpen={isOpen} onToggle={onToggle} />}/>
           </Routes>
         </ChakraProvider>
       </UserProvider>
