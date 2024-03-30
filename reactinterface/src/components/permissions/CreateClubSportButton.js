@@ -5,7 +5,7 @@ import { useUser } from "../UserContext";
 import axios from "axios";
 import CreateClubSportForm from "./forms/CreateClubSportForm";
 
-const PERM_NAME = "can_create_team";
+const PERM_NAME = "can_create_club_team";
 
 function CreateClubSportButton() {
 
