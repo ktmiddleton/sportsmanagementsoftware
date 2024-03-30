@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, Heading } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -43,6 +43,13 @@ function ClubSports({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'main'}>
+                    <Heading
+                        color="brand.brightGreen"
+                        textAlign="left"
+                        m="1rem"
+                    >
+                        Available Club Sports
+                    </Heading>
                     <Grid
                         templateColumns={{base: '1fr 1fr 1fr 1fr'}}
                         gap="1rem"
