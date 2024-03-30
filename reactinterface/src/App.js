@@ -12,8 +12,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ClubSportTeamPage from './pages/ClubSportTeamPage';
 import IntramuralSportTeamPage from './pages/IntramuralSportTeamPage';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { UserProvider } from './components/UserContext';
 
 
 // --loyola-green:#005a3c;
@@ -157,29 +158,28 @@ const theme = extendTheme({
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
 
-  const [ username, setUsername ] = useState(localStorage.getItem("username"))
+  // useEffect(() => {
+  //   // axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
+  //   // .then((response) => {
+  //   //   console.log(response);
+  //   // })
+  //   // .catch((error) => {
+  //   //   console.log(error);
+  //   // });
 
-  useEffect(() => {
-    axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  //   // function handleChangeStorage() {
+  //   //   console.log("CHANGED STORAGE")
+  //   //   setUsername(localStorage.getItem("username"));
+  //   // }
 
-    // function handleChangeStorage() {
-    //   console.log("CHANGED STORAGE")
-    //   setUsername(localStorage.getItem("username"));
-    // }
-
-    // window.addEventListener('storage', handleChangeStorage);
-    // return () => window.removeEventListener('storage', handleChangeStorage);
-  }, [])
+  //   // window.addEventListener('storage', handleChangeStorage);
+  //   // return () => window.removeEventListener('storage', handleChangeStorage);
+  // }, [])
   
   
   return (
     <div className="App">
+      <UserProvider>
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
             <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle}/>} />
@@ -194,6 +194,7 @@ function App() {
             <Route path='/register' element={<Register />}/>
           </Routes>
         </ChakraProvider>
+      </UserProvider>
     </div>
   );
 }
