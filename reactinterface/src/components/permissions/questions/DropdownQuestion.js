@@ -2,6 +2,22 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Select } f
 import { Field } from "formik";
 import React from "react";
 
+/**
+ * Serves as a formik dropdown question
+ * 
+ * Usage:
+ *  <DropdownQuestion 
+        fieldName="registration" 
+        label="Registration Status" 
+        placeHolder=" "
+        required={true}
+        options={[
+            { value: 'open', label: 'Open' },
+            { value: 'closed', label: 'Closed' },
+        ]}
+        formikProps={formikProps}
+    />
+ */
 function DropdownQuestion({ fieldName, placeHolder, label, options, formikProps, required  }) {
 
     function validateQuestion(value) {

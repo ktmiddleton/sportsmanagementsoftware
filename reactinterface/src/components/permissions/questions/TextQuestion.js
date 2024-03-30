@@ -2,6 +2,18 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@ch
 import { Field } from "formik";
 import React from "react";
 
+/**
+ * Serves as a formik text question
+ * 
+ * Usage:
+ *  <TextQuestion
+        fieldName="name"
+        placeHolder="Name"
+        label="Team Name"
+        required={true}
+        formikProps={formikProps}
+    />
+ */
 function TextQuestion({ fieldName, placeHolder, label, formikProps, required  }) {
 
     function validateQuestion(value) {
