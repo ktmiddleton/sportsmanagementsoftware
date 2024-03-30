@@ -49,7 +49,7 @@ function ClubSports({isOpen, onToggle}) {
                         p="1rem"
                     >
                         {clubSports.map((item, index) => (
-                            <SportCard key={index} image="" header={item.name} description={item.description} />
+                            <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
                         ))}
                     </Grid>
                 </GridItem>
