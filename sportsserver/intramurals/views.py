@@ -55,15 +55,26 @@ class IntramuralSportTeamList(APIView):
     {
         "name": "",
         "description": "A great _sport_ team.",
-        "sport": "Soccer"
+        "sport": "Soccer",
+        "registration": "open",
+        "token": ""
     }
     """
+    # Requires permisssion can_create_intramural_team
     def post(self, request):
-        serializer = IntramuralSportTeamSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        token = request.data.get("token")
+        try:
+            user = Token.objects.get(key=token).user
+            if user.has_perm("user.can_create_intramural_team"):
+                serializer = IntramuralSportTeamSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        except Token.DoesNotExist:
+            return Response({"error": "Token does not exist: " + token}, status=status.HTTP_404_NOT_FOUND)
     
 class UserTeamsList(APIView):
     """
