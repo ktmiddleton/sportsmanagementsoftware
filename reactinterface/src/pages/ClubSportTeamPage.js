@@ -1,4 +1,4 @@
-import { Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Card, CardBody, CardHeader, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -9,7 +9,12 @@ function ClubSportTeamPage({isOpen, onToggle}) {
 
     let { teamId } = useParams()
 
-    const [teamData, setTeamData] = useState(undefined);
+    const [teamData, setTeamData] = useState({ members: [] });
+
+    const capitalizeFirstLetter = (string) => {
+        if (!string) return string;
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
 
     useEffect(() => {
         console.log("plonk")
@@ -47,12 +52,59 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'main'}>
+                    <Heading
+                        color="brand.brightGreen"
+                        textAlign="left"
+                        m="1rem"
+                    >
+                        {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
+                        {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
+                    </Heading>
                     <Grid
-                        templateColumns={{base: '1fr 1fr 1fr 1fr'}}
+                        templateRows={{base: '1fr 1fr'}}
+                        templateColumns={{base: '1fr 1fr'}}
                         gap="1rem"
                         p="1rem"
                     >
-                        
+                        <GridItem
+                            rowSpan={2}
+                            colSpan={1}
+                        >
+                            <Card>
+                                <CardHeader>
+                                    <Heading>Roster</Heading>
+                                </CardHeader>
+                                <CardBody
+                                    maxHeight="85vh"
+                                    overflowY="auto"
+                                >
+                                    {teamData.members.map((item, index) => {
+                                        return (<Text key={index}>{item.username}</Text>)
+                                    })}
+                                </CardBody>
+                            </Card>
+                        </GridItem>
+                        <GridItem
+                            rowSpan={1}
+                            colSpan={1}
+                        >
+                            <Card>
+                                <CardHeader>
+                                    <Heading>Description</Heading>
+                                </CardHeader>
+                                <CardBody>
+                                    <Text>
+                                        {teamData.description}
+                                    </Text>
+                                </CardBody>
+                            </Card>
+                        </GridItem>
+                        <GridItem
+                            rowSpan={1}
+                            colSpan={1}
+                        >
+
+                        </GridItem>
                     </Grid>
                 </GridItem>
 
