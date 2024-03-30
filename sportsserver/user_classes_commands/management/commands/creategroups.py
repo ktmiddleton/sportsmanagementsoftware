@@ -17,9 +17,13 @@ class Command(BaseCommand):
                 user_type = ContentType.objects.get(app_label="user", model="user")
                 
                 ### Permissions
-                create_team = Permission.objects.create(
-                        codename='can_create_team',
-                        name='Can create team',
+                create_club_team = Permission.objects.create(
+                        codename='can_create_club_team',
+                        name='Can create club team',
+                        content_type=user_type)
+                create_intramural_team = Permission.objects.create(
+                        codename='can_create_intramural_team',
+                        name='Can create intramural team',
                         content_type=user_type)
                 join_team = Permission.objects.create(
                         codename='can_join_team',
@@ -63,11 +67,11 @@ class Command(BaseCommand):
                 
                 admin, created_admin = Group.objects.get_or_create(name='admin')
                 # Add permissions to admin group here
-                admin.permissions.add(create_team, join_team, create_league, create_class, join_class, create_game, administer_game)
+                admin.permissions.add(create_club_team, create_intramural_team, join_team, create_league, create_class, join_class, create_game, administer_game)
                 
                 captain, created_captain = Group.objects.get_or_create(name='captain')
                 # Add permissions to captain group here
-                captain.permissions.add(create_team)
+                captain.permissions.add(create_intramural_team)
                 
                 guest, created_guest = Group.objects.get_or_create(name='guest')
                 # Add permissions to guest group here
@@ -80,6 +84,8 @@ class Command(BaseCommand):
                 instructor, created_instructor = Group.objects.get_or_create(name='instructor')
                 # Add permissions to instructor group here
                 instructor.permissions.add(create_class)
-        except:
+        except Exception as e:
+                print(e)
                 print("Groups and permissions are likely already created in your database :)")
+                print("If you have added new permissions first run 'python manage.py deletegroups' ")
 
