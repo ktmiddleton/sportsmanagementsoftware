@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import SportCard from "../components/SportCard";
+import CreateClubSportButton from "../components/permissions/CreateClubSportButton";
 
 function ClubSports({isOpen, onToggle}) {
 
@@ -49,6 +50,7 @@ function ClubSports({isOpen, onToggle}) {
                         m="1rem"
                     >
                         Available Club Sports
+                        <CreateClubSportButton />
                     </Heading>
                     <Grid
                         templateColumns={{base: '1fr 1fr 1fr 1fr'}}
