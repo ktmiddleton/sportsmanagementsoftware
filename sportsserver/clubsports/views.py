@@ -13,11 +13,18 @@ class ClubSportsTeamsList(APIView):
     
     """
     List all club sports teams
+    or clubsports/?teamId=_team id_
     """
     def get(self, request):
-        teams = ClubSportsTeam.objects.all()
-        serializer = ClubSportsTeamSerializer(teams, many=True)
-        return Response({"ClubSportsTeams": serializer.data})
+        teamId = request.GET.get("teamId","default_value")
+        if teamId != "default_value": # Return a single team based on id
+            team = ClubSportsTeam.objects.get(pk=teamId)
+            serializer = ClubSportsTeamSerializer(team)
+            return Response(serializer.data)
+        else: # Return all teams
+            teams = ClubSportsTeam.objects.all()
+            serializer = ClubSportsTeamSerializer(teams, many=True)
+            return Response({"ClubSportsTeams": serializer.data})
    
     """
     Create a club sports team
@@ -53,8 +60,6 @@ class UserTeamsList(APIView):
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-class UserJoinTeam(APIView):
-
     """
     Joins a user into a team
     data format:
@@ -73,8 +78,8 @@ class UserJoinTeam(APIView):
                 team.members.add(user.pk)
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"error": "Unable to join this team", "registration": team.registration}, status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND) # TODO: Change to Json response with message
+            return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except ClubSportsTeam.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND) # TODO: Change to Json response with message
+            return Response({"error": "Club sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)
