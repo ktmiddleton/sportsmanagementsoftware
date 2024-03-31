@@ -12,7 +12,10 @@ function CreateClubSportForm({ isOpen, onClose }) {
 
     const submitForm = (formValues) => {
         console.log(formValues)
-        let data = formValues;//{name: formValues.name, description: formValues.description, registration: formValues.registration};
+        let data = {
+            ...formValues,
+            token: localStorage.getItem("token")
+        }
         axios.post(
             `http://localhost:8000/clubsports/`,
             data
