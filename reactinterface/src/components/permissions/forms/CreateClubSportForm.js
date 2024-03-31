@@ -22,8 +22,22 @@ function CreateClubSportForm({ isOpen, onClose }) {
         ).then((response) => {
             isOpen = !isOpen;
             window.location.reload();
-        }).catch((response) => {
-            console.error(response);
+            toast({
+                title: 'Team Successfully created.',
+                description: "You've successfully deleted team: " + formValues.name + ".",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        }).catch((error) => {
+            toast({
+                title: 'Failed to delete team.',
+                description: "You've encountered an error deleting team: " + teamId + " - " + error.response.data.error,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            console.error(error);
         });
     }
 
