@@ -6,6 +6,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AddIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
+import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
 
 function ClubSportTeamPage({isOpen, onToggle}) {
 
@@ -115,7 +116,8 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                 Join Team
                             </Button>
                         }
-                        <DeleteClubSportButton teamId={teamData.id} />
+                        <PromoteCaptainButton teamData={teamData} />
+                        <DeleteClubSportButton teamData={teamData.id} />
                     </Heading>
                     <Grid
                         templateRows={{base: '1fr 1fr'}}
