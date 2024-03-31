@@ -1,7 +1,7 @@
 import React from "react";
 import TextQuestion from "../questions/TextQuestion";
 import { Form, Formik } from "formik";
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack } from "@chakra-ui/react";
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@chakra-ui/react";
@@ -9,6 +9,8 @@ import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
 function CreateClubSportForm({ isOpen, onClose }) {
+
+    const toast = useToast()
 
     const submitForm = (formValues) => {
         console.log(formValues)
@@ -32,7 +34,7 @@ function CreateClubSportForm({ isOpen, onClose }) {
         }).catch((error) => {
             toast({
                 title: 'Failed to delete team.',
-                description: "You've encountered an error deleting team: " + teamId + " - " + error.response.data.error,
+                description: "You've encountered an error creating the team " + error.response.data.error,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
