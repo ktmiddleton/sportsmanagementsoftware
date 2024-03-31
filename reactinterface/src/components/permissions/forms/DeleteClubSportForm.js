@@ -9,7 +9,7 @@ import { Field } from "formik";
 import TrueFalseQuestion from "../questions/TrueFalseQuestion";
 import { useNavigate } from "react-router-dom";
 
-function CreateClubSportForm({ teamId, isOpen, onClose }) {
+function CreateClubSportForm({ teamData, isOpen, onClose }) {
 
     const toast = useToast()
 
@@ -18,13 +18,13 @@ function CreateClubSportForm({ teamId, isOpen, onClose }) {
     const submitForm = (formValues) => {
         console.log(formValues)
         axios.delete(
-            `http://localhost:8000/clubsports/?teamId=${teamId}&token=${localStorage.getItem("token")}`
+            `http://localhost:8000/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
         ).then((response) => {
             isOpen = !isOpen;
             navigate("/clubsports");
             toast({
                 title: 'Team Successfully deleted.',
-                description: "You've successfully deleted team: " + teamId + ".",
+                description: "You've successfully deleted team: " + teamData.id + ".",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -32,7 +32,7 @@ function CreateClubSportForm({ teamId, isOpen, onClose }) {
         }).catch((error) => {
             toast({
                 title: 'Failed to delete team.',
-                description: "You've encountered an error deleting team: " + teamId + " - " + error.response.data.error,
+                description: "You've encountered an error deleting team: " + teamData.id + " - " + error.response.data.error,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,

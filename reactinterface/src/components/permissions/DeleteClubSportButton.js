@@ -6,7 +6,7 @@ import DeleteClubSportForm from "./forms/DeleteClubSportForm";
 
 const PERM_NAME = "can_delete_club_team";
 
-function DeleteClubSportButton({ teamId }) {
+function DeleteClubSportButton({ teamData }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -30,7 +30,7 @@ function DeleteClubSportButton({ teamId }) {
                     bg="brand.brightGreen"
                     onClick={() => buttonClick()} // Define your click event handler
                 />
-                <DeleteClubSportForm teamId={teamId} isOpen={isOpen} onClose={onClose} />
+                <DeleteClubSportForm teamData={teamData} isOpen={isOpen} onClose={onClose} />
             </div>
         :
             <></>
