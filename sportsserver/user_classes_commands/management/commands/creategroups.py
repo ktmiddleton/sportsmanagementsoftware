@@ -34,6 +34,23 @@ class Command(BaseCommand):
                         codename='can_delete_users',
                         name='Can delete users',
                         content_type=user_type)
+                ### Promotion/Making other roles
+                promote_admin = Permission.objects.create(
+                        codename='can_promote_admin',
+                        name='Can promote_admin',
+                        content_type=user_type)
+                promote_captain = Permission.objects.create(
+                        codename='can_promote_captain',
+                        name='Can promote_captain',
+                        content_type=user_type)
+                promote_referee = Permission.objects.create(
+                        codename='can_promote_referee',
+                        name='Can promote_referee',
+                        content_type=user_type)
+                promote_instructor = Permission.objects.create(
+                        codename='can_promote_instructor',
+                        name='Can promote_instructor',
+                        content_type=user_type)
                 ### Club Teams
                 create_club_team = Permission.objects.create(
                         codename='can_create_club_team',
@@ -127,6 +144,7 @@ class Command(BaseCommand):
                 admin, created_admin = Group.objects.get_or_create(name='admin')
                 # Add permissions to admin group here
                 admin.permissions.add(create_users, view_users, update_users, delete_users,
+                                      promote_admin, promote_captain, promote_instructor, promote_referee,
                                       create_club_team, view_club_team, update_club_team, delete_club_team,
                                       create_intramural_team, view_club_team, update_club_team, delete_intramural_team,
                                       join_team,
