@@ -17,6 +17,7 @@ class Command(BaseCommand):
                 user_type = ContentType.objects.get(app_label="user", model="user")
                 
                 ### Permissions
+                ### Users
                 create_users = Permission.objects.create(
                         codename='can_create_users',
                         name='Can create users',
@@ -33,14 +34,41 @@ class Command(BaseCommand):
                         codename='can_delete_users',
                         name='Can delete users',
                         content_type=user_type)
+                ### Club Teams
                 create_club_team = Permission.objects.create(
                         codename='can_create_club_team',
                         name='Can create club team',
                         content_type=user_type)
+                view_club_team = Permission.objects.create(
+                        codename='can_view_club_team',
+                        name='Can view club team',
+                        content_type=user_type)
+                update_club_team = Permission.objects.create(
+                        codename='can_update_club_team',
+                        name='Can update club team',
+                        content_type=user_type)
+                delete_club_team = Permission.objects.create(
+                        codename='can_delete_club_team',
+                        name='Can delete club team',
+                        content_type=user_type)
+                ### Intramural Teams
                 create_intramural_team = Permission.objects.create(
                         codename='can_create_intramural_team',
                         name='Can create intramural team',
                         content_type=user_type)
+                view_intramural_team = Permission.objects.create(
+                        codename='can_view_intramural_team',
+                        name='Can view intramural team',
+                        content_type=user_type)
+                update_intramural_team = Permission.objects.create(
+                        codename='can_update_intramural_team',
+                        name='Can update intramural team',
+                        content_type=user_type)
+                delete_intramural_team = Permission.objects.create(
+                        codename='can_delete_intramural_team',
+                        name='Can delete intramural team',
+                        content_type=user_type)
+                ### Teams
                 join_team = Permission.objects.create(
                         codename='can_join_team',
                         name='Can join team',
@@ -49,13 +77,27 @@ class Command(BaseCommand):
                         codename='can_request_team',
                         name='Can request team',
                         content_type=user_type)
+                ### Leagues
                 create_league = Permission.objects.create(
                         codename='can_create_league',
                         name='Can create league',
                         content_type=user_type)
+                ### Classes
                 create_class = Permission.objects.create(
                         codename='can_create_class',
                         name='Can create class',
+                        content_type=user_type)
+                view_class = Permission.objects.create(
+                        codename='can_view_class',
+                        name='Can view class',
+                        content_type=user_type)
+                update_class = Permission.objects.create(
+                        codename='can_update_class',
+                        name='Can update class',
+                        content_type=user_type)
+                delete_class = Permission.objects.create(
+                        codename='can_delete_class',
+                        name='Can delete class',
                         content_type=user_type)
                 join_class = Permission.objects.create(
                         codename='can_join_class',
@@ -65,6 +107,7 @@ class Command(BaseCommand):
                         codename='can_request_class',
                         name='Can request class',
                         content_type=user_type)
+                ### Games
                 create_game = Permission.objects.create(
                         codename='can_create_game',
                         name='Can create game',
@@ -84,15 +127,17 @@ class Command(BaseCommand):
                 admin, created_admin = Group.objects.get_or_create(name='admin')
                 # Add permissions to admin group here
                 admin.permissions.add(create_users, view_users, update_users, delete_users,
-                                      create_club_team, create_intramural_team,
+                                      create_club_team, view_club_team, update_club_team, delete_club_team,
+                                      create_intramural_team, view_club_team, update_club_team, delete_intramural_team,
                                       join_team,
                                       create_league,
-                                      create_class, join_class,
+                                      create_class, view_class, update_class, delete_class,
+                                      join_class,
                                       create_game, administer_game)
                 
                 captain, created_captain = Group.objects.get_or_create(name='captain')
                 # Add permissions to captain group here
-                captain.permissions.add(create_intramural_team)
+                captain.permissions.add(create_intramural_team, view_club_team, update_club_team, delete_intramural_team)
                 
                 guest, created_guest = Group.objects.get_or_create(name='guest')
                 # Add permissions to guest group here
