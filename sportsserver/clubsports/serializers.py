@@ -7,9 +7,15 @@ class MemberSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name')
 
+class CaptainSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name')
+
 class ClubSportsTeamSerializer(serializers.ModelSerializer):
     
     members = MemberSerializer(many=True, required=False)
+    captains = CaptainSerializer(many=True, required=False)
     
     class Meta:
         model = ClubSportsTeam
