@@ -50,7 +50,32 @@ class ClubSportsTeamsList(APIView):
             else:
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         except Token.DoesNotExist:
-            return Response({"error": "Token does not exist: " + token}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    
+    """
+    Create a club sports team
+    data format:
+    clubsports/?teamId=_team id_&token=_token_
+    """
+    def delete(self, request):
+        teamId = request.GET.get("teamId","default_value")
+        token = request.GET.get("token","default_value")
+        if teamId != "default_value" and token != "default_value":
+            try:
+                user = Token.objects.get(key=token).user
+                if user.has_perm("user.can_delete_club_team"):
+                    team = ClubSportsTeam.objects.get(pk=teamId)
+                    team.delete()
+                    return Response(status=status.HTTP_200_OK)
+                else:
+                    return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+            except Token.DoesNotExist:
+                return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            except ClubSportsTeam.DoesNotExist:
+                return Response({"error": "Team with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "Must specify both teamId and token"}, status=status.HTTP_400_BAD_REQUEST)
+        
 
 class UserTeamsList(APIView):
 
@@ -94,3 +119,5 @@ class UserTeamsList(APIView):
             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except ClubSportsTeam.DoesNotExist:
             return Response({"error": "Club sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
