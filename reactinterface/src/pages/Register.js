@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, IconButton, Input, InputGroup, InputRightElement, Text, VStack } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, IconButton, Input, InputGroup, InputRightElement, Stack, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ function Register() {
     // }
 
     const submitForm = (formValues) => {
-        let data = {email: formValues.email, username: formValues.username, password: formValues.password, groups:[]};
+        let data = {email: formValues.email, username: formValues.username, password: formValues.password, first_name: formValues.firstName, last_name: formValues.lastName};
         axios.post(
             `http://localhost:8000/user/register/`,
             data
@@ -80,6 +80,22 @@ function Register() {
                                 let error
                                 if (!value) {
                                   error = 'Username is required 😱'
+                                }
+                                return error
+                            }
+
+                            function validateFirstName(value) {
+                                let error
+                                if (!value) {
+                                  error = 'First Name is required 😱'
+                                }
+                                return error
+                            }
+
+                            function validateLastName(value) {
+                                let error
+                                if (!value) {
+                                  error = 'Last Name is required 😱'
                                 }
                                 return error
                             }
@@ -142,6 +158,31 @@ function Register() {
                                                     </FormControl>
                                                     )}
                                                 </Field>
+
+                                                <Stack direction="row">
+                                                    <Field name='firstName' validate={validateFirstName}>
+                                                        {({ field, form }) => (
+                                                        <FormControl isInvalid={form.errors.firstName && form.touched.firstName}>
+                                                            <FormLabel fontSize="1.5rem">First Name</FormLabel>
+                                                            <InputGroup>
+                                                                <Input {...field} placeholder='First Name' />
+                                                            </InputGroup>
+                                                            <FormErrorMessage>{form.errors.firstName}</FormErrorMessage>
+                                                        </FormControl>
+                                                        )}
+                                                    </Field>
+                                                    <Field name='lastName' validate={validateLastName}>
+                                                        {({ field, form }) => (
+                                                        <FormControl isInvalid={form.errors.lastName && form.touched.lastName}>
+                                                            <FormLabel fontSize="1.5rem">Last Name</FormLabel>
+                                                            <InputGroup>
+                                                                <Input {...field} placeholder='Last Name' />
+                                                            </InputGroup>
+                                                            <FormErrorMessage>{form.errors.lastName}</FormErrorMessage>
+                                                        </FormControl>
+                                                        )}
+                                                    </Field>
+                                                </Stack>
 
                                                 <Field name='password' validate={validatePassword}>
                                                     {({ field, form }) => (
