@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from user.models import User
 from django.contrib.auth.models import Group, Permission
+from clubsports.models import ClubSportsTeam
 
 class PermissionsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,6 +15,12 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = "__all__"
+        
+class ClubTeamSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = ClubSportsTeam
+        fields = ("id", "name", "sport_type", "members", "captains")
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -27,6 +34,8 @@ class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=32)
     last_name = serializers.CharField(max_length=32)
     password = serializers.CharField(min_length = 8, write_only = True)
+    club_team_member = ClubTeamSerializer(many=True, read_only=True)
+    club_team_captain = ClubTeamSerializer(many=True, read_only=True)
     groups = GroupSerializer(many=True, read_only=True)
     
     def create(self, validated_data):
