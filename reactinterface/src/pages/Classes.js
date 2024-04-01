@@ -31,6 +31,7 @@ export default function Classes({isOpen, onToggle})
             `http://localhost:8000/classes/`
         )
         .then((response) => {
+            console.log(response.data)
             setClasses(response.data.Classes);
         })
         .catch((error) => {
