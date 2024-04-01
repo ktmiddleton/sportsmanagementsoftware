@@ -12,7 +12,7 @@ function PromoteCaptainButton({ teamData }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
+    const { user, loadUserData, userHasGroup, userHasPerm, userInClubTeam, userCaptainingTeam } = useUser();
 
     function buttonClick() {
         if (userHasPerm(PERM_NAME)) {
@@ -21,7 +21,8 @@ function PromoteCaptainButton({ teamData }) {
     }
 
     return (
-        userHasPerm(PERM_NAME) ?
+        // In short, the user must either be an admin or must be a captain OF THIS TEAM in order to promote other users to captain
+        userHasGroup("admin") || (userHasPerm(PERM_NAME) && userCaptainingTeam(teamData.id)) ?
             <div className="delete-club-sport-button">
                 <Button
                     m="1rem"

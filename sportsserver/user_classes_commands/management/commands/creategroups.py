@@ -155,7 +155,7 @@ class Command(BaseCommand):
                 
                 captain, created_captain = Group.objects.get_or_create(name='captain')
                 # Add permissions to captain group here
-                captain.permissions.add(create_intramural_team, view_club_team, update_club_team, delete_intramural_team)
+                captain.permissions.add(create_intramural_team, promote_captain, view_club_team, update_club_team, delete_intramural_team)
                 
                 guest, created_guest = Group.objects.get_or_create(name='guest')
                 # Add permissions to guest group here
