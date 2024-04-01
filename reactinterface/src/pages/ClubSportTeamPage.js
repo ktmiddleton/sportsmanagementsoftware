@@ -117,7 +117,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                             </Button>
                         }
                         <PromoteCaptainButton teamData={teamData} />
-                        <DeleteClubSportButton teamData={teamData.id} />
+                        <DeleteClubSportButton teamData={teamData} />
                     </Heading>
                     <Grid
                         templateRows={{base: '1fr 1fr'}}
