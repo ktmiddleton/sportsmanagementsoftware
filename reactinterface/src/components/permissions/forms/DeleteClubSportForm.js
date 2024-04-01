@@ -17,28 +17,30 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
 
     const submitForm = (formValues) => {
         console.log(formValues)
-        axios.delete(
-            `http://localhost:8000/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
-        ).then((response) => {
-            isOpen = !isOpen;
-            navigate("/clubsports");
-            toast({
-                title: 'Team Successfully deleted.',
-                description: "You've successfully deleted team: " + teamData.id + ".",
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
-        }).catch((error) => {
-            toast({
-                title: 'Failed to delete team.',
-                description: "You've encountered an error deleting team: " + teamData.id + " - " + error.response.data.error,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            })
-            console.error(error);
-        });
+        if (formValues.confirmation === "true") {
+            axios.delete(
+                `http://localhost:8000/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
+            ).then((response) => {
+                isOpen = !isOpen;
+                navigate("/clubsports");
+                toast({
+                    title: 'Team Successfully deleted.',
+                    description: "You've successfully deleted team: " + teamData.id + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to delete team.',
+                    description: "You've encountered an error deleting team: " + teamData.id + " - " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        }
     }
 
     return (
