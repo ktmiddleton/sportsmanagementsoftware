@@ -167,7 +167,7 @@ class Command(BaseCommand):
                 
                 instructor, created_instructor = Group.objects.get_or_create(name='instructor')
                 # Add permissions to instructor group here
-                instructor.permissions.add(create_class)
+                instructor.permissions.add(create_class, view_class, update_class, delete_class)
         except Exception as e:
                 print(e)
                 print("Groups and permissions are likely already created in your database :)")
