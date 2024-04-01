@@ -37,6 +37,14 @@ export const UserProvider = ({ children }) => {
     return hasPerm;
   }
 
+  function userInClubTeam(teamId) {
+    return user.club_team_member.some((team) => team.id === teamId);
+  }
+
+  function userCaptainingTeam(teamId) {
+    return user.club_team_captain.some((team) => team.id === teamId);
+  }
+
   useEffect(() => {
     loadUserData();
     window.addEventListener('storage', loadUserData); // TODO: Figure out why login and logout doesn't trigger a storage event
@@ -44,7 +52,7 @@ export const UserProvider = ({ children }) => {
   }, [])
 
   return (
-    <UserContext.Provider value={{ user, loadUserData, userHasGroup, userHasPerm }}>
+    <UserContext.Provider value={{ user, loadUserData, userHasGroup, userHasPerm, userInClubTeam, userCaptainingTeam }}>
       {children}
     </UserContext.Provider>
   );
