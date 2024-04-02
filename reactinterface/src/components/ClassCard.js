@@ -12,7 +12,7 @@ export default function ClassCard({classData, image}) {
     const toast = useToast()
 
     function register() {
-        axios.post(`http://localhost:8000/classes/register/`,
+        axios.post(`http://localhost:8000/classes/userclasses/`,
             {
                 token: localStorage.getItem("token"),
                 classId: classData.id
@@ -45,6 +45,16 @@ export default function ClassCard({classData, image}) {
 
     var element = "";
     let action = classData.registered_participants < classData.capacity ? "open" : "full" // TODO: Need to also check if user has permissions to register
+    if (classData.registered_participants < classData.capacity) {
+        action = "open"
+    } else {
+        action = "full"
+    }
+
+    if (classData.members.some((member) => member.username === user.username)) {
+        action = "registered";
+    }
+
     switch (action) 
     {
         case "open":
@@ -55,6 +65,9 @@ export default function ClassCard({classData, image}) {
             break;
         case "full":
             element = <Button isDisabled="true" m="2" variant="Full">Full</Button>;
+            break;
+        case "registered":
+            element = <Button isDisabled="true" m="2" variant="Full">Registered</Button>;
             break;
         case "registerOpen":
             element = <Flex><Button m="2" variant="Register">Competitive</Button> <Button m="2" variant="Register">Casual</Button></Flex>;
@@ -73,6 +86,8 @@ export default function ClassCard({classData, image}) {
                 direction="row"
                 w="3fr"
                 mx="2"
+                maxH="130"
+                overflow="hidden"
                 _hover={{
                     boxShadow: "4px 4px 5px #cccccc",
                     transition: "all 0.1s ease-in-out",
@@ -86,7 +101,7 @@ export default function ClassCard({classData, image}) {
                     src={image ? image : "./Placeholder.png"}
                     height="100%"
                     width="20%"
-                    objectFit="cover"
+                    objectFit="fill"
                 />
                 
                     <CardBody>
@@ -95,12 +110,13 @@ export default function ClassCard({classData, image}) {
                         >
                             <VStack
                                 alignItems="flex-start"
+                                spacing="2px"
                             >
-                                <Heading textAlign="left" size="md" mx="2">{classData.name}</Heading>
+                                <Heading textAlign="left" size="md">{classData.name}</Heading>
 
                                 <Text textAlign="left" fontSize="sm" noOfLines={1}>{classData.description}</Text>
 
-                                <Heading textAlign="left" size="md" mx="2">Instructor</Heading>
+                                <Heading textAlign="left" size="md">Instructor</Heading>
 
                                 <Text textAlign="left" fontSize="sm" noOfLines={1}>
                                     {classData.instructors.map((item, index) => {

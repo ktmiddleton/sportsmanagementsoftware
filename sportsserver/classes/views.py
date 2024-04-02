@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from classes.serializers import ClassSerializer
 from classes.models import Class
+from user.models import User
 from rest_framework.authtoken.models import Token
 
 # Create your views here.
@@ -42,7 +43,23 @@ class ClassesList(APIView):
         except Token.DoesNotExist:
             return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
         
-class ClassRegister(APIView):
+class UserClassesList(APIView):
+    """
+    Lists a users classes
+    data format (url):
+    classes/userclasses/?username=_username_
+    """
+    def get(self, request):
+        username = request.GET.get("username","default_value")
+        print(request.data)
+        try:
+            user = User.objects.get(username=username)
+            classes = Class.objects.filter(members=user.pk)
+            serializer = ClassSerializer(classes, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
     """
     data format:
     {
