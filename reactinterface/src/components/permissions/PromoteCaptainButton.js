@@ -23,7 +23,7 @@ function PromoteCaptainButton({ teamData }) {
     return (
         // In short, the user must either be an admin or must be a captain OF THIS TEAM in order to promote other users to captain
         userHasGroup("admin") || (userHasPerm(PERM_NAME) && userCaptainingTeam(teamData.id)) ?
-            <div className="delete-club-sport-button">
+            <div className="promote-captain-button">
                 <Button
                     m="1rem"
                     aria-label="Add"
