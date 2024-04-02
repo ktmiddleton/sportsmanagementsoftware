@@ -32,7 +32,9 @@ class ClassesList(APIView):
             if user.has_perm("user.can_create_class"):
                 serializer = ClassSerializer(data=request.data)
                 if serializer.is_valid(): 
-                    serializer.save()
+                    class_instance = serializer.save()
+                    class_instance.instructors.add(user) # Add user who created class to instructors list
+                    class_instance.save()
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
@@ -55,7 +57,11 @@ class ClassRegister(APIView):
             if user.has_perm("user.can_join_class"):
                 class_id = request.data.get("classId")
                 class_ = Class.objects.get(pk=class_id) # added _ since class is a keyword
-                class_.members.add(user.pk)
+                if class_.registered_participants < class_.capacity:
+                    class_.members.add(user.pk)
+                    return Response(status=status.HTTP_200_OK)
+                else:
+                    return Response({"error": "Class is full"}, status=status.HTTP_422_UNPROCESSABLE_CONTENT)
             else:
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         except Token.DoesNotExist:
