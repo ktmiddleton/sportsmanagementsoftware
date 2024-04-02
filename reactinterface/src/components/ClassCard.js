@@ -11,10 +11,6 @@ export default function ClassCard({classData, image}) {
 
     const toast = useToast()
 
-    useEffect(() => {
-        console.log((classData.registered_participants/classData.capacity)*100)
-    }, [])
-
     function register() {
         axios.post(`http://localhost:8000/classes/register/`,
             {
@@ -103,6 +99,14 @@ export default function ClassCard({classData, image}) {
                                 <Heading textAlign="left" size="md" mx="2">{classData.name}</Heading>
 
                                 <Text textAlign="left" fontSize="sm" noOfLines={1}>{classData.description}</Text>
+
+                                <Heading textAlign="left" size="md" mx="2">Instructor</Heading>
+
+                                <Text textAlign="left" fontSize="sm" noOfLines={1}>
+                                    {classData.instructors.map((item, index) => {
+                                        return (<Text key={index}>{item.username}</Text>)
+                                    })}
+                                </Text>
                             </VStack>
                         </Stack>
                     </CardBody>
