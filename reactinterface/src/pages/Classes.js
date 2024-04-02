@@ -10,6 +10,7 @@ import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
 import axios from "axios";
+import CreateClassButton from "../components/permissions/CreateClassButton";
 
 
 export default function Classes({isOpen, onToggle}) 
@@ -78,6 +79,7 @@ export default function Classes({isOpen, onToggle})
                     m="1rem"
                     >Available Classes
                     </Heading>
+                    <CreateClassButton />
                     {classesMap}
                 </VStack>
             </GridItem>
