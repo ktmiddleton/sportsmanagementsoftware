@@ -77,9 +77,10 @@ export default function Classes({isOpen, onToggle})
                     color="brand.black"
                     textAlign="left"
                     m="1rem"
-                    >Available Classes
+                    >
+                        Available Classes
+                        <CreateClassButton />
                     </Heading>
-                    <CreateClassButton />
                     {classesMap}
                 </VStack>
             </GridItem>
@@ -97,7 +98,7 @@ export default function Classes({isOpen, onToggle})
                     >
                         Look for a Class
                     </Heading>
-                    <Calendar value={dateState} onChange={changeDate}/>
+                    <Calendar className="calendar-large" value={dateState} onChange={changeDate}/>
                 </Stack>
             </GridItem>
         </Grid>

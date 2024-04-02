@@ -8,6 +8,7 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@ch
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 import IntegerQuestion from "../questions/IntegerQuestion";
+import DateTimeQuestion from "../questions/DateTimeQuestion";
 
 function CreateClassForm({ isOpen, onClose }) {
 
@@ -20,7 +21,7 @@ function CreateClassForm({ isOpen, onClose }) {
             token: localStorage.getItem("token")
         }
         axios.post(
-            `http://localhost:8000/clubsports/`,
+            `http://localhost:8000/classes/`,
             data
         ).then((response) => {
             isOpen = !isOpen;
@@ -75,20 +76,27 @@ function CreateClassForm({ isOpen, onClose }) {
                                     <TextQuestion
                                         fieldName="name"
                                         placeHolder="Name"
-                                        label="Team Name"
+                                        label="Class Name"
                                         required={true}
                                         formikProps={formikProps}
                                     />
                                     <TextQuestion
                                         fieldName="description"
                                         placeHolder="Description"
-                                        label="Team Description"
+                                        label="Description"
                                         formikProps={formikProps}
                                     />
                                     <IntegerQuestion
                                         fieldName="capacity"
-                                        placeHolder={10}
-                                        label="Class Capacity"
+                                        placeHolder={0}
+                                        label="Capacity"
+                                        formikProps={formikProps}
+                                    />
+                                    <DateTimeQuestion
+                                        fieldName="class_time"
+                                        placeHolder=""
+                                        label="Class Date and Time"
+                                        required={true}
                                         formikProps={formikProps}
                                     />
                                     {/* <DropdownQuestion 

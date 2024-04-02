@@ -1,12 +1,13 @@
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 import { Field } from "formik";
 import React from "react";
+import DateTimePicker from 'react-datetime-picker';
 
 /**
  * Serves as a formik text question
  * 
  * Usage:
- *  <IntegerQuestion
+ *  <DateTimeQuestion
         fieldName="name"
         placeHolder="Name"
         label="Team Name"
@@ -14,14 +15,12 @@ import React from "react";
         formikProps={formikProps}
     />
  */
-function IntegerQuestion({ fieldName, placeHolder, label, formikProps, required  }) {
+function DateTimeQuestion({ fieldName, placeHolder, label, formikProps, required  }) {
 
     function validateQuestion(value) {
         let error
         if (!value && required) {
           error = `${label} is required 😱`
-        } if (value < 0) {
-            error = `${label} must be non-negative`
         }
         return error
     }
@@ -32,16 +31,7 @@ function IntegerQuestion({ fieldName, placeHolder, label, formikProps, required 
             <FormControl isInvalid={form.errors[fieldName] && form.touched[fieldName]}>
                 <FormLabel fontSize="1.5rem">{label}</FormLabel>
                 <InputGroup>
-                    <NumberInput
-                        value={field.value}
-                        onChange={(valueString) => form.setFieldValue(fieldName, valueString)}
-                    >
-                        <NumberInputField placeholder={placeHolder} {...field} id={fieldName} />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
+                    <DateTimePicker onChange={(value) => form.setFieldValue(fieldName, value)} value={field.value} />
                 </InputGroup>
                 <FormErrorMessage>{form.errors[fieldName]}</FormErrorMessage>
             </FormControl>
@@ -50,4 +40,4 @@ function IntegerQuestion({ fieldName, placeHolder, label, formikProps, required 
     );
 }
 
-export default IntegerQuestion;
+export default DateTimeQuestion;
