@@ -87,6 +87,40 @@ class UserGet(APIView):
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
+    def patch(self, request):
+        token=request.GET.get("token", "default_value")
+        username=request.GET.get("username", "default_value")
+        user=None
+        try:
+            AuthUser = Token.objects.get(key=token).user
+            if username != "default_value":
+                user = User.objects.get(username=username)
+            if AuthUser.has_perm('user.can_update_users') or AuthUser == user:
+                serializer = UserSerializer(user, data=request.data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    def delete(self, request):
+        token=request.GET.get("token", "default_value")
+        username=request.GET.get("username", "default_value")
+        user=None
+        try:
+            AuthUser = Token.objects.get(key=token).user
+            if username != "default_value":
+                user = User.objects.get(username=username)
+            if AuthUser.has_perm('user.can_delete_users'):
+                user.delete()
+                return Response("User Successfully Deleted", status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+            
+        
 class AllUsers(APIView):
     """
     Get ALL user's information.
@@ -97,13 +131,11 @@ class AllUsers(APIView):
 
     def get(self, request):
         token = request.GET.get("token", "default_value")
-        user= None
         try: 
-            if token != "default_value":
-                user = Token.objects.get(key=token).user
-            if user.has_perm('can_create_users') and user.has_perm('can_view_users') and user.has_perm('can_update_users') and user.has_perm('can_delete_users'):
+            user = Token.objects.get(key=token).user
+            if user.has_perm('user.can_create_users') and user.has_perm('user.can_view_users') and user.has_perm('user.can_update_users') and user.has_perm('user.can_delete_users'):
                 users = User.objects.all()
-                return {"userList": UserSerializer(users, many=True)}
+                return Response({"userList": UserSerializer(users, many=True).data})
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
