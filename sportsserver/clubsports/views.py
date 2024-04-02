@@ -142,7 +142,7 @@ class PromoteCaptain(APIView):
         username = request.data.get("username")
         try:
             user = Token.objects.get(key=token).user
-            if user.has_perm("user.can_promote_captain"):
+            if user.has_perm("user.can_promote_captain"): # TODO: Should also check if user is captain of this team
                 # Add user to captain group
                 promoted_user = User.objects.get(username=username)
                 captain_group = Group.objects.get(name="captain")
