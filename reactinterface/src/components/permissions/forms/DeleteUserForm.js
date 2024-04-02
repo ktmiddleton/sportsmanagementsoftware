@@ -1,40 +1,34 @@
 import React from "react";
 import TextQuestion from "../questions/TextQuestion";
 import { Form, Formik } from "formik";
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, useToast } from "@chakra-ui/react";
+import { Text, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@chakra-ui/react";
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
-function CreateClubSportForm({ isOpen, onClose }) {
+export default function DeleteUserForm({ isOpen, onClose, username}) {
 
     const toast = useToast()
 
     const submitForm = (formValues) => {
-        console.log(formValues)
-        let data = {
-            ...formValues,
-            token: localStorage.getItem("token")
-        }
-        axios.post(
-            `http://localhost:8000/clubsports/`,
-            data
+        axios.delete(
+            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
         ).then((response) => {
             isOpen = !isOpen;
             window.location.reload();
             toast({
-                title: 'Team successfully created.',
-                description: "You've successfully created the team: " + formValues.name + ".",
+                title: 'User successfully deleted.',
+                description: "You've successfully deleted the user: " + username + ".",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
             })
         }).catch((error) => {
             toast({
-                title: 'Failed to create team.',
-                description: "You've encountered an error creating the team " + error.response.data.error,
+                title: 'Failed to delete the user.',
+                description: "You've encountered an error deleting the user " + error.response.data.error,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -47,7 +41,6 @@ function CreateClubSportForm({ isOpen, onClose }) {
         <Formik
             initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
-                console.log(values);
                 submitForm(values);
                 setTimeout(() => {
                 actions.setSubmitting(false)
@@ -61,7 +54,7 @@ function CreateClubSportForm({ isOpen, onClose }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Create Club Sport Team</ModalHeader>
+                            <ModalHeader>Create New User</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -70,31 +63,9 @@ function CreateClubSportForm({ isOpen, onClose }) {
                                     spacing="2rem"
                                     width="100%"
                                 >
-
-                                    <TextQuestion
-                                        fieldName="name"
-                                        placeHolder="Name"
-                                        label="Team Name"
-                                        required={true}
-                                        formikProps={formikProps}
-                                    />
-                                    <TextQuestion
-                                        fieldName="description"
-                                        placeHolder="Description"
-                                        label="Team Description"
-                                        formikProps={formikProps}
-                                    /> 
-                                    <DropdownQuestion 
-                                        fieldName="registration" 
-                                        label="Registration Status" 
-                                        placeHolder=" "
-                                        required={true}
-                                        options={[
-                                            { value: 'open', label: 'Open' },
-                                            { value: 'closed', label: 'Closed' },
-                                        ]}
-                                        formikProps={formikProps}
-                                    />
+                                    <Text>
+                                        THIS IS AN IRREVERSIBLE ACTION, ARE YOU SURE YOU WISH TO PROCEED?
+                                    </Text>
                                 </VStack>
                             </ModalBody>
 
@@ -104,6 +75,7 @@ function CreateClubSportForm({ isOpen, onClose }) {
                                 </Button>
                                 <Button
                                     variant="submit"
+                                    bg="red"
                                     isLoading={formikProps.isSubmitting}
                                     onClick={formikProps.handleSubmit}
                                 >
@@ -118,5 +90,3 @@ function CreateClubSportForm({ isOpen, onClose }) {
         </Formik>
     );
 }
-
-export default CreateClubSportForm;

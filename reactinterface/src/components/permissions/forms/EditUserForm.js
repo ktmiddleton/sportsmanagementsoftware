@@ -8,33 +8,29 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@ch
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
-function CreateClubSportForm({ isOpen, onClose }) {
+export default function EditUserForm({ isOpen, onClose, username, email, first_name, last_name}) {
 
     const toast = useToast()
 
     const submitForm = (formValues) => {
-        console.log(formValues)
-        let data = {
-            ...formValues,
-            token: localStorage.getItem("token")
-        }
-        axios.post(
-            `http://localhost:8000/clubsports/`,
+        let data = {email: formValues.email, username: formValues.username, first_name: formValues.firstname, last_name: formValues.lastname};
+        axios.patch(
+            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`,
             data
         ).then((response) => {
             isOpen = !isOpen;
             window.location.reload();
             toast({
-                title: 'Team successfully created.',
-                description: "You've successfully created the team: " + formValues.name + ".",
+                title: 'User successfully edited.',
+                description: "You've successfully edited the user: " + formValues.name + ".",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
             })
         }).catch((error) => {
             toast({
-                title: 'Failed to create team.',
-                description: "You've encountered an error creating the team " + error.response.data.error,
+                title: 'Failed to edit the user.',
+                description: "You've encountered an error editing the user " + error.response.data.error,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -47,7 +43,6 @@ function CreateClubSportForm({ isOpen, onClose }) {
         <Formik
             initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
-                console.log(values);
                 submitForm(values);
                 setTimeout(() => {
                 actions.setSubmitting(false)
@@ -61,7 +56,7 @@ function CreateClubSportForm({ isOpen, onClose }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Create Club Sport Team</ModalHeader>
+                            <ModalHeader>Edit a User</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -72,27 +67,27 @@ function CreateClubSportForm({ isOpen, onClose }) {
                                 >
 
                                     <TextQuestion
-                                        fieldName="name"
-                                        placeHolder="Name"
-                                        label="Team Name"
-                                        required={true}
+                                        fieldName="firstname"
+                                        placeHolder={first_name}
+                                        label="Edit User's First Name"
                                         formikProps={formikProps}
                                     />
                                     <TextQuestion
-                                        fieldName="description"
-                                        placeHolder="Description"
-                                        label="Team Description"
+                                        fieldName="lastname"
+                                        placeHolder={last_name}
+                                        label="Edit User's Last Name"
                                         formikProps={formikProps}
-                                    /> 
-                                    <DropdownQuestion 
-                                        fieldName="registration" 
-                                        label="Registration Status" 
-                                        placeHolder=" "
-                                        required={true}
-                                        options={[
-                                            { value: 'open', label: 'Open' },
-                                            { value: 'closed', label: 'Closed' },
-                                        ]}
+                                    />
+                                    <TextQuestion
+                                        fieldName="username"
+                                        placeHolder={username}
+                                        label="Edit User's Username"
+                                        formikProps={formikProps}
+                                    />
+                                    <TextQuestion
+                                        fieldName="email"
+                                        placeHolder={email}
+                                        label="Edit User's Email"
                                         formikProps={formikProps}
                                     />
                                 </VStack>
@@ -118,5 +113,3 @@ function CreateClubSportForm({ isOpen, onClose }) {
         </Formik>
     );
 }
-
-export default CreateClubSportForm;
