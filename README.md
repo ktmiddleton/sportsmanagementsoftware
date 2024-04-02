@@ -13,14 +13,24 @@ The project plans to create "LoyolaFit," a new app for Loyola's Department of Re
 ## Installation Instructions
 There is no "installation" required in order to run and use the app. The only app that you are required to have on your computer is **Docker Desktop**. Since the application is dockerized and runs in a container, much like a virtual machine, this container handles all of the setup for you.
 
+### Installing Docker Desktop
+Information on how to install and run docker desktop can be found below
+#### Windows
+<a href="https://docs.docker.com/desktop/install/windows-install/">Windows Installation Guide</a>
+#### macOS
+<a href="https://docs.docker.com/desktop/install/mac-install/">Mac Installation Guide</a>
+#### Linux
+<a href="https://docs.docker.com/desktop/install/linux-install/">Linux Installation Guide</a>
+
 ## How to Run
-1. Clone the project repository using git to a location on your system as desired.
-2. Open a command line/terminal window.
-3. Navigate to the outtermost directory of the project `sportsmanagementsoftware/`
-4. Run the command `docker compose up` in the terminal
-5. Now if all goes well you should be able to access the frontent via <a href="https://localhost:3000">localhost:3000</a> and backend endpoints for the API run on <a href="https://localhost:8000">localhost:8000</a>
-6. To take down the application simply do `^c` in the terminal window in which you ran the application
-7. Now run the command `docker compose down --rmi all` this will remove the applications docker images from your system and will allow you to re-run the application with a fresh start
+1. Open the **Docker Desktop** application
+2. Clone the project repository using git to a location on your system as desired.
+3. Open a command line/terminal window.
+4. Navigate to the outtermost directory of the project `sportsmanagementsoftware/`
+5. Run the command `docker compose up` in the terminal
+6. Now if all goes well you should be able to access the frontent via <a href="https://localhost:3000">localhost:3000</a> and backend endpoints for the API run on <a href="https://localhost:8000">localhost:8000</a>
+7. To take down the application simply do `^c` in the terminal window in which you ran the application
+8. Now run the command `docker compose down --rmi all` this will remove the applications docker images from your system and will allow you to re-run the application with a fresh start
 
 ## How to Test
 In order to run tests, you must have installed all the requirements to run the app locally outside of a docker container
