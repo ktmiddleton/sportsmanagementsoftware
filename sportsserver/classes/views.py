@@ -39,3 +39,24 @@ class ClassesList(APIView):
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         except Token.DoesNotExist:
             return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+class ClassRegister(APIView):
+    """
+    data format:
+    {
+        "classId": "",
+        "token": ""
+    }
+    """
+    def post(self, request):
+        token = request.data.get("token")
+        try:
+            user = Token.objects.get(key=token).user
+            if user.has_perm("user.can_join_class"):
+                class_id = request.data.get("classId")
+                class_ = Class.objects.get(pk=class_id) # added _ since class is a keyword
+                class_.members.add(user.pk)
+            else:
+                return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        except Token.DoesNotExist:
+            return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)

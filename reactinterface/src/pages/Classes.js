@@ -44,8 +44,8 @@ export default function Classes({isOpen, onToggle})
     var classesMap = "";
 
     classesMap = classes.map( (item) => { 
-    if (new Date(item.classTime).getDate() == dateState.getDate())
-        return <ListItem className={item.name} description={item.description} action={item.registeredParticipants <= item.capacity ? "open" : "full"}/> 
+    if (new Date(item.class_time).getDate() == dateState.getDate())
+        return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/> 
     return <></>
     }
     )
