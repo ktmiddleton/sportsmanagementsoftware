@@ -12,6 +12,7 @@ from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.exceptions import PermissionDenied
 import json
 from django.contrib.auth.models import Group
 
@@ -55,16 +56,16 @@ class UserLogin(ObtainAuthToken):#APIView
         email = request.data.get('email')
         password = request.data.get('password')
 
-        try:
-            user = authenticate(request, username=email, password=password, backend='user.backends.EmailOrUsernameModelBackend')
+        user = authenticate(request, username=email, password=password, backend='user.backends.EmailOrUsernameModelBackend')
+        if user is not None:
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
                 'email': user.email,
                 'username': user.username
-            })
-        except User.DoesNotExist:
-            return Response({'error': 'Authentication failed'}, status=401)
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Authentication failed'}, status=status.HTTP_401_UNAUTHORIZED)
     
 class UserGet(APIView):
     """
@@ -86,7 +87,17 @@ class UserGet(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+    
+    """
+    /user/getuser/?token=_token_&username=_username_
+    data format for user to update based on username:
+    {
+        "email": "",
+        "username": "",
+        "first_name": "",
+        "last_name": "",
+    }
+    """
     def patch(self, request):
         token=request.GET.get("token", "default_value")
         username=request.GET.get("username", "default_value")
@@ -105,6 +116,10 @@ class UserGet(APIView):
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
     
+    """
+    data format (url):
+    /user/getuser/?token=_token_&username=_username_
+    """
     def delete(self, request):
         token=request.GET.get("token", "default_value")
         username=request.GET.get("username", "default_value")
