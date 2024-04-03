@@ -123,6 +123,27 @@ class UserTeamsList(APIView):
             return Response({"error": "Club sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except Token.DoesNotExist:
             return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    
+    """
+    Leaves a user from a team
+    data format (url):
+    clubsports/userteams/?teamId=_team id_&token=_token_
+    """
+    def delete(self, request):
+        teamId = request.GET.get("teamId","default_value")
+        token = request.GET.get("token","default_value")
+        if teamId != "default_value" and token != "default_value":
+            try:
+                user = Token.objects.get(key=token).user
+                team = ClubSportsTeam.objects.get(pk=teamId)
+                team.members.remove(user)
+                return Response(status=status.HTTP_200_OK)
+            except Token.DoesNotExist:
+                return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            except ClubSportsTeam.DoesNotExist:
+                return Response({"error": "Team with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "Must specify both teamId and token"}, status=status.HTTP_400_BAD_REQUEST)
         
 class PromoteCaptain(APIView):
     """

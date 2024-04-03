@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
 
@@ -70,6 +70,33 @@ function ClubSportTeamPage({isOpen, onToggle}) {
         }, 1000);
     }
 
+    function leaveTeam() {
+        axios.delete(`http://localhost:8000/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
+        .then((response) => {
+            window.location.reload();
+            toast({
+                title: 'Team Left.',
+                description: "You've successfully left club " + teamData.name + ".",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        })
+        .catch((error) => {
+            toast({
+                title: 'Failed to Leave Team.',
+                description: "You've encountered an error leaving club " + teamData.name + ".",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+        })
+        setJoinSubmitting(true);
+        setTimeout(() => {
+            setJoinSubmitting(false);
+        }, 1000);
+    }
+
     return (
         <div className="ClubSportTeamPage">
             <Grid
@@ -100,7 +127,19 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                         {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
                         {/* TODO: Small issue where button appears then disappears quickly */}
                         {teamData.members.some((member) => member.username === localStorage.getItem("username")) ?
-                            <></>
+                            <Button
+                                m="1rem"
+                                aria-label="Leave Team"
+                                leftIcon={<MinusIcon />}
+                                isRound={true}
+                                size="lg"
+                                variant="submit"
+                                loadingText='Leaving...'
+                                isLoading={joinSubmitting}
+                                onClick={() => leaveTeam()}
+                            >
+                                Leave Team
+                            </Button>
                         :
                             <Button
                                 m="1rem"
