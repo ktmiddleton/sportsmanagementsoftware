@@ -198,6 +198,7 @@ class ClubSportsTeamsViewTest(TestCase):
         self.assertNotIn(TEST_POST_EMAIL, str(response_get.data)) # Ensure our posted user is not there
 
     def test_get_all_users(self):
+        print("GET /user/allusers/?token=_token_")
         response_get = self.client.get('/user/allusers/?token=' + str(self.admin_token.key)) # check all users with admin token
         self.assertIn(ADMIN_TEST_USERNAME, str(response_get.data)) # Ensure our admin user is there
         self.assertIn(TEST_USERNAME, str(response_get.data)) # Ensure our user is there
