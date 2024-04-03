@@ -6,11 +6,6 @@ class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name')
-
-class IntramuralSportSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = IntramuralSport
-        fields = '__all__'
         
 class IntramuralSportTeamSerializer(serializers.ModelSerializer):
     
@@ -19,3 +14,21 @@ class IntramuralSportTeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = IntramuralSportTeam
         fields = '__all__'
+        
+class ShortIntramuralSportTeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntramuralSportTeam
+        fields = '__all__'
+        
+class IntramuralSportSerializer(serializers.ModelSerializer):
+    
+    casual_teams=serializers.SerializerMethodField('get_sport_casual_teams')
+    
+    class Meta:
+        model = IntramuralSport
+        fields = '__all__'
+        
+    def get_sport_casual_teams(self, obj):
+        teams = IntramuralSportTeam.objects.filter(sport=obj.pk)
+        serializer = ShortIntramuralSportTeamSerializer(teams, many=True)
+        return serializer.data

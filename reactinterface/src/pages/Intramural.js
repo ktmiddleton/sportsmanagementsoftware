@@ -25,16 +25,10 @@ export default function Intramurals({isOpen, onToggle})
             setIntramurals(response.data.IntramuralSports);
         })
         .catch((error) => {
-            console.log("Error getting classes");
+            console.log("Error getting intramural sports");
             console.log(error);
         })
       }, []);
-
-    var intramuralsMap = "";
-
-    intramuralsMap = intramurals.map( (item) => 
-        <ListItem className={item.name} description={item.description} action={new Date(item.registrationDeadline) > new Date() ? "registerOpen" : "registerClose"}/>
-    )
 
     return (
     <div className="intramurals">
@@ -65,7 +59,9 @@ export default function Intramurals({isOpen, onToggle})
                     m="1rem"
                     >Intramural Teams
                     </Heading>
-                    {intramuralsMap}
+                    {intramurals.map( (item) => {
+                        return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
+                    })}
                 </VStack>
             </GridItem>
         </Grid>

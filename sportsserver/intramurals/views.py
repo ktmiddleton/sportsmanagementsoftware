@@ -10,6 +10,10 @@ from user.models import User
 # Create your views here.
 
 class IntramuralSportList(APIView):
+    """
+    data format(url):
+    /intramurals/
+    """
     def get(self, request):
         teams = IntramuralSport.objects.all()
         serializer = IntramuralSportSerializer(teams, many=True)
@@ -115,3 +119,24 @@ class UserTeamsList(APIView):
             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except IntramuralSportTeam.DoesNotExist:
             return Response({"error": "Intramural sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+    """
+    Leaves a user from a team
+    data format (url):
+    intramurals/userteams/?teamId=_team id_&token=_token_
+    """
+    def delete(self, request):
+        teamId = request.GET.get("teamId","default_value")
+        token = request.GET.get("token","default_value")
+        if teamId != "default_value" and token != "default_value":
+            try:
+                user = Token.objects.get(key=token).user
+                team = IntramuralSportTeam.objects.get(pk=teamId)
+                team.members.remove(user)
+                return Response(status=status.HTTP_200_OK)
+            except Token.DoesNotExist:
+                return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            except IntramuralSportTeam.DoesNotExist:
+                return Response({"error": "Team with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "Must specify both teamId and token"}, status=status.HTTP_400_BAD_REQUEST)
