@@ -10,6 +10,7 @@ import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
 import axios from "axios";
+import IntramuralCard from "../components/IntramuralCard";
 
 
 export default function Intramurals({isOpen, onToggle}) 
@@ -22,6 +23,7 @@ export default function Intramurals({isOpen, onToggle})
             `http://localhost:8000/intramurals/`
         )
         .then((response) => {
+            console.log(response.data);
             setIntramurals(response.data.IntramuralSports);
         })
         .catch((error) => {
@@ -60,7 +62,8 @@ export default function Intramurals({isOpen, onToggle})
                     >Intramural Teams
                     </Heading>
                     {intramurals.map( (item) => {
-                        return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
+                        // return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
+                        return <IntramuralCard sportData={item} />
                     })}
                 </VStack>
             </GridItem>

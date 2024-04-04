@@ -4,7 +4,7 @@ import { useUser } from "./UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function ClassCard({classData, image}) {
+export default function IntramuralCard({sportData, image}) {
 
     const [joinSubmitting, setJoinSubmitting] = useState(false);
 
@@ -17,14 +17,14 @@ export default function ClassCard({classData, image}) {
         axios.post(`http://localhost:8000/classes/userclasses/`,
             {
                 token: localStorage.getItem("token"),
-                classId: classData.id
+                classId: sportData.id
             }
         )
         .then((response) => {
             window.location.reload();
             toast({
                 title: 'Class Joined.',
-                description: "You've successfully joined class " + classData.name + ".",
+                description: "You've successfully joined class " + sportData.name + ".",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -33,7 +33,7 @@ export default function ClassCard({classData, image}) {
         .catch((error) => {
             toast({
                 title: 'Failed to Join Class.',
-                description: "You've encountered an error joining Class " + classData.name + ".",
+                description: "You've encountered an error joining Class " + sportData.name + ".",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -48,15 +48,15 @@ export default function ClassCard({classData, image}) {
     function getButtons() {
         var element = "";
         let action = "" // TODO: Need to also check if user has permissions to register
-        if (classData.registered_participants < classData.capacity) {
+        if (sportData.registered_participants < sportData.capacity) {
             action = "open"
         } else {
             action = "full"
         }
 
-        if (classData.members.some((member) => member.username === localStorage.getItem("username"))) {
-            action = "registered";
-        }
+        // if (sportData.members.some((member) => member.username === localStorage.getItem("username"))) {
+        //     action = "registered";
+        // }
 
         switch (action) 
         {
@@ -85,7 +85,7 @@ export default function ClassCard({classData, image}) {
     }
 
     function handleClick() {
-        navigate(`/class/${classData.id}`);
+        navigate(`/class/${sportData.id}`);
     }
     
     return (
@@ -123,24 +123,24 @@ export default function ClassCard({classData, image}) {
                                 alignItems="flex-start"
                                 spacing="2px"
                             >
-                                <Heading textAlign="left" size="md">{classData.name}</Heading>
+                                <Heading textAlign="left" size="md">{sportData.name}</Heading>
 
-                                <Text textAlign="left" fontSize="sm" noOfLines={1}>{classData.description}</Text>
+                                <Text textAlign="left" fontSize="sm" noOfLines={1}>{sportData.description}</Text>
 
                                 <Heading textAlign="left" size="md">Instructor</Heading>
 
                                 <Text textAlign="left" fontSize="sm" noOfLines={1}>
-                                    {classData.instructors.map((item, index) => {
+                                    {/* {sportData.instructors.map((item, index) => {
                                         return (<Text key={index}>{item.username}</Text>)
-                                    })}
+                                    })} */}
                                 </Text>
                             </VStack>
                         </Stack>
                     </CardBody>
 
                     <CardFooter>
-                        <CircularProgress value={(classData.registered_participants/classData.capacity)*100} color='green.400'>
-                            <CircularProgressLabel>{classData.registered_participants}/{classData.capacity}</CircularProgressLabel>
+                        <CircularProgress value={(sportData.registered_participants/sportData.capacity)*100} color='green.400'>
+                            <CircularProgressLabel>{sportData.registered_participants}/{sportData.capacity}</CircularProgressLabel>
                         </CircularProgress>
                         {getButtons()}
                     </CardFooter>

@@ -1,13 +1,18 @@
-import { Card, CardBody, CardHeader, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 function IntramuralSportTeamPage({isOpen, onToggle}) {
 
     let { teamId } = useParams()
+
+    const toast = useToast()
+
+    const [joinSubmitting, setJoinSubmitting] = useState(false);
 
     const [teamData, setTeamData] = useState({ members: [] });
 
@@ -30,6 +35,65 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
             console.log(error);
         })
     }, []);
+
+    function joinTeam() {
+        axios.post(`http://localhost:8000/intramurals/userteams/`,
+            {
+                token: localStorage.getItem("token"),
+                teamId: teamData.id
+            }
+        )
+        .then((response) => {
+            window.location.reload();
+            toast({
+                title: 'Team Joined.',
+                description: "You've successfully joined Intramural " + teamData.name + ".",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        })
+        .catch((error) => {
+            toast({
+                title: 'Failed to Join Team.',
+                description: "You've encountered an error joining Intramural " + teamData.name + ".",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+        })
+        setJoinSubmitting(true);
+        setTimeout(() => {
+            setJoinSubmitting(false);
+        }, 1000);
+    }
+
+    function leaveTeam() {
+        axios.delete(`http://localhost:8000/intramurals/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
+        .then((response) => {
+            window.location.reload();
+            toast({
+                title: 'Team Left.',
+                description: "You've successfully left club " + teamData.name + ".",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        })
+        .catch((error) => {
+            toast({
+                title: 'Failed to Leave Team.',
+                description: "You've encountered an error leaving club " + teamData.name + ".",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+        })
+        setJoinSubmitting(true);
+        setTimeout(() => {
+            setJoinSubmitting(false);
+        }, 1000);
+    }
 
     return (
         <div className="IntramuralSportTeamPage">
@@ -59,6 +123,36 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
                     >
                         {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
                         {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
+                        {teamData.members.some((member) => member.username === localStorage.getItem("username")) ?
+                        // TODO: Need to add leave class button
+                            <Button
+                                m="1rem"
+                                aria-label="Leave Team"
+                                leftIcon={<MinusIcon />}
+                                isRound={true}
+                                size="lg"
+                                variant="submit"
+                                loadingText='Leaving...'
+                                isLoading={joinSubmitting}
+                                onClick={() => leaveTeam()}
+                            >
+                                Leave Team
+                            </Button>
+                        :
+                            <Button
+                                m="1rem"
+                                aria-label="Join Team"
+                                leftIcon={<AddIcon />}
+                                isRound={true}
+                                size="lg"
+                                variant="submit"
+                                loadingText='Joining...'
+                                isLoading={joinSubmitting}
+                                onClick={() => joinTeam()}
+                            >
+                                Join Team
+                            </Button>
+                        }
                     </Heading>
                     <Grid
                         templateRows={{base: '1fr 1fr'}}
