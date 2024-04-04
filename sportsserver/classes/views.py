@@ -21,7 +21,7 @@ class ClassesList(APIView):
             team = Class.objects.get(pk=class_id)
             serializer = ClassSerializer(team)
             return Response(serializer.data)
-        else: # Return all teams
+        else: # Return all classes
             classes = Class.objects.all()
             serializer = ClassSerializer(classes, many=True)
             return Response({"Classes": serializer.data})

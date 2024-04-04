@@ -13,13 +13,13 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
     const toast = useToast()
 
     const submitForm = (formValues) => {
-        let data = {email: formValues.email, username: formValues.username, first_name: formValues.firstname, last_name: formValues.lastname};
+        console.log(formValues)
         axios.patch(
-            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`,
-            data
+            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
         ).then((response) => {
+            console.log(response)
             isOpen = !isOpen;
-            window.location.reload();
+            // window.location.reload();
             toast({
                 title: 'User successfully edited.',
                 description: "You've successfully edited the user: " + formValues.name + ".",
@@ -67,13 +67,13 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
                                 >
 
                                     <TextQuestion
-                                        fieldName="firstname"
+                                        fieldName="first_name"
                                         placeHolder={first_name}
                                         label="Edit User's First Name"
                                         formikProps={formikProps}
                                     />
                                     <TextQuestion
-                                        fieldName="lastname"
+                                        fieldName="last_name"
                                         placeHolder={last_name}
                                         label="Edit User's Last Name"
                                         formikProps={formikProps}
