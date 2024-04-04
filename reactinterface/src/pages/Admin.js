@@ -48,23 +48,11 @@ export default function Admin({openState, onToggle})
     var userMap = "";
 
     userMap = userList.map( (item) => {
-    const { 
-        isOpen: isOpenEdit, 
-        onOpen: onOpenEdit, 
-        onClose: onCloseEdit
-    } = useDisclosure();
-
-    const { 
-        isOpen: isOpenDelete, 
-        onOpen: onOpenDelete, 
-        onClose: onCloseDelete
-    } = useDisclosure();
+    
     // Need to put EditUserForm and DeleteUserForm as components inside of UserList. Then move state variables into UserList. This will fix buggy behavior.
     return (
         <>
-            <UserList username={item.username} email={item.email} status={item.groups.length == 0 ? "user" : item.groups[0].name} editOpen={onOpenEdit} deleteOpen={onOpenDelete}/>
-            <EditUserForm username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name} isOpen={isOpenEdit} onClose={onCloseEdit}/>
-            <DeleteUserForm username={item.username} isOpen={isOpenDelete} onClose={onCloseDelete}/>
+            <UserList username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name} status={item.groups.length == 0 ? "user" : item.groups[0].name}/>
         </>)
 })
 
