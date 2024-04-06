@@ -1,36 +1,40 @@
 import React from "react";
 import TextQuestion from "../questions/TextQuestion";
 import { Form, Formik } from "formik";
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, useToast } from "@chakra-ui/react";
+import { Heading, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@chakra-ui/react";
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
-export default function EditUserForm({ isOpen, onClose, username, email, first_name, last_name}) {
+function ChangeUserClassForm({ isOpen, onClose, username}) {
 
     const toast = useToast()
 
     const submitForm = (formValues) => {
         console.log(formValues)
-        axios.patch(
-            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
+        let data = {
+            ...formValues,
+            token: localStorage.getItem("token")
+        }
+        axios.post(
+            `http://localhost:8000/user/addGroup`,
+            data
         ).then((response) => {
-            console.log(response)
             isOpen = !isOpen;
-            // window.location.reload();
+            window.location.reload();
             toast({
-                title: 'User successfully edited.',
-                description: "You've successfully edited the user: " + formValues.name + ".",
+                title: 'The user ' + {username} + ' has been added to group ' + {formValues},
+                description: "",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
             })
         }).catch((error) => {
             toast({
-                title: 'Failed to edit the user.',
-                description: "You've encountered an error editing the user " + error.response.data.error,
+                title: 'Failed to create class.',
+                description: "You've encountered an error creating the class " + error.response.data.error,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -43,6 +47,7 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
         <Formik
             initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
+                console.log(values);
                 submitForm(values);
                 setTimeout(() => {
                 actions.setSubmitting(false)
@@ -56,7 +61,7 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Edit a User</ModalHeader>
+                            <ModalHeader>Change User Class</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -65,29 +70,21 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
                                     spacing="2rem"
                                     width="100%"
                                 >
-
-                                    <TextQuestion
-                                        fieldName="first_name"
-                                        placeHolder={first_name}
-                                        label="Edit User's First Name"
-                                        formikProps={formikProps}
-                                    />
-                                    <TextQuestion
-                                        fieldName="last_name"
-                                        placeHolder={last_name}
-                                        label="Edit User's Last Name"
-                                        formikProps={formikProps}
-                                    />
-                                    <TextQuestion
-                                        fieldName="username"
-                                        placeHolder={username}
-                                        label="Edit User's Username"
-                                        formikProps={formikProps}
-                                    />
-                                    <TextQuestion
-                                        fieldName="email"
-                                        placeHolder={email}
-                                        label="Edit User's Email"
+                                    <Heading>
+                                        Current User Class: {}
+                                    </Heading>
+                                    <DropdownQuestion 
+                                        fieldName="userclass" 
+                                        label="User Class" 
+                                        placeHolder=" "
+                                        required={true}
+                                        options={[
+                                            { value: 'captain', label: 'Captain' },
+                                            { value: 'referee', label: 'Referee' },
+                                            { value: 'user', label: 'User' },
+                                            { value: 'instructor', label: 'Instructor' },
+                                            { value: 'admin', label: 'Admin' },
+                                        ]}
                                         formikProps={formikProps}
                                     />
                                 </VStack>
@@ -113,3 +110,5 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
         </Formik>
     );
 }
+
+export default ChangeUserClassForm;

@@ -156,6 +156,14 @@ class ClubSportsTeamsViewTest(TestCase):
         self.assertEqual(response_post.status_code, 201) # Make sure we get the CREATED status code
         response_get = self.client.get('/clubsports/userteams/?username=' + str(self.user.username))
         self.assertIn(TEST_TEAM_NAME, str(response_get.data)) # Ensure user is in team
+        
+    # DELETE /clubsports/userteams/?teamId=_team id_&token=_token_
+    def test_post_user_join_team(self):
+        print('POST /clubsports/userteams/?teamId=_team id_&token=_token_')
+        response_delete = self.client.delete('/clubsports/userteams/?teamId=' + str(1) + '&token=' + str(self.token.key))
+        self.assertEqual(response_delete.status_code, 200) # Make sure we get the OK status code
+        response_get = self.client.get('/clubsports/userteams/?username=' + str(self.user.username))
+        self.assertNotIn(TEST_TEAM_NAME, str(response_get.data)) # Ensure user is no longer in team
 
     # POST /clubsports/userteams/
     def test_post_user_join_team_closed(self):

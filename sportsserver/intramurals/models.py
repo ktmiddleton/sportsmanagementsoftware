@@ -8,8 +8,8 @@ from django.dispatch import receiver
 class IntramuralSport(models.Model):
     name=models.CharField(max_length=50, null=True, unique=True)
     description=models.CharField(max_length=1000, null=True)
-    registeredTeams=models.PositiveIntegerField(default=0)
-    registrationDeadline=models.DateTimeField(null=True)
+    registered_teams=models.PositiveIntegerField(default=0)
+    registration_deadline=models.DateTimeField(null=True)
     
 class IntramuralSportTeam(models.Model):
     REGISTRATION_CHOICES = [
@@ -22,14 +22,20 @@ class IntramuralSportTeam(models.Model):
         ("club", "Club"),
         ("intramural", "Intramural")
     ]
+    
+    TEAM_TYPES_CHOICES = [
+        ("casual", "Casual"),
+        ("competitive", "Competitive")
+    ]
 
     name=models.CharField(max_length=50, null=True, unique=True)
-    sport_type=models.TextField(choices=SPORT_TYPES_CHOICES, default="intramural")
+    sport_type=models.TextField(choices=SPORT_TYPES_CHOICES, blank=True, default="intramural")
+    team_type=models.TextField(choices=TEAM_TYPES_CHOICES, blank=True, default="casual")
     description=models.CharField(max_length=1000, null=True)
     registeredParticipants=models.PositiveIntegerField(default=0)
     members=models.ManyToManyField(User, blank=True)
     registration=models.TextField(choices=REGISTRATION_CHOICES, default="open")
-    sport = models.ForeignKey(IntramuralSport, to_field="name", db_column="sport_name", on_delete=models.CASCADE)
+    sport = models.ForeignKey(IntramuralSport, on_delete=models.CASCADE)
     
 # Signal to update the registeredTeams count when a team is saved
 @receiver(post_save, sender=IntramuralSportTeam)

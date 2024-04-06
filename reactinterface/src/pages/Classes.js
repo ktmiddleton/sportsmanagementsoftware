@@ -46,7 +46,7 @@ export default function Classes({isOpen, onToggle})
     classesMap = classes.map( (item) => { 
     if (new Date(item.class_time).getDate() == dateState.getDate()) // TODO: Want to turn this into a reuseable event button component.
         // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
-        return <ClassCard classData={item} /> 
+         return <ClassCard classData={item} /> 
     return <></>
     }
     )
