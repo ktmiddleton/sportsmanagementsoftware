@@ -85,7 +85,7 @@ export default function IntramuralCard({sportData, image}) {
     }
 
     function handleClick() {
-        navigate(`/class/${sportData.id}`);
+        navigate(`/intramuralsport/${sportData.id}`);
     }
     
     return (

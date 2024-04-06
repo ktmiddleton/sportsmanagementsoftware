@@ -17,6 +17,7 @@ import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserProvider } from './components/UserContext';
 import ClassPage from './pages/ClassPage';
+import IntramuralSportPage from './pages/IntramuralSportPage';
 
 
 // --loyola-green:#005a3c;
@@ -205,6 +206,7 @@ function App() {
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsports' element={<ClubSports isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsportteam/:teamId' element={<ClubSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/intramuralsport/:sportId' element={<IntramuralSportPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramuralsportteam/:teamId' element={<IntramuralSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/class/:classId' element={<ClassPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>

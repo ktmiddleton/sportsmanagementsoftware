@@ -22,8 +22,8 @@ class IntramuralSportList(APIView):
     """
     data format:
     {
-        "name": "Team Awesome",
-        "description": "A great team.",
+        "name": "Soccer",
+        "description": "A fun sport.",
     }
     """
     def post(self, request):
