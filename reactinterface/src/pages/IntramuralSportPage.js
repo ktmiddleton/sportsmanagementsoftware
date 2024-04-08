@@ -58,7 +58,7 @@ function IntramuralSportPage({isOpen, onToggle}) {
                         m="2rem"
                         w={"100%"}
                     >
-                        {clubSports.map((item, index) => (
+                        {sportData.map((item, index) => (
                             <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
                         ))}
                     </Wrap>

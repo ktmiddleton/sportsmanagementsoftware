@@ -7,9 +7,37 @@ import axios from "axios";
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@chakra-ui/react";
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
+import MultiSelectQuestion from "../questions/MultiSelectQuestion";
+import { useUser } from "../../UserContext";
+
+
 
 function ChangeUserClassForm({ isOpen, onClose, username}) {
 
+    var userGroups = [];
+    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
+
+    if (userHasGroup("admin") == true) 
+    {
+        userGroups.push("admin")
+    }
+    else if (userHasGroup("captain") == true) 
+    {
+        userGroups.push("captain")
+    }
+    else if (userHasGroup("instructor") == true) 
+    {
+        userGroups.push("instructor")
+    }
+    else if (userHasGroup("referee") == true) 
+    {
+        userGroups.push("referee")
+    }
+    else
+    {
+        userGroups.push("user")
+    }
+    
     const toast = useToast()
 
     const submitForm = (formValues) => {
@@ -73,10 +101,10 @@ function ChangeUserClassForm({ isOpen, onClose, username}) {
                                     <Heading>
                                         Current User Class: {}
                                     </Heading>
-                                    <DropdownQuestion 
+                                    <MultiSelectQuestion 
                                         fieldName="userclass" 
                                         label="User Class" 
-                                        placeHolder=" "
+                                        checkedList={userGroups}
                                         required={true}
                                         options={[
                                             { value: 'captain', label: 'Captain' },

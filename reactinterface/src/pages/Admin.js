@@ -49,7 +49,6 @@ export default function Admin({openState, onToggle})
 
     userMap = userList.map( (item) => {
     
-    // Need to put EditUserForm and DeleteUserForm as components inside of UserList. Then move state variables into UserList. This will fix buggy behavior.
     return (
         <>
             <UserList username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name} status={item.groups.length == 0 ? "user" : item.groups[0].name}/>
