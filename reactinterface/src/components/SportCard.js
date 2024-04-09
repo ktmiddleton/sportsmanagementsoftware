@@ -37,7 +37,7 @@ function SportCard({image, header, description, teamObject}) {
                 }}
             >
                 <Image
-                    src={image ? image : "./Placeholder.png"}
+                    src={image ? image : "/Placeholder.png"}
                     height="50%"
                     width="100%"
                     objectFit="cover"

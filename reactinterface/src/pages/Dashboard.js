@@ -5,10 +5,13 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
+import ClassCard from "../components/ClassCard";
 
 function Dashboard({isOpen, onToggle}) {
 
     const [registeredTeams, setRegisteredTeams] = useState([]);
+
+    const [registeredClasses, setRegisteredClasses] = useState([]);
 
     useEffect(() => {
         setRegisteredTeams([])
@@ -33,19 +36,30 @@ function Dashboard({isOpen, onToggle}) {
             console.log("Error getting users Intramural Sports");
             console.log(error);
         });
+
+        axios.get( // Get Intramural Sports
+            `http://localhost:8000/classes/userclasses/?username=${localStorage.getItem("username")}`
+        )
+        .then((response) => {
+            setRegisteredClasses(response.data);
+        })
+        .catch((error) => {
+            console.log("Error getting users Classes");
+            console.log(error);
+        });
     }, []);
 
     return (
         <div className="dashboard">
             <Grid
-            templateAreas={`"header header header"
-                            "nav main sidebar"`}
-            gridTemplateRows={{base: '10vh 90vh'}}
-            gridTemplateColumns={{base:'1fr 3fr 2fr'}}
-            gap='0'
-            color='blackAlpha.700'
-            fontWeight='bold'
-            overflowX="hidden"
+                templateAreas={`"header header header"
+                                "nav main sidebar"`}
+                gridTemplateRows={{base: '10vh 90vh'}}
+                gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+                gap='0'
+                color='blackAlpha.700'
+                fontWeight='bold'
+                overflowX="hidden"
             >
                 <GridItem area={'header'}>
                     <Header buttons={true}/>
@@ -61,18 +75,34 @@ function Dashboard({isOpen, onToggle}) {
                     align={"baseline"}
                     >
                         <Heading
-                        color="brand.brightGreen"
-                        textAlign="left"
-                        m="1rem"
+                            color="brand.black"
+                            textAlign="left"
+                            m="1rem"
                         >
                             Your Registrations
                         </Heading>
                         <Wrap
-                        m="2rem"
-                        spacing="1rem"
+                            m="2rem"
+                            spacing="1rem"
                         >
                             {registeredTeams.map((item, index) => (
                                 <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                            ))}
+                        </Wrap>
+
+                        <Heading
+                            color="brand.black"
+                            textAlign="left"
+                            m="1rem"
+                        >
+                            Your Classes
+                        </Heading>
+                        <Wrap
+                            m="2rem"
+                            spacing="1rem"
+                        >
+                            {registeredClasses.map((item, index) => (
+                                <ClassCard key={index} classData={item} />
                             ))}
                         </Wrap>
                     </VStack>

@@ -10,11 +10,12 @@ import moment from 'moment';
 import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
 import axios from "axios";
+import CreateClassButton from "../components/permissions/CreateClassButton";
+import ClassCard from "../components/ClassCard";
 
 
 export default function Classes({isOpen, onToggle}) 
 {
-
 
     // Saved as a date object, for calendar
     const [dateState, setDateState] = useState(new Date())
@@ -31,6 +32,7 @@ export default function Classes({isOpen, onToggle})
             `http://localhost:8000/classes/`
         )
         .then((response) => {
+            console.log(response.data)
             setClasses(response.data.Classes);
         })
         .catch((error) => {
@@ -42,8 +44,9 @@ export default function Classes({isOpen, onToggle})
     var classesMap = "";
 
     classesMap = classes.map( (item) => { 
-    if (new Date(item.classTime).getDate() == dateState.getDate())
-        return <ListItem className={item.name} description={item.description} action={item.registeredParticipants <= item.capacity ? "open" : "full"}/> 
+    if (new Date(item.class_time).getDate() == dateState.getDate()) // TODO: Want to turn this into a reuseable event button component.
+        // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
+         return <ClassCard classData={item} /> 
     return <></>
     }
     )
@@ -75,7 +78,9 @@ export default function Classes({isOpen, onToggle})
                     color="brand.black"
                     textAlign="left"
                     m="1rem"
-                    >Available Classes
+                    >
+                        Available Classes
+                        <CreateClassButton />
                     </Heading>
                     {classesMap}
                 </VStack>
@@ -94,7 +99,7 @@ export default function Classes({isOpen, onToggle})
                     >
                         Look for a Class
                     </Heading>
-                    <Calendar value={dateState} onChange={changeDate}/>
+                    <Calendar className="calendar-large" value={dateState} onChange={changeDate}/>
                 </Stack>
             </GridItem>
         </Grid>

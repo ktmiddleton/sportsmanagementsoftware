@@ -12,6 +12,12 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ClubSportTeamPage from './pages/ClubSportTeamPage';
 import IntramuralSportTeamPage from './pages/IntramuralSportTeamPage';
+import Admin from './pages/Admin';
+import { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { UserProvider } from './components/UserContext';
+import ClassPage from './pages/ClassPage';
+import IntramuralSportPage from './pages/IntramuralSportPage';
 
 
 // --loyola-green:#005a3c;
@@ -54,6 +60,21 @@ const theme = extendTheme({
   components: {
     Button: {
       variants: {
+        submit: 
+        {
+          bg: "brand.brightGreen",
+          color: "brand.white",
+          fontSize: "1.3rem",
+          borderRadius: "6px",
+          _active: 
+          {
+            bg: "brand.active.brightGreen",
+          },
+          _hover: 
+          {
+            bg: "brand.hover.brightGreen",
+          },
+        },
         sidebar: {
           width: "100%",
           height: "6rem",
@@ -97,7 +118,7 @@ const theme = extendTheme({
           bg: "brand.brightGreen",
           color: "brand.white",
           fontSize: "1.3rem",
-          borderRadius: "0px",
+          borderRadius: "6px",
           _active: 
           {
             color: "brand.black",
@@ -116,7 +137,7 @@ const theme = extendTheme({
           bg: "brand.yellow",
           color: "brand.white",
           fontSize: "1.3rem",
-          borderRadius: "0px",
+          borderRadius: "6px",
           _active: 
           {
             color: "brand.black",
@@ -136,7 +157,7 @@ const theme = extendTheme({
           bg: "brand.houndsGrey",
           color: "brand.black",
           fontSize: "1.3rem",
-          borderRadius: "0px",
+          borderRadius: "6px",
         }
       },
     },
@@ -154,9 +175,29 @@ const theme = extendTheme({
 
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
+
+  // useEffect(() => {
+  //   // axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
+  //   // .then((response) => {
+  //   //   console.log(response);
+  //   // })
+  //   // .catch((error) => {
+  //   //   console.log(error);
+  //   // });
+
+  //   // function handleChangeStorage() {
+  //   //   console.log("CHANGED STORAGE")
+  //   //   setUsername(localStorage.getItem("username"));
+  //   // }
+
+  //   // window.addEventListener('storage', handleChangeStorage);
+  //   // return () => window.removeEventListener('storage', handleChangeStorage);
+  // }, [])
+  
   
   return (
     <div className="App">
+      <UserProvider>
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
             <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle}/>} />
@@ -165,12 +206,16 @@ function App() {
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsports' element={<ClubSports isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsportteam/:teamId' element={<ClubSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/intramuralsport/:sportId' element={<IntramuralSportPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramuralsportteam/:teamId' element={<IntramuralSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/class/:classId' element={<ClassPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
+            <Route path='/admin' element={<Admin openState={isOpen} onToggle={onToggle} />}/>
           </Routes>
         </ChakraProvider>
+      </UserProvider>
     </div>
   );
 }

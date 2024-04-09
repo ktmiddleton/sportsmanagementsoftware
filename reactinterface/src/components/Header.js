@@ -18,12 +18,16 @@ import {
 import { ReactComponent as LoyolaMDLogo } from '../assets/LoyolaMDLogo.svg';
 import { FaUserCircle } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import { RiAdminFill } from "react-icons/ri";
+import { useUser } from "./UserContext";
 
-
+const GROUP_NAME = "admin"
 
 export default function Header(props) 
 {
     const navigate = useNavigate();
+
+    const {user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
     function handleNavigate(path) 
     {
@@ -32,6 +36,8 @@ export default function Header(props)
 
     function handleLogout() {
         window.localStorage.removeItem("token");
+        window.localStorage.removeItem("email");
+        window.localStorage.removeItem("username");
         navigate("/login");
     }
 
@@ -61,6 +67,19 @@ export default function Header(props)
             <div className="headerbuttons">
                 {props.buttons ?
                     <>
+                        {userHasGroup(GROUP_NAME) ? 
+                        <IconButton 
+                            aria-label="Administration"
+                            as={RiAdminFill}
+                            boxSize={16}
+                            mr={5}
+                            color={"brand.white"}
+                            bg={"brand.loyolaGreen"}
+                            onClick={handleNavigate("/admin")}
+                            _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
+                        /> 
+                        : 
+                        <></>}
                         <IconButton
                             aria-label='Settings'
                             as={IoSettingsSharp} 
