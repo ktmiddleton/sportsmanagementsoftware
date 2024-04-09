@@ -1,6 +1,6 @@
 import React from "react";
 import { DeleteIcon } from '@chakra-ui/icons';
-import { IconButton, useDisclosure } from "@chakra-ui/react";
+import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { useUser } from "../UserContext";
 import DeleteClubSportForm from "./forms/DeleteClubSportForm";
 
@@ -21,15 +21,17 @@ function DeleteClubSportButton({ teamData }) {
     return (
         userHasPerm(PERM_NAME) ?
             <div className="delete-club-sport-button">
-                <IconButton
-                    m="1rem"
-                    aria-label="Add"
-                    icon={<DeleteIcon />}
-                    isRound={true}
-                    size="lg"
-                    bg="brand.brightGreen"
-                    onClick={() => buttonClick()} // Define your click event handler
-                />
+                <Tooltip hasArrow label='Delete Club Sport' bg='gray.300' color='black'>
+                    <IconButton
+                        m="1rem"
+                        aria-label="Add"
+                        icon={<DeleteIcon />}
+                        isRound={true}
+                        size="lg"
+                        bg="brand.brightGreen"
+                        onClick={() => buttonClick()} // Define your click event handler
+                    />
+                </Tooltip>
                 <DeleteClubSportForm teamData={teamData} isOpen={isOpen} onClose={onClose} />
             </div>
         :

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AddIcon } from '@chakra-ui/icons';
-import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { useUser } from "../UserContext";
 import axios from "axios";
 import CreateIntramuralSportTeamForm from "./forms/CreateIntramuralSportTeamForm";
@@ -22,15 +22,17 @@ function CreateIntramuralSportTeamButton({ sportData }) {
     return (
         userHasPerm(PERM_NAME) ?
             <div className="create-intramural-sport-team-button">
-                <IconButton
-                    m="1rem"
-                    aria-label="Add"
-                    icon={<AddIcon />}
-                    isRound={true}
-                    size="lg"
-                    bg="brand.brightGreen"
-                    onClick={() => buttonClick()} // Define your click event handler
-                />
+                <Tooltip hasArrow label='Create Intramural Sport Team' bg='gray.300' color='black'>
+                    <IconButton
+                        m="1rem"
+                        aria-label="Add"
+                        icon={<AddIcon />}
+                        isRound={true}
+                        size="lg"
+                        bg="brand.brightGreen"
+                        onClick={() => buttonClick()} // Define your click event handler
+                    />
+                </Tooltip>
                 <CreateIntramuralSportTeamForm isOpen={isOpen} onClose={onClose} sportData={sportData} />
             </div>
         :

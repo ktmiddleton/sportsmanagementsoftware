@@ -1,6 +1,6 @@
 import React from "react";
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Button, IconButton, useDisclosure } from "@chakra-ui/react";
+import { Button, IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { useUser } from "../UserContext";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import DeleteClubSportForm from "./forms/DeleteClubSportForm";
@@ -24,17 +24,19 @@ function PromoteCaptainButton({ teamData }) {
         // In short, the user must either be an admin or must be a captain OF THIS TEAM in order to promote other users to captain
         userHasGroup("admin") || (userHasPerm(PERM_NAME) && userCaptainingTeam(teamData.id)) ?
             <div className="promote-captain-button">
-                <Button
-                    m="1rem"
-                    aria-label="Add"
-                    leftIcon={<PersonAddIcon />}
-                    isRound={true}
-                    size="lg"
-                    bg="brand.brightGreen"
-                    onClick={() => buttonClick()} // Define your click event handler
-                >
-                    Add Captain
-                </Button>
+                <Tooltip hasArrow label='Promote User to Captain' bg='gray.300' color='black'>
+                    <Button
+                        m="1rem"
+                        aria-label="Add"
+                        leftIcon={<PersonAddIcon />}
+                        isRound={true}
+                        size="lg"
+                        bg="brand.brightGreen"
+                        onClick={() => buttonClick()} // Define your click event handler
+                    >
+                        Add Captain
+                    </Button>
+                </Tooltip>
                 <PromoteCaptainForm teamData={teamData} isOpen={isOpen} onClose={onClose} />
             </div>
         :
