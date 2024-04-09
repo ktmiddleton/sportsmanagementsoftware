@@ -49,10 +49,35 @@ export default function Admin({openState, onToggle})
 
     userMap = userList.map( (item) => {
     
-    // Need to put EditUserForm and DeleteUserForm as components inside of UserList. Then move state variables into UserList. This will fix buggy behavior.
+    var userGroups = [];
+    
+    for (let i =0; i < item.groups.length; i++) 
+    {
+        if (item.groups[i].name == "admin")
+        {
+            userGroups.push("admin");
+        }
+        if (item.groups[i].name == "instructor")
+        {
+            userGroups.push("instructor");
+        }
+        if (item.groups[i].name == "referee")
+        {
+            userGroups.push("referee");
+        }
+        if (item.groups[i].name == "captain")
+        {
+            userGroups.push("captain");
+        }
+        if (item.groups[i].name == "user") 
+        {
+            userGroups.push("user");
+        }
+    }
+    
     return (
         <>
-            <UserList username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name} status={item.groups.length == 0 ? "user" : item.groups[0].name}/>
+            <UserList username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name} groups={userGroups}/>
         </>)
 })
 

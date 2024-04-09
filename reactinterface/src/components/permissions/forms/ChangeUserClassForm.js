@@ -7,21 +7,20 @@ import axios from "axios";
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@chakra-ui/react";
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
+import MultiSelectQuestion from "../questions/MultiSelectQuestion";
+import { useUser } from "../../UserContext";
 
-function ChangeUserClassForm({ isOpen, onClose, username}) {
 
+
+function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
+    
     const toast = useToast()
-
     const submitForm = (formValues) => {
-        console.log(formValues)
-        let data = {
-            ...formValues,
-            token: localStorage.getItem("token")
-        }
-        axios.post(
-            `http://localhost:8000/user/addGroup`,
-            data
+        axios.patch(
+            `http://localhost:8000/user/changegroup/?token=${localStorage.getItem("token")}&username=${username}`,
+            formValues
         ).then((response) => {
+            console.log(formValues)
             isOpen = !isOpen;
             window.location.reload();
             toast({
@@ -73,10 +72,10 @@ function ChangeUserClassForm({ isOpen, onClose, username}) {
                                     <Heading>
                                         Current User Class: {}
                                     </Heading>
-                                    <DropdownQuestion 
-                                        fieldName="userclass" 
+                                    <MultiSelectQuestion 
+                                        fieldName="groups" 
                                         label="User Class" 
-                                        placeHolder=" "
+                                        checkedList={groups}
                                         required={true}
                                         options={[
                                             { value: 'captain', label: 'Captain' },

@@ -9,7 +9,7 @@ import ChangeUserClassForm from "./forms/ChangeUserClassForm";
 const PERM_NAME1 = "can_update_users";
 const PERM_NAME2 = "can_delete_users";
 
-export default function UserList({username, email, first_name, last_name, status}) {
+export default function UserList({username, email, first_name, last_name, groups}) {
 
     const { 
         isOpen: isOpenEdit, 
@@ -43,7 +43,7 @@ export default function UserList({username, email, first_name, last_name, status
                     <Avatar size="lg" src="./Placeholder.png" />
                     <VStack w="100%" alignItems={"baseline"}>
                         <Heading size="md" mx="2">{username}</Heading>
-                        <Text fontSize="sm" noOfLines={1}>{status}</Text>
+                        <Text fontSize="sm" noOfLines={1}>{groups[groups.length - 1]}</Text>
                     </VStack>
                     <Button 
                     variant="Waitlist"
@@ -82,7 +82,7 @@ export default function UserList({username, email, first_name, last_name, status
             </Flex>
             <EditUserForm username={username} email={email} first_name={first_name} last_name={last_name} isOpen={isOpenEdit} onClose={onCloseEdit}/>
             <DeleteUserForm username={username} isOpen={isOpenDelete} onClose={onCloseDelete}/>
-            <ChangeUserClassForm username={username} isOpen={isOpenChangeUserClass} onClose={onCloseChangeUserClass}/>
+            <ChangeUserClassForm username={username} isOpen={isOpenChangeUserClass} onClose={onCloseChangeUserClass} groups={groups}/>
         </div>
     );
 }
