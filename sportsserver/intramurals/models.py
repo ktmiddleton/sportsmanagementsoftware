@@ -35,7 +35,7 @@ class IntramuralSportTeam(models.Model):
     registered_participants=models.PositiveIntegerField(default=0)
     members=models.ManyToManyField(User, blank=True)
     registration=models.TextField(choices=REGISTRATION_CHOICES, default="open")
-    sport = models.ForeignKey(IntramuralSport, on_delete=models.CASCADE)
+    sport = models.ForeignKey(IntramuralSport, null=True, on_delete=models.CASCADE)
     
 # Signal to update the registeredTeams count when a team is saved
 @receiver(post_save, sender=IntramuralSportTeam)
