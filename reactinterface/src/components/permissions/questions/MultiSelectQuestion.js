@@ -20,7 +20,8 @@ import React from "react";
  */
 function MultiSelectQuestion({ fieldName, checkedList, label, options, formikProps, required  }) {
 
-    function validateQuestion(value) {
+    function validateQuestion(value) 
+    {
         let error
         if (!value && required) {
           error = `${label} is required 😱`
