@@ -12,43 +12,14 @@ import { useUser } from "../../UserContext";
 
 
 
-function ChangeUserClassForm({ isOpen, onClose, username}) {
-
-    var userGroups = [];
-    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
-
-    if (userHasGroup("admin") == true) 
-    {
-        userGroups.push("admin")
-    }
-    else if (userHasGroup("captain") == true) 
-    {
-        userGroups.push("captain")
-    }
-    else if (userHasGroup("instructor") == true) 
-    {
-        userGroups.push("instructor")
-    }
-    else if (userHasGroup("referee") == true) 
-    {
-        userGroups.push("referee")
-    }
-    else
-    {
-        userGroups.push("user")
-    }
+function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
     
     const toast = useToast()
 
     const submitForm = (formValues) => {
-        console.log(formValues)
-        let data = {
-            ...formValues,
-            token: localStorage.getItem("token")
-        }
-        axios.post(
-            `http://localhost:8000/user/addGroup`,
-            data
+        axios.patch(
+            `http://localhost:8000/user/changegroup/?token=${localStorage.getItem("token")}&username=${username}`,
+            formValues
         ).then((response) => {
             isOpen = !isOpen;
             window.location.reload();
@@ -102,9 +73,9 @@ function ChangeUserClassForm({ isOpen, onClose, username}) {
                                         Current User Class: {}
                                     </Heading>
                                     <MultiSelectQuestion 
-                                        fieldName="userclass" 
+                                        fieldName="groups" 
                                         label="User Class" 
-                                        checkedList={userGroups}
+                                        checkedList={groups}
                                         required={true}
                                         options={[
                                             { value: 'captain', label: 'Captain' },

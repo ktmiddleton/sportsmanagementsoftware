@@ -155,6 +155,32 @@ class AllUsers(APIView):
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
+class ChangeGroup(APIView):
+    """
+    Change a user's classes to match the request
+    data format (url):
+    user/changegroup/?token=_token_&username=_username_
+    MUST BE ADMIN TO USE.
+    """
+    def patch(self, request):
+        token = request.GET.get("token", "default_value")
+        username=request.GET.get("username", "default_value")
+        user = None
+        try:
+            AuthUser = Token.objects.get(key=token).user
+            user = User.objects.get(username=username)
+            print(AuthUser.has_perm('user.can_update_users'))
+            if AuthUser.has_perm('user.can_update_users'):
+                user.groups.clear()
+                print(request.data.get("groups"))
+                for group in request.data.get("groups"):
+                    group = Group.objects.get(name=group)
+                    user.groups.add(group)
+                return Response("User Classes Successfully Updated", status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 # class UserGetGroups(APIView):
 #     """
 #     data format(url):

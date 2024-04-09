@@ -35,7 +35,7 @@ function MultiSelectQuestion({ fieldName, checkedList, label, options, formikPro
                 <FormLabel fontSize="1.5rem">{label}</FormLabel>
                 <CheckboxGroup defaultValue={checkedList}>
                     {options.map(option => (
-                            <Checkbox {...field} key={option.value} value={option.value}>
+                            <Checkbox isDisabled={option.value == 'user' ? true : false}{...field} key={option.value} value={option.value}>
                                 {option.label}
                             </Checkbox>
                         ))}
