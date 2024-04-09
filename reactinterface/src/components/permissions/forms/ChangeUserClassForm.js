@@ -44,7 +44,7 @@ function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
 
     return (
         <Formik
-            initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
+            initialValues={{groups: groups}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
                 console.log(values);
                 submitForm(values);
@@ -54,7 +54,7 @@ function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
             }}
         >
             {(formikProps) => {
-
+                console.log(formikProps.values)
                 return (
                 <Form>
                     <Modal isOpen={isOpen} onClose={onClose}>
