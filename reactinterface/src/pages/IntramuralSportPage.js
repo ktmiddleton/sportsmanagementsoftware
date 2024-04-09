@@ -1,22 +1,41 @@
-import { Grid, GridItem, Wrap, Heading } from "@chakra-ui/react";
+import { Grid, GridItem, Wrap, Heading, Spinner } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import SportCard from "../components/SportCard";
+import { useParams } from "react-router-dom";
 import CreateClubSportButton from "../components/permissions/CreateClubSportButton";
+import CreateIntramuralSportTeamButton from "../components/permissions/CreateIntramuralSportTeamButton";
 
 function IntramuralSportPage({isOpen, onToggle}) {
 
-    const [sportData, setSportData] = useState([]);
+    let { sportId } = useParams();
+
+    const [casualTeamData, setCasualTeamData] = useState([]);
+    const [competitiveTeamData, setCompetitiveTeamData] = useState([]);
+
+    const [sportData, setSportData] = useState(undefined);
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/intramurals/teams/?sport=${sportData.id}`
+            `http://localhost:8000/intramurals/teams/?sport=${sportId}`
         )
         .then((response) => {
             console.log(response.data)
-            setSportData(response.data.ClubSportsTeams);
+            setCasualTeamData(response.data.IntramuralSportsTeams.casual_teams);
+            setCompetitiveTeamData(response.data.IntramuralSportsTeams.competitive_teams);
+        })
+        .catch((error) => {
+            console.log("Error getting intramural teams");
+            console.log(error);
+        })
+        axios.get(
+            `http://localhost:8000/intramurals/?sportId=${sportId}`
+        )
+        .then((response) => {
+            console.log(response.data);
+            setSportData(response.data.IntramuralSports);
         })
         .catch((error) => {
             console.log("Error getting intramural teams");
@@ -25,7 +44,7 @@ function IntramuralSportPage({isOpen, onToggle}) {
     }, []);
 
     return (
-        <div className="ClubSports">
+        <div className="IntramuralSports">
             <Grid
             templateAreas={`"header header header"
                             "nav main main"`}
@@ -50,15 +69,18 @@ function IntramuralSportPage({isOpen, onToggle}) {
                         textAlign="left"
                         m="1rem"
                     >
-                        Available Club Sports
-                        <CreateClubSportButton />
+                        Available {sportData ? sportData.name : <Spinner />} Teams
+                        <CreateIntramuralSportTeamButton sportData={sportData}/>
                     </Heading>
                     <Wrap
                         spacing="1rem"
                         m="2rem"
                         w={"100%"}
                     >
-                        {clubSports.map((item, index) => (
+                        {casualTeamData.map((item, index) => (
+                            <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                        ))}
+                        {competitiveTeamData.map((item, index) => (
                             <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
                         ))}
                     </Wrap>

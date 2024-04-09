@@ -69,7 +69,7 @@ class Command(BaseCommand):
                         codename='can_delete_club_team',
                         name='Can delete club team',
                         content_type=user_type)
-                ### Intramural Teams
+                ### Intramural Teams TODO: May want to add perms for intramural sports in addition to teams
                 create_intramural_team = Permission.objects.create(
                         codename='can_create_intramural_team',
                         name='Can create intramural team',

@@ -32,7 +32,7 @@ class IntramuralSportTeam(models.Model):
     sport_type=models.TextField(choices=SPORT_TYPES_CHOICES, blank=True, default="intramural")
     team_type=models.TextField(choices=TEAM_TYPES_CHOICES, blank=True, default="casual")
     description=models.CharField(max_length=1000, null=True)
-    registeredParticipants=models.PositiveIntegerField(default=0)
+    registered_participants=models.PositiveIntegerField(default=0)
     members=models.ManyToManyField(User, blank=True)
     registration=models.TextField(choices=REGISTRATION_CHOICES, default="open")
     sport = models.ForeignKey(IntramuralSport, on_delete=models.CASCADE)
@@ -55,5 +55,5 @@ def update_team_count_on_delete(sender, instance, **kwargs):
 @receiver(m2m_changed, sender=IntramuralSportTeam.members.through)
 def update_participant_count(sender, instance, action, **kwargs):
     if action in ["post_add", "post_remove"]:
-        instance.registeredParticipants = instance.members.count()
+        instance.registered_participants = instance.members.count()
         instance.save()

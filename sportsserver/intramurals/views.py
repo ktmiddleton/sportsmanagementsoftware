@@ -13,17 +13,28 @@ class IntramuralSportList(APIView):
     """
     data format(url):
     /intramurals/
+    or /intramurals/?sportId=_sport id_
     """
     def get(self, request):
-        teams = IntramuralSport.objects.all()
-        serializer = IntramuralSportSerializer(teams, many=True)
-        return Response({"IntramuralSports": serializer.data})
+        sportId = request.GET.get("sportId","default_value")
+        try:
+            if sportId != "default_value": # Return a single sport based on id
+                team = IntramuralSport.objects.get(pk=sportId)
+                serializer = IntramuralSportSerializer(team)
+                return Response({"IntramuralSports": serializer.data})
+            else:
+                teams = IntramuralSport.objects.all()
+                serializer = IntramuralSportSerializer(teams, many=True)
+                return Response({"IntramuralSports": serializer.data})
+        except IntramuralSport.DoesNotExist:
+            return Response({"error": "Cannot find sport with specified id"}, status=status.HTTP_404_NOT_FOUND)
    
     """
     data format:
     {
         "name": "Soccer",
         "description": "A fun sport.",
+        "registration_deadline" : DateTime
     }
     """
     def post(self, request):
@@ -48,19 +59,27 @@ class IntramuralSportTeamList(APIView):
             serializer = IntramuralSportTeamSerializer(team)
             return Response(serializer.data)
         elif sport != "default_value": # Filter teams based on sport
-            teams = IntramuralSportTeam.objects.filter(sport=sport)
+            casual_teams = IntramuralSportTeam.objects.filter(sport=sport, team_type="casual")
+            casual_serializer = IntramuralSportTeamSerializer(casual_teams, many=True)
+            competitive_teams = IntramuralSportTeam.objects.filter(sport=sport, team_type="competitive")
+            competitive_serializer = IntramuralSportTeamSerializer(competitive_teams, many=True)
+            return Response({"IntramuralSportsTeams": {
+                            "casual_teams": casual_serializer.data,
+                            "competitive_teams": competitive_serializer.data
+                        }})
         else: # Return all teams
             teams = IntramuralSportTeam.objects.all()
-        serializer = IntramuralSportTeamSerializer(teams, many=True)
-        return Response({"IntramuralSportsTeams": serializer.data})
+            serializer = IntramuralSportTeamSerializer(teams, many=True)
+            return Response({"IntramuralSportsTeams": serializer.data})
     
     """
     data format:
     {
         "name": "",
         "description": "A great _sport_ team.",
-        "sport": "Soccer",
+        "sport": #,
         "registration": "open",
+        "team_type": "casual",
         "token": ""
     }
     """

@@ -11,6 +11,7 @@ import Sidebar from "../components/Sidebar";
 import '../css/calendar.css';
 import axios from "axios";
 import IntramuralCard from "../components/IntramuralCard";
+import CreateIntramuralSportButton from "../components/permissions/CreateIntramuralSportButton";
 
 
 export default function Intramurals({isOpen, onToggle}) 
@@ -59,7 +60,9 @@ export default function Intramurals({isOpen, onToggle})
                     color="brand.black"
                     textAlign="left"
                     m="1rem"
-                    >Intramural Teams
+                    >
+                        Intramural Sports
+                        <CreateIntramuralSportButton />
                     </Heading>
                     {intramurals.map( (item) => {
                         // return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
