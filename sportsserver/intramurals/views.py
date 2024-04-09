@@ -34,6 +34,7 @@ class IntramuralSportList(APIView):
     {
         "name": "Soccer",
         "description": "A fun sport.",
+        "registration_opens" : DateTime,
         "registration_deadline" : DateTime
     }
     """
@@ -116,6 +117,7 @@ class UserTeamsList(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     """
+    TODO: May want to prevent user from joining multiple teams or add that option when creating an intramural sport
     Joins a user into a team
     data format:
     {

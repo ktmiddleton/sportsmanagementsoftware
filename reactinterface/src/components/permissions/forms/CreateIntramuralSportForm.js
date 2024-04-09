@@ -86,6 +86,13 @@ function CreateIntramuralSportForm({ isOpen, onClose }) {
                                         formikProps={formikProps}
                                     />
                                     <DateTimeQuestion
+                                        fieldName="registration_opens"
+                                        placeHolder=""
+                                        label="Registration Opens"
+                                        required={true}
+                                        formikProps={formikProps}
+                                    />
+                                    <DateTimeQuestion
                                         fieldName="registration_deadline"
                                         placeHolder=""
                                         label="Registration Deadline"
