@@ -15,12 +15,12 @@ import { useUser } from "../../UserContext";
 function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
     
     const toast = useToast()
-
     const submitForm = (formValues) => {
         axios.patch(
             `http://localhost:8000/user/changegroup/?token=${localStorage.getItem("token")}&username=${username}`,
             formValues
         ).then((response) => {
+            console.log(formValues)
             isOpen = !isOpen;
             window.location.reload();
             toast({
