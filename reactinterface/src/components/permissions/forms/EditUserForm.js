@@ -15,7 +15,8 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
     const submitForm = (formValues) => {
         console.log(formValues)
         axios.patch(
-            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
+            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`,
+            formValues
         ).then((response) => {
             console.log(response)
             isOpen = !isOpen;
