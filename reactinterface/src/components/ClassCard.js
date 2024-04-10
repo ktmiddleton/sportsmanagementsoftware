@@ -98,6 +98,7 @@ export default function ClassCard({classData, image}) {
                 mx="2"
                 maxH="130"
                 overflow="hidden"
+                alignItems="center"
                 onClick={handleClick}
                 _hover={{
                     boxShadow: "4px 4px 5px #cccccc",
