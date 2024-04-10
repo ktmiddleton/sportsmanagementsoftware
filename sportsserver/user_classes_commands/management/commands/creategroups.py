@@ -134,6 +134,24 @@ class Command(BaseCommand):
                         codename='can_administer_game',
                         name='Can administer game',
                         content_type=user_type)
+
+                ### Forms
+                create_forms = Permission.objects.create(
+                        codename='can_create_forms',
+                        name='Can create forms',
+                        content_type=user_type)
+                update_forms = Permission.objects.create(
+                        codename='can_update_forms',
+                        name='Can update forms',
+                        content_type=user_type)
+                read_forms = Permission.objects.create(
+                        codename='can_read_forms',
+                        name='Can read forms',
+                        content_type=user_type)
+                delete_forms = Permission.objects.create(
+                        codename='can_delete_forms',
+                        name='Can delete forms',
+                        content_type=user_type)
                 ### End Permissions
                 # TODO: Other permissions likely needed: can_promote_captain, can_promote_referee, can_promote_instructor
                 # can_modify_league, can_modify_..., can_view_..., etc.
