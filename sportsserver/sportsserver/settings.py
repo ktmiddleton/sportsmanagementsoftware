@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "clubsports",
     "intramurals",
     "user",
+    "forms",
     "user_classes_commands",
 ]
 

@@ -22,5 +22,6 @@ urlpatterns = [
     path("clubsports/", include("clubsports.urls")),
     path("intramurals/", include("intramurals.urls")),
     path("admin/", admin.site.urls),
-    path("user/", include("user.urls"),)
+    path("user/", include("user.urls")),
+    path("forms/", include("forms.urls")),
 ]
