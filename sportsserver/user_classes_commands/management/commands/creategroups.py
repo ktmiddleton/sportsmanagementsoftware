@@ -170,7 +170,8 @@ class Command(BaseCommand):
                                       create_league,
                                       create_class, view_class, update_class, delete_class,
                                       join_class,
-                                      create_game, administer_game)
+                                      create_game, administer_game, 
+                                      create_forms, update_forms, read_forms, delete_forms)
                 
                 captain, created_captain = Group.objects.get_or_create(name='captain')
                 # Add permissions to captain group here
