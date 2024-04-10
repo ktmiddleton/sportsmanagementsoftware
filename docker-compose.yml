@@ -18,8 +18,8 @@ services:
   #     retries: 20
   backend:
     build: ./sportsserver
-    # volumes:
-    #   - ./geodjango:/usr/src/app/backend
+    volumes:
+      - ./sportsserver/db.sqlite3:/usr/src/backend/db.sqlite3
     ports:
       - "8000:8000"
     environment:
