@@ -1,5 +1,7 @@
 from django.db import models
 from user.models import User
+from django.db.models.signals import post_save, post_delete, m2m_changed
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -22,3 +24,10 @@ class ClubSportsTeam(models.Model):
     members=models.ManyToManyField(User, blank=True, related_name="club_team_member")
     captains=models.ManyToManyField(User, blank=True, related_name="club_team_captain")
     registration=models.TextField(choices=REGISTRATION_CHOICES, default="open")
+    
+# Signal to update the registered_participants count when a user joins or leaves
+@receiver(m2m_changed, sender=ClubSportsTeam.members.through)
+def update_participant_count(sender, instance, action, **kwargs):
+    if action in ["post_add", "post_remove"]:
+        instance.registered_participants = instance.members.count()
+        instance.save()

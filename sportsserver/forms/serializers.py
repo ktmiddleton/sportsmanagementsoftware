@@ -18,6 +18,9 @@ class FormInfoSerializer(serializers.ModelSerializer):
         model = FormInfo
         fields = '__all__'
 
+"""
+Used for creating and updating individual forms and fields
+"""
 class FormCreateUpdateSerializer(serializers.ModelSerializer):
     form_info=serializers.PrimaryKeyRelatedField(queryset=FormInfo.objects.all(), required=True)
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
@@ -29,6 +32,9 @@ class FormCreateUpdateSerializer(serializers.ModelSerializer):
         model = Form
         fields = '__all__'
 
+"""
+Used for returning form data through an endpoint
+"""
 class FormSerializer(serializers.ModelSerializer):
     form_info=FormInfoSerializer()
     user = MemberSerializer(required=True)
