@@ -31,6 +31,7 @@ class Form(models.Model):
     clubsport=models.ForeignKey(ClubSportsTeam, blank=True, null=True, on_delete=models.CASCADE)
     class_obj=models.ForeignKey(Class, blank=True, null=True, on_delete=models.CASCADE)
     intramural_team=models.ForeignKey(IntramuralSportTeam, blank=True, null=True, on_delete=models.CASCADE)
+    completed=models.BooleanField(blank=True, default=False)
     
 # Signal to instantiate forms when user joins a club sports team
 @receiver(m2m_changed, sender=ClubSportsTeam.members.through)
