@@ -19,37 +19,36 @@ function FormDisplay({ formData, isOpen, onClose }) {
     const submitForm = (formValues) => {
         console.log(formValues)
         let data = {
-            ...formValues,
-            token: localStorage.getItem("token")
+            ...formValues
         }
-        // axios.post(
-        //     `http://localhost:8000/classes/`,
-        //     data
-        // ).then((response) => {
-        //     isOpen = !isOpen;
-        //     window.location.reload();
-        //     toast({
-        //         title: 'Class successfully created.',
-        //         description: "You've successfully created the class: " + formValues.name + ".",
-        //         status: 'success',
-        //         duration: 9000,
-        //         isClosable: true,
-        //     })
-        // }).catch((error) => {
-        //     toast({
-        //         title: 'Failed to create class.',
-        //         description: "You've encountered an error creating the class " + error.response.data.error,
-        //         status: 'error',
-        //         duration: 9000,
-        //         isClosable: true,
-        //     })
-        //     console.error(error);
-        // });
+        axios.post(
+            `http://localhost:8000/forms/complete/?token=${localStorage.getItem("token")}&formId=${formData.id}`,
+            data
+        ).then((response) => {
+            isOpen = !isOpen;
+            window.location.reload();
+            toast({
+                title: 'Form successfully completed.',
+                description: "You've successfully completed the form: " + formValues.name + ".",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        }).catch((error) => {
+            toast({
+                title: 'Failed to complete form.',
+                description: "You've encountered an error completing the form " + error.response.data.error,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            console.error(error);
+        });
     }
 
     return (
         <Formik
-            initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
+            initialValues={{signature: formData.signature, confirm: formData.completed}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
                 console.log(values);
                 submitForm(values);
@@ -65,6 +64,7 @@ function FormDisplay({ formData, isOpen, onClose }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent maxW="50vw">
+                            {/* TODO: Add whichever other entity pertains to this form to the header or something */}
                             <ModalHeader>{formData.form_info.name}</ModalHeader>
                             
                             <ModalCloseButton />
@@ -85,11 +85,12 @@ function FormDisplay({ formData, isOpen, onClose }) {
                                         padding="6px"
                                         overflowY="scroll"
                                     >
-                                        {formData.form_info.body}
+                                        {/* TODO: I really have no fucking clue whether this is safe or not the name having "dangerous" in it makes me suspicious */}
+                                        <div dangerouslySetInnerHTML={{ __html: formData.form_info.body }} />
                                     </Text>
                                     <TextQuestion
-                                        fieldName="name"
-                                        placeHolder="Name"
+                                        fieldName="signature"
+                                        placeHolder="Full Name"
                                         label="Full Name"
                                         required={true}
                                         formikProps={formikProps}
@@ -98,20 +99,9 @@ function FormDisplay({ formData, isOpen, onClose }) {
                                         fieldName="confirm" 
                                         label="Confirm Signature"
                                         checkboxLabel="By checking this box, I certify that all information provided is accurate and complete to the best of my knowledge."
-                                        required={true}
                                         trueRequired={true}
                                         formikProps={formikProps}
                                     />
-                                    {/* <MultiSelectQuestion 
-                                        fieldName="groups" 
-                                        label="Confirm Signature" 
-                                        // checkedList={groups}
-                                        required={true}
-                                        options={[
-                                            { value: 'certify', label: '' },
-                                        ]}
-                                        formikProps={formikProps}
-                                    /> */}
                                 </VStack>
                             </ModalBody>
 

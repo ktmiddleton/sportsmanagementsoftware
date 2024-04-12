@@ -12,12 +12,20 @@ import '../css/calendar.css';
 import axios from "axios";
 import FormCard from "../components/FormCard";
 import CreateIntramuralSportButton from "../components/permissions/CreateIntramuralSportButton";
+import CreateFormButton from "../components/permissions/CreateFormButton";
+import { useUser } from "../components/UserContext";
+import FormInfoCard from "../components/FormInfoCard";
 
+const VIEW_FORM_INFO_TEMPLATE_PERM = "can_read_forms";
 
 export default function Forms({isOpen, onToggle}) 
 {
 
     const [forms, setForms] = useState([]);
+
+    const [formInfo, setFormInfo] = useState([]);
+
+    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
     useEffect(() => {
         axios.get(
@@ -31,7 +39,21 @@ export default function Forms({isOpen, onToggle})
             console.log("Error getting user forms");
             console.log(error);
         })
-      }, []);
+        console.log(user)
+        if (userHasPerm("can_create_forms")) {
+            axios.get(
+                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`
+            )
+            .then((response) => {
+                console.log(response.data);
+                setFormInfo(response.data.forms);
+            })
+            .catch((error) => {
+                console.log("Error getting user forms");
+                console.log(error);
+            })
+        }
+    }, [user]);
 
     return (
     <div className="intramurals">
@@ -56,16 +78,31 @@ export default function Forms({isOpen, onToggle})
                 <VStack
                  alignItems={"stretch"}
                 >
+                    {userHasPerm(VIEW_FORM_INFO_TEMPLATE_PERM) ?
+                        <>
+                            <Heading
+                            color="brand.black"
+                            textAlign="left"
+                            m="1rem"
+                        >
+                            Admin Forms
+                            <CreateFormButton />
+                        </Heading>
+                        {formInfo.map( (item) => {
+                            return <FormInfoCard formData={item} />
+                        })}
+                        </>
+                    :
+                        <></>
+                    }
                     <Heading
                     color="brand.black"
                     textAlign="left"
                     m="1rem"
                     >
                         My Forms
-                        {/* <CreateIntramuralSportButton /> */}
                     </Heading>
                     {forms.map( (item) => {
-                        // return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
                         return <FormCard formData={item} />
                     })}
                 </VStack>

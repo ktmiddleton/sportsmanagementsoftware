@@ -9,12 +9,12 @@ import React from "react";
  *  <ConfirmCheckbox 
         fieldName="registration" 
         label="Registration Status" 
-        placeHolder=" "
-        required={true}
+        checkboxLabel="label"
+        trueRequired={true}
         formikProps={formikProps}
     />
  */
-function ConfirmCheckbox({ fieldName, label, formikProps, trueRequired, checkboxLabel, required  }) {
+function ConfirmCheckbox({ fieldName, label, formikProps, trueRequired, checkboxLabel  }) {
 
     function validateQuestion(value) 
     {

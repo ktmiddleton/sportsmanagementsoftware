@@ -6,8 +6,11 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import ClassCard from "../components/ClassCard";
+import { useUser } from "../components/UserContext";
 
 function Dashboard({isOpen, onToggle}) {
+    const { user } = useUser();
+    console.log('User in Dashboard:', user);
 
     const [registeredTeams, setRegisteredTeams] = useState([]);
 

@@ -32,12 +32,13 @@ class Form(models.Model):
     class_obj=models.ForeignKey(Class, blank=True, null=True, on_delete=models.CASCADE)
     intramural_team=models.ForeignKey(IntramuralSportTeam, blank=True, null=True, on_delete=models.CASCADE)
     completed=models.BooleanField(blank=True, default=False)
+    signature=models.CharField(blank=True, null=True, max_length=50)
     
 # Signal to instantiate forms when user joins a club sports team
 @receiver(m2m_changed, sender=ClubSportsTeam.members.through)
 def create_clubsport_team_forms(sender, instance, action, pk_set, **kwargs):
     if action in ["post_add"]:#, "post_remove"]:
-        clubsport_forms = FormInfo.objects.filter(class_join=True)
+        clubsport_forms = FormInfo.objects.filter(clubsport_join=True)
         users = User.objects.filter(pk__in=pk_set)
         for form in clubsport_forms:
             for user in users:

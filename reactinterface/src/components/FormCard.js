@@ -16,25 +16,25 @@ export default function FormCard({formData, image}) {
 
     const toast = useToast()
 
-    useEffect(() => {
-        console.log(formData)
-    }, [])
+    // useEffect(() => {
+    //     console.log(formData)
+    // }, [])
 
     /* Method from https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript */
     function calculateTimeRemaining(registration_deadline) {
         const nowDate = new Date();
-        console.log("Now: " + nowDate)
+        // console.log("Now: " + nowDate)
         const deadlineDate = new Date(registration_deadline);
-        console.log("Ends: " + deadlineDate)
+        // console.log("Ends: " + deadlineDate)
         const diffMilli = (deadlineDate - nowDate);
         const daysRemaining = Math.floor(diffMilli / (1000 * 60 * 60 * 24)); 
         const hoursRemaining = Math.floor((diffMilli / (1000 * 60 * 60)) % 24) // Mod 24 to find hours remaining not considering days
         const minsRemaining = Math.floor((diffMilli / (1000 * 60)) % 60) // Mod 60 to find minutes remaining not considering hours
         const secondsRemaining = Math.floor((diffMilli / (1000)) % 60) // Mod 60 to find seconds remining not considering minutes
-        console.log(daysRemaining + " days");
-        console.log(hoursRemaining + " hours");
-        console.log(minsRemaining + " minutes");
-        console.log(secondsRemaining + " seconds");
+        // console.log(daysRemaining + " days");
+        // console.log(hoursRemaining + " hours");
+        // console.log(minsRemaining + " minutes");
+        // console.log(secondsRemaining + " seconds");
 
         let timeString = "";
 
@@ -111,15 +111,13 @@ export default function FormCard({formData, image}) {
     function getButtons() {
         var element = "";
         let action = "" // TODO: Need to also check if user has permissions to register
-        if (calculateTimeRemaining(formData.deadline) !== REGISTRATION_DEADLINE_PASSED_TEXT ) {
+        if (formData.completed) {
+            action="completed"
+        } else if (calculateTimeRemaining(formData.deadline) !== REGISTRATION_DEADLINE_PASSED_TEXT ) {
             action = "complete";
         } else {
             action = "deadlinePassed";
         }
-
-        // if (formData.members.some((member) => member.username === localStorage.getItem("username"))) {
-        //     action = "registered";
-        // }
 
         switch (action) 
         {
@@ -130,7 +128,7 @@ export default function FormCard({formData, image}) {
                 element = <Button m="2" isDisabled="true" variant="Full">Completed</Button>;
                 break;
             case "deadlinePassed":
-                element = <Button m="2" variant="Register">Complete Now</Button>;
+                element = <Button isLoading={joinSubmitting} onClick={(event) => complete(event)} m="2" variant="Register">Complete</Button>;
                 break;
         }
         return element;
