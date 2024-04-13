@@ -16,8 +16,7 @@ import RichTextEditor from 'react-rte';
     />
  */
 function RichTextQuestion({ fieldName, placeHolder, label, formikProps, required  }) {
-    // TODO: Fix cause if its undefined this thing maeks the default text undefined
-    const [editorValue, setEditorValue] = useState(RichTextEditor.createValueFromString(formikProps.values[fieldName], "html"));
+    const [editorValue, setEditorValue] = useState(RichTextEditor.createValueFromString((formikProps.values[fieldName] ? formikProps.values[fieldName] : ""), "html"));
 
     function validateQuestion(value) {
         let error
