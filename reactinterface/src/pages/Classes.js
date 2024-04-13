@@ -84,32 +84,38 @@ export default function Classes({isOpen, onToggle})
                         Available Classes
                         <CreateClassButton />
                     </Heading>
-                    <Skeleton
-                        isLoaded={classesLoaded}
-                        width="90%"
-                        height="10vh"
-                        alignSelf="center"
-                    >
                     {classesMap}
-                    </Skeleton>
-                    <Skeleton // Extra Skeletons look nice
-                        isLoaded={classesLoaded}
-                        width="90%"
-                        height="10vh"
-                        alignSelf="center"
-                    />
-                    <Skeleton // Extra Skeletons look nice
-                        isLoaded={classesLoaded}
-                        width="90%"
-                        height="10vh"
-                        alignSelf="center"
-                    />
-                    <Skeleton // Extra Skeletons look nice
-                        isLoaded={classesLoaded}
-                        width="90%"
-                        height="10vh"
-                        alignSelf="center"
-                    />
+                    {classesLoaded ?
+                            <></>
+                        :
+                            <Box
+                                className="skeleton-coffin"
+                                width="90%"
+                                height="100%"
+                                alignSelf="center"
+                            >
+                                <Skeleton
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                            </Box>
+                        }
                 </VStack>
             </GridItem>
             <GridItem area={'sidebar'}>

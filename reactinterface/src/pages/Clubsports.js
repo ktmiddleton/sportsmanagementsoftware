@@ -1,4 +1,4 @@
-import { Grid, GridItem, Wrap, Heading, Skeleton, VStack } from "@chakra-ui/react";
+import { Grid, GridItem, Wrap, Heading, Skeleton, VStack, Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -57,34 +57,36 @@ function ClubSports({isOpen, onToggle}) {
                             Available Club Sports
                             <CreateClubSportButton />
                         </Heading>
-                        <Skeleton
-                            isLoaded={clubSportsLoaded}
-                            width="90%"
-                            height="20vh"
-                            alignSelf="center"
+                        <Wrap
+                            spacing="1rem"
+                            m="2rem"
+                            w={"100%"}
                         >
-                            <Wrap
-                                spacing="1rem"
-                                m="2rem"
-                                w={"100%"}
+                            {clubSports.map((item, index) => (
+                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                            ))}
+                        </Wrap>
+                        {clubSportsLoaded ?
+                            <></>
+                        :
+                            <Box
+                                className="skeleton-coffin"
+                                width="90%"
+                                height="100%"
+                                alignSelf="center"
                             >
-                                {clubSports.map((item, index) => (
-                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                                ))}
-                            </Wrap>
-                        </Skeleton>
-                        <Skeleton // Extra Skeleton looks nice
-                            isLoaded={clubSportsLoaded}
-                            width="90%"
-                            height="20vh"
-                            alignSelf="center"
-                        />
-                        <Skeleton // Extra Skeleton looks nice
-                            isLoaded={clubSportsLoaded}
-                            width="90%"
-                            height="20vh"
-                            alignSelf="center"
-                        />
+                                <Skeleton
+                                    isLoaded={clubSportsLoaded}
+                                    height="20vh"
+                                    mb="1%"
+                                />
+                                <Skeleton
+                                    isLoaded={clubSportsLoaded}
+                                    height="20vh"
+                                    mb="1%"
+                                />
+                            </Box>
+                        }
                     </VStack>
                 </GridItem>
 

@@ -87,22 +87,30 @@ function Dashboard({isOpen, onToggle}) {
                         >
                             Your Teams
                         </Heading>
-                        <Skeleton
-                            isLoaded={clubSportsLoaded && intramuralTeamsLoaded}
-                            width="90%"
-                            height="20vh"
-                            alignSelf="center"
+                        <Wrap
+                            m="2rem"
+                            spacing="1rem"
                         >
-                            <Wrap
-                                m="2rem"
-                                spacing="1rem"
+                            {registeredTeams.map((item, index) => (
+                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                            ))}
+                        </Wrap>
+                        {clubSportsLoaded ?
+                            <></>
+                        :
+                            <Box
+                                className="skeleton-coffin"
+                                width="90%"
+                                height="100%"
+                                alignSelf="center"
                             >
-                                {registeredTeams.map((item, index) => (
-                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                                ))}
-                            </Wrap>
-                        </Skeleton>
-
+                                <Skeleton
+                                    isLoaded={clubSportsLoaded}
+                                    height="20vh"
+                                    mb="1%"
+                                />
+                            </Box>
+                        }
                         <Heading
                             color="brand.black"
                             textAlign="left"
@@ -110,33 +118,45 @@ function Dashboard({isOpen, onToggle}) {
                         >
                             Your Classes
                         </Heading>
-                        <Skeleton
-                            isLoaded={classesLoaded}
-                            width="90%"
-                            height="10vh"
-                            alignSelf="center"
+                        <Wrap
+                            m="2rem"
+                            spacing="1rem"
                         >
-                            <Wrap
-                                m="2rem"
-                                spacing="1rem"
+                            {registeredClasses.map((item, index) => (
+                                <ClassCard key={index} classData={item} />
+                            ))}
+                        </Wrap>
+                        {classesLoaded ?
+                            <></>
+                        :
+                            <Box
+                                className="skeleton-coffin"
+                                width="90%"
+                                height="100%"
+                                alignSelf="center"
                             >
-                                {registeredClasses.map((item, index) => (
-                                    <ClassCard key={index} classData={item} />
-                                ))}
-                            </Wrap>
-                        </Skeleton>
-                        <Skeleton // Extra Skeleton to look nice
-                            isLoaded={classesLoaded}
-                            width="90%"
-                            height="10vh"
-                            alignSelf="center"
-                        />
-                        <Skeleton // Extra Skeleton to look nice
-                            isLoaded={classesLoaded}
-                            width="90%"
-                            height="10vh"
-                            alignSelf="center"
-                        />
+                                <Skeleton
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={classesLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                            </Box>
+                        }
                     </VStack>
                 </GridItem>
 
