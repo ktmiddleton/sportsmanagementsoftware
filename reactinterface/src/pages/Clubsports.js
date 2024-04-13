@@ -1,4 +1,4 @@
-import { Grid, GridItem, Wrap, Heading } from "@chakra-ui/react";
+import { Grid, GridItem, Wrap, Heading, Skeleton, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -9,6 +9,7 @@ import CreateClubSportButton from "../components/permissions/CreateClubSportButt
 function ClubSports({isOpen, onToggle}) {
 
     const [clubSports, setClubSports] = useState([]);
+    const [clubSportsLoaded, setClubSportsLoaded] = useState(false);
 
     useEffect(() => {
         axios.get(
@@ -16,6 +17,7 @@ function ClubSports({isOpen, onToggle}) {
         )
         .then((response) => {
             setClubSports(response.data.ClubSportsTeams);
+            setClubSportsLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting Club Sports");
@@ -44,23 +46,46 @@ function ClubSports({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'main'}>
-                    <Heading
-                        color="brand.black"
-                        textAlign="left"
-                        m="1rem"
+                    <VStack
+                        align={"baseline"}
                     >
-                        Available Club Sports
-                        <CreateClubSportButton />
-                    </Heading>
-                    <Wrap
-                        spacing="1rem"
-                        m="2rem"
-                        w={"100%"}
-                    >
-                        {clubSports.map((item, index) => (
-                            <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                        ))}
-                    </Wrap>
+                        <Heading
+                            color="brand.black"
+                            textAlign="left"
+                            m="1rem"
+                        >
+                            Available Club Sports
+                            <CreateClubSportButton />
+                        </Heading>
+                        <Skeleton
+                            isLoaded={clubSportsLoaded}
+                            width="90%"
+                            height="20vh"
+                            alignSelf="center"
+                        >
+                            <Wrap
+                                spacing="1rem"
+                                m="2rem"
+                                w={"100%"}
+                            >
+                                {clubSports.map((item, index) => (
+                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                ))}
+                            </Wrap>
+                        </Skeleton>
+                        <Skeleton // Extra Skeleton looks nice
+                            isLoaded={clubSportsLoaded}
+                            width="90%"
+                            height="20vh"
+                            alignSelf="center"
+                        />
+                        <Skeleton // Extra Skeleton looks nice
+                            isLoaded={clubSportsLoaded}
+                            width="90%"
+                            height="20vh"
+                            alignSelf="center"
+                        />
+                    </VStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>

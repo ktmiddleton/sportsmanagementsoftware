@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Flex, Icon, IconButton, Text, VStack, background, useDisclosure } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
@@ -18,6 +18,7 @@ const MotionBox = motion(Box);
 function Sidebar({isOpen, onToggle}) {
     const navigate = useNavigate();
     const location = useLocation();
+    const [innerBoxHeight, setInnerBoxHeight] = useState("90vh");
 
     function handleNavigate(path) {
         return () => navigate(path);
@@ -36,19 +37,33 @@ function Sidebar({isOpen, onToggle}) {
         onToggle();
     }
 
+    useEffect(() => {
+        const updateInnerBoxHeight = () => {
+            var body = document.body,
+            html = document.documentElement;
+
+            // TODO: NEED TO EXTEND SIDEBAR TO BOTTOM OF PAGE
+            var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                                    html.clientHeight, html.scrollHeight, html.offsetHeight );
+            setInnerBoxHeight(height);
+            console.log(height + "px");
+        };
+
+        window.addEventListener('resize', updateInnerBoxHeight);
+        updateInnerBoxHeight();
+    }, [])
+
     return (
         <AnimatePresence>
             <MotionBox
                 animate={{ width: (isOpen ? "100%" : "6rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
-                minHeight="100vh"
-                h="100%"
             >
                 <Box // Sidebar background
                     as="aside"
                     w={{ base: "100%" }}
                     bg="brand.darkGrey"
-                    h="100%"
+                    h={innerBoxHeight}
                     // p="3px"
                 >
                     <VStack align="stretch" spacing="0px">

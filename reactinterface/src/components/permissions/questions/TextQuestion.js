@@ -24,6 +24,8 @@ function TextQuestion({ fieldName, placeHolder, label, formikProps, required  })
         return error
     }
 
+    console.log(formikProps.values)
+
     return (
         <Field name={fieldName} validate={validateQuestion}>
             {({ field, form }) => (

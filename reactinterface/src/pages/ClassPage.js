@@ -17,6 +17,7 @@ function ClassPage({isOpen, onToggle}) {
     const [joinSubmitting, setJoinSubmitting] = useState(false);
 
     const [classData, setClassData] = useState({ members: [] });
+    const [classLoaded, setClassLoaded] = useState(false);
 
     useEffect(() => {
         axios.get(
@@ -24,6 +25,7 @@ function ClassPage({isOpen, onToggle}) {
         )
         .then((response) => {
             setClassData(response.data);
+            setClassLoaded(true);
             console.log(response.data)
         })
         .catch((error) => {

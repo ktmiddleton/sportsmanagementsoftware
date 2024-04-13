@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SportCard from "../components/SportCard";
-import { Wrap, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Wrap, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -9,10 +9,10 @@ import ClassCard from "../components/ClassCard";
 import { useUser } from "../components/UserContext";
 
 function Dashboard({isOpen, onToggle}) {
-    const { user } = useUser();
-    console.log('User in Dashboard:', user);
-
     const [registeredTeams, setRegisteredTeams] = useState([]);
+    const [clubSportsLoaded, setClubSportsLoaded] = useState(false);
+    const [intramuralTeamsLoaded, setIntramuralTeamsLoaded] = useState(false);
+    const [classesLoaded, setClassesLoaded] = useState(false);
 
     const [registeredClasses, setRegisteredClasses] = useState([]);
 
@@ -23,6 +23,7 @@ function Dashboard({isOpen, onToggle}) {
         )
         .then((response) => {
             setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
+            setClubSportsLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting users Club Sports");
@@ -34,17 +35,19 @@ function Dashboard({isOpen, onToggle}) {
         )
         .then((response) => {
             setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
+            setIntramuralTeamsLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting users Intramural Sports");
             console.log(error);
         });
 
-        axios.get( // Get Intramural Sports
+        axios.get( // Get Classes
             `http://localhost:8000/classes/userclasses/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredClasses(response.data);
+            setClassesLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting users Classes");
@@ -75,23 +78,30 @@ function Dashboard({isOpen, onToggle}) {
 
                 <GridItem area={'main'}>
                     <VStack
-                    align={"baseline"}
+                        align={"baseline"}
                     >
                         <Heading
                             color="brand.black"
                             textAlign="left"
                             m="1rem"
                         >
-                            Your Registrations
+                            Your Teams
                         </Heading>
-                        <Wrap
-                            m="2rem"
-                            spacing="1rem"
+                        <Skeleton
+                            isLoaded={clubSportsLoaded && intramuralTeamsLoaded}
+                            width="90%"
+                            height="20vh"
+                            alignSelf="center"
                         >
-                            {registeredTeams.map((item, index) => (
-                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                            ))}
-                        </Wrap>
+                            <Wrap
+                                m="2rem"
+                                spacing="1rem"
+                            >
+                                {registeredTeams.map((item, index) => (
+                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                ))}
+                            </Wrap>
+                        </Skeleton>
 
                         <Heading
                             color="brand.black"
@@ -100,14 +110,33 @@ function Dashboard({isOpen, onToggle}) {
                         >
                             Your Classes
                         </Heading>
-                        <Wrap
-                            m="2rem"
-                            spacing="1rem"
+                        <Skeleton
+                            isLoaded={classesLoaded}
+                            width="90%"
+                            height="10vh"
+                            alignSelf="center"
                         >
-                            {registeredClasses.map((item, index) => (
-                                <ClassCard key={index} classData={item} />
-                            ))}
-                        </Wrap>
+                            <Wrap
+                                m="2rem"
+                                spacing="1rem"
+                            >
+                                {registeredClasses.map((item, index) => (
+                                    <ClassCard key={index} classData={item} />
+                                ))}
+                            </Wrap>
+                        </Skeleton>
+                        <Skeleton // Extra Skeleton to look nice
+                            isLoaded={classesLoaded}
+                            width="90%"
+                            height="10vh"
+                            alignSelf="center"
+                        />
+                        <Skeleton // Extra Skeleton to look nice
+                            isLoaded={classesLoaded}
+                            width="90%"
+                            height="10vh"
+                            alignSelf="center"
+                        />
                     </VStack>
                 </GridItem>
 

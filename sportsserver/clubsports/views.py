@@ -29,17 +29,17 @@ class ClubSportsTeamsList(APIView):
    
     """
     Create a club sports team
+    clubsports/?token=_token_
     data format:
     {
         "name": "",
         "description": "",
         "registration": "open",
-        "token": ""
     }
     """
     # Requires permisssion can_create_club_team
     def post(self, request):
-        token = request.data.get("token")
+        token = request.GET.get("token", "default_value")
         try:
             user = Token.objects.get(key=token).user
             if user.has_perm("user.can_create_club_team"):
@@ -50,6 +50,38 @@ class ClubSportsTeamsList(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        except Token.DoesNotExist:
+            return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+    """
+    Update a club sports team
+    clubsports/?token=_token_&teamId=_team id_
+    data format:
+    {
+        "name": "",
+        "description": "",
+        "registration": "open",
+    }
+    """
+    # Requires permisssion can_update_club_team
+    def patch(self, request):
+        token = request.GET.get("token", "default_value")
+        team_id = request.GET.get("teamId", "default_value")
+        try:
+            user = Token.objects.get(key=token).user
+            team = ClubSportsTeam.objects.get(pk=team_id)
+            if user.has_perm("user.can_update_club_team"):
+                request.data.pop("members") # TODO: Quick fix don't need to pass members or captains it messes up serialization
+                request.data.pop("captains")
+                serializer = ClubSportsTeamSerializer(team, data=request.data, partial=True)
+                if serializer.is_valid(): 
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        except ClubSportsTeam.DoesNotExist:
+            return Response({"error": "Team with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except Token.DoesNotExist:
             return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
     

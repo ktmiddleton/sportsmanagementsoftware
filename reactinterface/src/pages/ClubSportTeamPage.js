@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
+import EditClubSportButton from "../components/permissions/EditClubSportButton";
 
 function ClubSportTeamPage({isOpen, onToggle}) {
 
@@ -157,6 +158,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                         }
                         <PromoteCaptainButton teamData={teamData} />
                         <DeleteClubSportButton teamData={teamData} />
+                        <EditClubSportButton teamData={teamData}/>
                     </Heading>
                     <Grid
                         templateRows={{base: '1fr 1fr'}}

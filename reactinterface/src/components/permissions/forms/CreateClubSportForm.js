@@ -8,44 +8,69 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@ch
 import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
-function CreateClubSportForm({ isOpen, onClose }) {
+function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
 
     const toast = useToast()
 
     const submitForm = (formValues) => {
         console.log(formValues)
         let data = {
-            ...formValues,
-            token: localStorage.getItem("token")
+            ...formValues
         }
-        axios.post(
-            `http://localhost:8000/clubsports/`,
-            data
-        ).then((response) => {
-            isOpen = !isOpen;
-            window.location.reload();
-            toast({
-                title: 'Team successfully created.',
-                description: "You've successfully created the team: " + formValues.name + ".",
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
-        }).catch((error) => {
-            toast({
-                title: 'Failed to create team.',
-                description: "You've encountered an error creating the team " + error.response.data.error,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            })
-            console.error(error);
-        });
+        if (mode === "create") {
+            axios.post(
+                `http://localhost:8000/clubsports/?token=${localStorage.getItem("token")}`,
+                data
+            ).then((response) => {
+                isOpen = !isOpen;
+                window.location.reload();
+                toast({
+                    title: 'Team successfully created.',
+                    description: "You've successfully created the team: " + formValues.name + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to create team.',
+                    description: "You've encountered an error creating the team " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        } else if (mode === "update") {
+            axios.patch(
+                `http://localhost:8000/clubsports/?token=${localStorage.getItem("token")}&teamId=${pk}`,
+                data
+            ).then((response) => {
+                isOpen = !isOpen;
+                window.location.reload();
+                toast({
+                    title: 'Team successfully updated.',
+                    description: "You've successfully updated the team: " + formValues.name + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to update team.',
+                    description: "You've encountered an error updating the team " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        }
     }
 
     return (
         <Formik
-            initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
+            initialValues={{...initialValues}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
                 console.log(values);
                 submitForm(values);
@@ -61,7 +86,7 @@ function CreateClubSportForm({ isOpen, onClose }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Create Club Sport Team</ModalHeader>
+                            <ModalHeader>{mode == "create" ? "Create" : "Update"} Club Sport Team</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -107,7 +132,7 @@ function CreateClubSportForm({ isOpen, onClose }) {
                                     isLoading={formikProps.isSubmitting}
                                     onClick={formikProps.handleSubmit}
                                 >
-                                    Submit
+                                    {mode == "create" ? "Submit" : "Update"}
                                 </Button>
                             </ModalFooter>
                         </ModalContent>

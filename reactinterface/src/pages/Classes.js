@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -25,6 +25,7 @@ export default function Classes({isOpen, onToggle})
     }
 
     const [classes, setClasses] = useState([]);
+    const [classesLoaded, setClassesLoaded] = useState(false);
 
 
     useEffect(() => {
@@ -34,6 +35,7 @@ export default function Classes({isOpen, onToggle})
         .then((response) => {
             console.log(response.data)
             setClasses(response.data.Classes);
+            setClassesLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting classes");
@@ -82,7 +84,32 @@ export default function Classes({isOpen, onToggle})
                         Available Classes
                         <CreateClassButton />
                     </Heading>
+                    <Skeleton
+                        isLoaded={classesLoaded}
+                        width="90%"
+                        height="10vh"
+                        alignSelf="center"
+                    >
                     {classesMap}
+                    </Skeleton>
+                    <Skeleton // Extra Skeletons look nice
+                        isLoaded={classesLoaded}
+                        width="90%"
+                        height="10vh"
+                        alignSelf="center"
+                    />
+                    <Skeleton // Extra Skeletons look nice
+                        isLoaded={classesLoaded}
+                        width="90%"
+                        height="10vh"
+                        alignSelf="center"
+                    />
+                    <Skeleton // Extra Skeletons look nice
+                        isLoaded={classesLoaded}
+                        width="90%"
+                        height="10vh"
+                        alignSelf="center"
+                    />
                 </VStack>
             </GridItem>
             <GridItem area={'sidebar'}>
