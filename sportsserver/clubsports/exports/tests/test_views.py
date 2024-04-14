@@ -20,6 +20,9 @@ CLOSED_TEAM_DESCRIPTION = 'A closed team'
 TEST_POST_TEAM_NAME = 'POST Team'
 TEST_POST_TEAM_DESCRIPTION = 'A POST team'
 
+TEST_PATCH_TEAM_NAME = 'PATCH Team'
+TEST_PATCH_TEAM_DESCRIPTION = 'A PATCH team'
+
 class ClubSportsTeamsViewTest(TestCase):
 
     @classmethod
@@ -94,29 +97,78 @@ class ClubSportsTeamsViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(TEST_TEAM_NAME, str(response.data))
 
-    # POST UNAUTHORIZED /clubsports/
+    # POST UNAUTHORIZED /clubsports/?token=_token_
     def test_post_club_sport_team_UNAUTHORIZED(self):
-        print('POST UNAUTHORIZED /clubsports/')
+        print('POST UNAUTHORIZED /clubsports/?token=' + str(self.token.key))
         response_post = self.client.post('/clubsports/?token=' + str(self.token.key),
         {
             "name": TEST_POST_TEAM_NAME,
-            "description": TEST_POST_TEAM_DESCRIPTION,
+            "description": TEST_POST_TEAM_DESCRIPTION
         })
         self.assertEqual(response_post.status_code, 401) # Make sure we get the UNAUTHORIZED status code
         response_get = self.client.get('/clubsports/')
         self.assertNotIn(TEST_POST_TEAM_NAME, str(response_get.data)) # Ensure its not there
     
-    # POST AUTHORIZED /clubsports/
+    # POST AUTHORIZED /clubsports/?token=_token_
     def test_post_club_sport_team_AUTHORIZED(self):
-        print('POST AUTHORIZED /clubsports/')
+        print('POST AUTHORIZED /clubsports/?token=' + str(self.admin_token.key))
         response_post = self.client.post('/clubsports/?token=' + str(self.admin_token.key),
         {
             "name": TEST_POST_TEAM_NAME,
-            "description": TEST_POST_TEAM_DESCRIPTION,
+            "description": TEST_POST_TEAM_DESCRIPTION
         })
         self.assertEqual(response_post.status_code, 201) # Make sure we get the CREATED status code
         response_get = self.client.get('/clubsports/')
         self.assertIn(TEST_POST_TEAM_NAME, str(response_get.data)) # Ensure its not there
+        
+    # PATCH UNAUTHORIZED /clubsports/?token=_token_&teamId=_team id_
+    def test_patch_club_sport_team_UNAUTHORIZED(self):
+        print('PATCH UNAUTHORIZED /clubsports/?token=' + str(self.token.key) + "&teamId=" + str(1))
+        
+        # First, post a new clubsport
+        response_post = self.client.post('/clubsports/?token=' + str(self.admin_token.key),
+        {
+            "name": TEST_POST_TEAM_NAME,
+            "description": TEST_POST_TEAM_DESCRIPTION
+        })
+        self.assertEqual(response_post.status_code, 201) # Make sure we get the CREATED status code
+        
+        # Now patch that clubsport
+        response_patch = self.client.patch('/clubsports/?token=' + str(self.token.key) + "&teamId=" + str(response_post.data["id"]),
+        {
+            "name": TEST_PATCH_TEAM_NAME,
+            "description": TEST_PATCH_TEAM_DESCRIPTION
+        })
+        self.assertEqual(response_patch.status_code, 401) # Make sure we get the UNAUTHORIZED status code
+        
+        # Now get that clubsport
+        response_get = self.client.get('/clubsports/?teamId=' + str(response_post.data["id"]))
+        self.assertNotIn(TEST_PATCH_TEAM_NAME, str(response_get.data)) # Ensure its not there
+    
+    # PATCH AUTHORIZED /clubsports/
+    def test_patch_club_sport_team_AUTHORIZED(self):
+        print('PATCH AUTHORIZED /clubsports/?token=' + str(self.token.key) + "&teamId=" + str(1))
+        
+        # First, post a new clubsport
+        response_post = self.client.post('/clubsports/?token=' + str(self.admin_token.key),
+        {
+            "name": TEST_POST_TEAM_NAME,
+            "description": TEST_POST_TEAM_DESCRIPTION
+        })
+        self.assertEqual(response_post.status_code, 201) # Make sure we get the CREATED status code
+        
+        print(response_post.data)
+        # Now patch that clubsport
+        response_patch = self.client.patch('/clubsports/?token=' + str(self.admin_token.key) + "&teamId=" + str(response_post.data["id"]),
+        {
+            "name": TEST_PATCH_TEAM_NAME,
+            "description": TEST_PATCH_TEAM_DESCRIPTION
+        })
+        self.assertEqual(response_patch.status_code, 201) # Make sure we get the CREATED status code
+
+        # Now get that clubsport
+        response_get = self.client.get('/clubsports/?teamId=' + str(response_post.data["id"]))
+        self.assertIn(TEST_PATCH_TEAM_NAME, str(response_get.data)) # Ensure its in there
 
     # DELETE /clubsports/?teamId=_team id_&token=_token_ UNAUTHORIZED
     def test_delete_club_sport_team_UNAUTHORIZED(self):

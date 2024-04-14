@@ -71,8 +71,10 @@ class ClubSportsTeamsList(APIView):
             user = Token.objects.get(key=token).user
             team = ClubSportsTeam.objects.get(pk=team_id)
             if user.has_perm("user.can_update_club_team"):
-                request.data.pop("members") # TODO: Quick fix don't need to pass members or captains it messes up serialization
-                request.data.pop("captains")
+                if ("members" in request.data):
+                    request.data.pop("members") # TODO: Quick fix don't need to pass members or captains it messes up serialization
+                if ("captains" in request.data):
+                    request.data.pop("captains")
                 serializer = ClubSportsTeamSerializer(team, data=request.data, partial=True)
                 if serializer.is_valid(): 
                     serializer.save()
