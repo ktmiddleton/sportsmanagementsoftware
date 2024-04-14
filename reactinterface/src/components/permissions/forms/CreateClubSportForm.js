@@ -9,7 +9,6 @@ import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
 function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
-
     const toast = useToast()
 
     const submitForm = (formValues) => {
@@ -78,6 +77,7 @@ function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

@@ -8,8 +8,11 @@ import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
 import EditClubSportButton from "../components/permissions/EditClubSportButton";
+import { useUser } from "../components/UserContext";
 
 function ClubSportTeamPage({isOpen, onToggle}) {
+
+    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
     let { teamId } = useParams()
 
@@ -37,7 +40,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
             console.log("Error getting Club Sport team");
             console.log(error);
         })
-    }, []);
+    }, [user]);
 
     function joinTeam() {
         axios.post(`http://localhost:8000/clubsports/userteams/`,

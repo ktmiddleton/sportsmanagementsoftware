@@ -49,7 +49,7 @@ export default function Forms({isOpen, onToggle})
                 setFormInfo(response.data.forms);
             })
             .catch((error) => {
-                console.log("Error getting user forms");
+                console.log("Error getting info forms");
                 console.log(error);
             })
         }

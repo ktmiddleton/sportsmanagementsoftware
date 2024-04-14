@@ -54,7 +54,6 @@ function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
             }}
         >
             {(formikProps) => {
-                console.log(formikProps.values)
                 return (
                 <Form>
                     <Modal isOpen={isOpen} onClose={onClose}>
