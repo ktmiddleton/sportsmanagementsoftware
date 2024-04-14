@@ -46,6 +46,7 @@ export default function DeleteUserForm({ isOpen, onClose, username}) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

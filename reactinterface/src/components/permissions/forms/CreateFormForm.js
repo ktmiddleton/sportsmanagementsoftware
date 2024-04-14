@@ -86,6 +86,7 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

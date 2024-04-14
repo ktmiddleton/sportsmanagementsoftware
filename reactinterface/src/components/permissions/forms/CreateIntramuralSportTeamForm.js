@@ -55,6 +55,7 @@ function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

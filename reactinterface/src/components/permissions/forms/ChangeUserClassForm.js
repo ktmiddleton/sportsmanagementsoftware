@@ -52,6 +52,7 @@ function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
                 return (

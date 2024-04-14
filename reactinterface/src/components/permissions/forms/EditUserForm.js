@@ -49,6 +49,7 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 
