@@ -97,11 +97,10 @@ class ClubSportsTeamsViewTest(TestCase):
     # POST UNAUTHORIZED /clubsports/
     def test_post_club_sport_team_UNAUTHORIZED(self):
         print('POST UNAUTHORIZED /clubsports/')
-        response_post = self.client.post('/clubsports/',
+        response_post = self.client.post('/clubsports/?token=' + str(self.token.key),
         {
             "name": TEST_POST_TEAM_NAME,
             "description": TEST_POST_TEAM_DESCRIPTION,
-            "token": str(self.token.key)
         })
         self.assertEqual(response_post.status_code, 401) # Make sure we get the UNAUTHORIZED status code
         response_get = self.client.get('/clubsports/')
@@ -110,11 +109,10 @@ class ClubSportsTeamsViewTest(TestCase):
     # POST AUTHORIZED /clubsports/
     def test_post_club_sport_team_AUTHORIZED(self):
         print('POST AUTHORIZED /clubsports/')
-        response_post = self.client.post('/clubsports/',
+        response_post = self.client.post('/clubsports/?token=' + str(self.admin_token.key),
         {
             "name": TEST_POST_TEAM_NAME,
             "description": TEST_POST_TEAM_DESCRIPTION,
-            "token": str(self.admin_token.key)
         })
         self.assertEqual(response_post.status_code, 201) # Make sure we get the CREATED status code
         response_get = self.client.get('/clubsports/')
