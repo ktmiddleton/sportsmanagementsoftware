@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast } from "@chakra-ui/react";
+import { Button, ButtonGroup, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -159,9 +159,11 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                 Join Team
                             </Button>
                         }
-                        <PromoteCaptainButton teamData={teamData} />
-                        <DeleteClubSportButton teamData={teamData} />
-                        <EditClubSportButton teamData={teamData}/>
+                        <ButtonGroup isAttached>
+                            <PromoteCaptainButton teamData={teamData} />
+                            <DeleteClubSportButton teamData={teamData} />
+                            <EditClubSportButton teamData={teamData}/>
+                        </ButtonGroup>
                     </Heading>
                     <Grid
                         templateRows={{base: '1fr 1fr'}}
