@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { useDisclosure, IconButton, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Tabs, TabList, TabPanels, TabPanel, Tab, Table, Thead, Tr, Th, Tbody, Td, ButtonGroup } from "@chakra-ui/react";
+import { useDisclosure, IconButton, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Tabs, TabList, TabPanels, TabPanel, Tab, Table, Thead, Tr, Th, Tbody, Td, ButtonGroup, Tfoot } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -13,7 +13,7 @@ import axios from "axios";
 import UserList from '../components/permissions/UserList';
 import { useUser } from "../components/UserContext";
 import CreateUserForm from "../components/permissions/forms/CreateUserForm";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import EditUserForm from "../components/permissions/forms/EditUserForm"
 import DeleteUserForm from "../components/permissions/forms/DeleteUserForm"
 import CreateFormButton from "../components/permissions/CreateFormButton";
@@ -21,6 +21,7 @@ import FormInfoCard from "../components/FormInfoCard";
 import SearchBar from "../components/SearchBar";
 import EditFormButton from "../components/permissions/EditFormButton";
 import DeleteFormButton from "../components/permissions/DeleteFormButton";
+import FormCRUD from "../components/FormCRUD";
 
 const GROUP_NAME = "admin"
 
@@ -37,10 +38,6 @@ export default function Admin({openState, onToggle})
 
     const [userList, setUserList] = useState([]);
 
-    const [formInfo, setFormInfo] = useState([]);
-
-    const [filterFormInfo, setFilterFormInfo] = useState([]);
-
     useEffect(() => {
         axios.get(
             `http://localhost:8000/user/allusers/?token=${localStorage.getItem("token")}`
@@ -52,19 +49,6 @@ export default function Admin({openState, onToggle})
             console.log("Error getting classes");
             console.log(error);
         })
-        if (userHasPerm("can_create_forms")) {
-            axios.get(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`
-            )
-            .then((response) => {
-                console.log(response.data);
-                setFormInfo(response.data.forms);
-            })
-            .catch((error) => {
-                console.log("Error getting user forms");
-                console.log(error);
-            })
-        }
       }, [user]);
 
     var userMap = "";
@@ -167,65 +151,7 @@ export default function Admin({openState, onToggle})
                                 </div>
                             </TabPanel>
                             <TabPanel> {/* Form Tab */}
-                                <div id="form-crud">
-                                    <VStack
-                                        alignItems={"stretch"}
-                                    >
-                                    {userHasPerm("can_read_forms") ?
-                                        <>
-                                            <Heading
-                                                color="brand.black"
-                                                textAlign="left"
-                                                m="1rem"
-                                            >
-                                                Admin Forms
-                                            </Heading>
-                                            <HStack
-                                                width="100%"
-                                            >
-                                                <CreateFormButton />
-                                                <SearchBar data={formInfo} searchField={"name"} setFilteredData={setFilterFormInfo} />
-                                            </HStack>
-                                            <Table size="lg">
-                                                <Thead>
-                                                    <Tr>
-                                                        <Th>Id</Th>
-                                                        <Th>Form Name</Th>
-                                                        <Th>Form Assigned On</Th>
-                                                        <Th>Actions</Th>
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    {filterFormInfo.map( (item) => {
-                                                        return (
-                                                            <Tr>
-                                                                <Td>{item.id}</Td>
-                                                                <Td>{item.name}</Td>
-                                                                <Td>
-                                                                    <Text>{item.clubsport_join ? "Joining Club Sport" : ""}</Text>
-                                                                    <Text>{item.class_join ? "Joining Class" : ""}</Text>
-                                                                    <Text>{item.intramural_team_join ? "Joining Intramural Team" : ""}</Text>
-                                                                </Td>
-                                                                <Td>
-                                                                    <ButtonGroup>
-                                                                        <EditFormButton formData={item} />
-                                                                        <DeleteFormButton pk={item.id} />
-                                                                    </ButtonGroup>
-                                                                </Td>
-                                                            </Tr>
-                                                        )
-                                                    })}
-                                                </Tbody>
-                                            </Table>
-                                            {/* {filterFormInfo.map( (item) => {
-                                                return <FormInfoCard formData={item} />
-                                            })} */}
-                                        </>
-                                    :
-                                        <></>
-                                    }
-                                    </VStack>
-                                </div>
+                                <FormCRUD />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
