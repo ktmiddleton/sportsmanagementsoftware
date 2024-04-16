@@ -87,6 +87,8 @@ class UserGet(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
     
     """
     /user/getuser/?token=_token_&username=_username_
@@ -115,6 +117,8 @@ class UserGet(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
     
     """
     data format (url):
@@ -134,6 +138,8 @@ class UserGet(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
             
         
 class AllUsers(APIView):
@@ -154,6 +160,8 @@ class AllUsers(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
         
 class ChangeGroup(APIView):
     """
@@ -180,6 +188,8 @@ class ChangeGroup(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
 # class UserGetGroups(APIView):
 #     """

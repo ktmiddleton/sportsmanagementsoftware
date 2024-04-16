@@ -69,7 +69,7 @@ class Forms(APIView):
                                 "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count}})
             
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     """
@@ -118,7 +118,7 @@ class Forms(APIView):
                         return Response(serializer.data, status=status.HTTP_201_CREATED)
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
     """
     Update a form info template
@@ -157,7 +157,7 @@ class Forms(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except FormInfo.DoesNotExist:
             return Response({"error": "Forminfo with specified id not found"}, status=status.HTTP_404_NOT_FOUND)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response({"error": "User with specified token not found"}, status=status.HTTP_404_NOT_FOUND)
     """
     DELETE a form info template
@@ -179,7 +179,7 @@ class Forms(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except FormInfo.DoesNotExist:
             return Response({"error": "Forminfo with specified id not found"}, status=status.HTTP_404_NOT_FOUND)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response({"error": "User with specified token not found"}, status=status.HTTP_404_NOT_FOUND)
     
 class FormComplete(APIView):
@@ -214,5 +214,5 @@ class FormComplete(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except Form.DoesNotExist:
             return Response({"error": "Form with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)

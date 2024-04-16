@@ -27,18 +27,18 @@ class ClassesList(APIView):
             return Response({"Classes": serializer.data})
    
     """
+    classes/?token=_token_
     data format:
     {
         "name": "",
         "description": "",
         "capacity": #,
         "class_time": "",
-        "token": ""
     }
     """
     # Requires user permission can_create_class
     def post(self, request):
-        token = request.data.get("token")
+        token = request.GET.get("token", "default_value")
         try:
             user = Token.objects.get(key=token).user
             if user.has_perm("user.can_create_class"):
@@ -53,6 +53,39 @@ class ClassesList(APIView):
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         except Token.DoesNotExist:
             return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+    """
+    Update a class
+    USE 1: classes/?token=_token_&classId=_class id_
+    data format:
+    {
+        "name": "",
+        "description": "",
+        "capacity": #,
+        "class_time": "",
+    }
+    """
+    def patch(self, request):
+        token = request.GET.get("token", "default_value")
+        class_id = request.GET.get("classId", "default_value")
+        try:
+            AuthUser = Token.objects.get(key=token).user
+            class_ = Class.objects.get(pk=class_id)
+            if AuthUser.has_perm('user.can_update_classes'):
+                if ("members" in request.data):
+                    request.data.pop("members") # TODO: Quick fix don't need to pass members or instructors it messes up serialization
+                if ("instructors" in request.data):
+                    request.data.pop("instructors")
+                serializer = ClassSerializer(class_, data=request.data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        except Class.DoesNotExist:
+            return Response({"error": "Class with specified id not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token not found"}, status=status.HTTP_404_NOT_FOUND)
         
     """
     Deletes a class
@@ -96,14 +129,14 @@ class UserClassesList(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         
     """
+    classes/userclasses/?token=_token_
     data format:
     {
         "classId": "",
-        "token": ""
     }
     """
     def post(self, request):
-        token = request.data.get("token")
+        token = request.GET.get("token", "default_value")
         try:
             user = Token.objects.get(key=token).user
             if user.has_perm("user.can_join_class"):
