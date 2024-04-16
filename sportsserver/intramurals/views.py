@@ -136,7 +136,7 @@ class UserTeamsList(APIView):
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response({"error": "Unable to join this team", "registration": team.registration}, status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except IntramuralSportTeam.DoesNotExist:
             return Response({"error": "Intramural sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)

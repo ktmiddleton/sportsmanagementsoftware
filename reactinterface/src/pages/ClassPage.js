@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
+import EditClassButton from "../components/permissions/EditClassButton";
 
 function ClassPage({isOpen, onToggle}) {
 
@@ -35,9 +36,8 @@ function ClassPage({isOpen, onToggle}) {
     }, []);
 
     function registerClass() {
-        axios.post(`http://localhost:8000/classes/userclasses/`,
+        axios.post(`http://localhost:8000/classes/userclasses/?token=${localStorage.getItem("token")}`,
             {
-                token: localStorage.getItem("token"),
                 classId: classData.id
             }
         )
@@ -151,6 +151,7 @@ function ClassPage({isOpen, onToggle}) {
                                 Register for Class
                             </Button>
                         }
+                        <EditClassButton classData={classData} />
                     </Heading>
                     <Grid
                         templateRows={{base: '1fr 1fr'}}
