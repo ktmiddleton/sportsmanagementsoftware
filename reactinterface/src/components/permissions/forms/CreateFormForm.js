@@ -15,8 +15,11 @@ import RichTextQuestion from "../questions/RichTextQuestion";
 import RichTextEditor from "react-rte";
 import DeleteFormButton from "../DeleteFormButton";
 
-/* */
+/*
+    mode: {"create", "update"} <-- undefined defaults to create
+*/
 function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
+    mode = (mode === undefined ? "create" : mode); // Make sure mode is create if not specified
 
     const toast = useToast()
 
@@ -25,7 +28,7 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
         let data = {
             ...formValues
         }
-        if (mode == "create") {
+        if (mode === "create") {
             axios.post(
                 `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`,
                 data
@@ -49,7 +52,7 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
                 })
                 console.error(error);
             });
-        } else if (mode == "update") {
+        } else if (mode === "update") {
             axios.patch(
                 `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&formId=${pk}&info=1`,
                 data
@@ -97,7 +100,7 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
                         <ModalContent
                             maxW="50vw"
                         >
-                            <ModalHeader>{mode == "create" ? "Create" : "Update"} Form</ModalHeader>
+                            <ModalHeader>{mode === "create" ? "Create" : "Update"} Form</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -167,9 +170,9 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
                                     isLoading={formikProps.isSubmitting}
                                     onClick={formikProps.handleSubmit}
                                 >
-                                    {mode == "create" ? "Submit" : "Update"}
+                                    {mode === "create" ? "Submit" : "Update"}
                                 </Button>
-                                {mode == "update" ? <DeleteFormButton pk={pk} /> : <></>}
+                                {mode === "update" ? <DeleteFormButton pk={pk} /> : <></>}
                             </ModalFooter>
                         </ModalContent>
                     </Modal>

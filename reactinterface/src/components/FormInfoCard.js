@@ -6,6 +6,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import FormDisplay from "./FormDisplay";
 import CreateFormForm from "./permissions/forms/CreateFormForm";
+import EditFormButton from "./permissions/EditFormButton";
+import DeleteFormButton from "./permissions/DeleteFormButton";
 
 const REGISTRATION_DEADLINE_PASSED_TEXT = "Deadline Passed";
 
@@ -19,7 +21,8 @@ export default function FormInfoCard({formData, image}) {
     //     console.log(formData)
     // }, [])
 
-    function handleClick() {
+    function handleClick(event) {
+        console.log(event)
         onOpen();
     }
     
@@ -85,6 +88,8 @@ export default function FormInfoCard({formData, image}) {
                 </CardBody>
 
                 <CardFooter>
+                    <EditFormButton formData={formData} />
+                    <DeleteFormButton pk={formData.id} />
                     <CreateFormForm initialValues={formData} mode="update" pk={formData.id} isOpen={isOpen} onClose={onClose} />
                 </CardFooter>
             </Card>

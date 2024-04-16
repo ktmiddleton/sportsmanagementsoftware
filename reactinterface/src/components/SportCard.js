@@ -22,7 +22,7 @@ function SportCard({image, header, description, teamObject}) {
                 as="button" // makes it clickable
                 variant="elevated"
                 size={{base: "sm", sm: "md", md: "lg"}}
-                width="18vw"//{{base: "40vw", sm: "30vw", lg: "20vw"}} // It's a little messed up the 10 one doesn't activate for any size of screen
+                width="14vw"//"18vw"//{{base: "40vw", sm: "30vw", lg: "20vw"}} // It's a little messed up the 10 one doesn't activate for any size of screen
                 aspectRatio="400 / 323.2"
                 onClick={handleClick} // TODO: finish this onclick function
                 overflow="hidden" // Ensures stuff extending outside is hidden

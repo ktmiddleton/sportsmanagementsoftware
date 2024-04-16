@@ -13,8 +13,9 @@ function EditClubSportButton({teamData}) {
     console.log(teamData)
     const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
-    function buttonClick() {
+    function buttonClick(event) {
         if (userHasPerm(PERM_NAME)) {
+            event.stopPropagation();
             onOpen();
         }
     }
@@ -30,7 +31,7 @@ function EditClubSportButton({teamData}) {
                         isRound={true}
                         size="lg"
                         bg="brand.brightGreen"
-                        onClick={() => buttonClick()} // Define your click event handler
+                        onClick={buttonClick} // Define your click event handler
                     />
                 </Tooltip>
                 <CreateClubSportForm isOpen={isOpen} onClose={onClose} initialValues={teamData} mode="update" pk={teamData.id} />

@@ -111,8 +111,10 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                             Your Teams
                         </Heading>
                         <Wrap
-                            m="2rem"
-                            spacing="1rem"
+                            // m="2rem"
+                            // spacing="1rem"
+                            w="100%"
+                            justify="space-between"
                         >
                             {registeredTeams.map((item, index) => (
                                 <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />

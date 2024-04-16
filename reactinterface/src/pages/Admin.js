@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { useDisclosure, IconButton, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Tabs, TabList, TabPanels, TabPanel, Tab } from "@chakra-ui/react";
+import { useDisclosure, IconButton, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Tabs, TabList, TabPanels, TabPanel, Tab, Table, Thead, Tr, Th, Tbody, Td, ButtonGroup, Tfoot } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -13,12 +13,15 @@ import axios from "axios";
 import UserList from '../components/permissions/UserList';
 import { useUser } from "../components/UserContext";
 import CreateUserForm from "../components/permissions/forms/CreateUserForm";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import EditUserForm from "../components/permissions/forms/EditUserForm"
 import DeleteUserForm from "../components/permissions/forms/DeleteUserForm"
 import CreateFormButton from "../components/permissions/CreateFormButton";
 import FormInfoCard from "../components/FormInfoCard";
 import SearchBar from "../components/SearchBar";
+import EditFormButton from "../components/permissions/EditFormButton";
+import DeleteFormButton from "../components/permissions/DeleteFormButton";
+import FormCRUD from "../components/FormCRUD";
 
 const GROUP_NAME = "admin"
 
@@ -35,10 +38,6 @@ export default function Admin({openState, onToggle})
 
     const [userList, setUserList] = useState([]);
 
-    const [formInfo, setFormInfo] = useState([]);
-
-    const [filterFormInfo, setFilterFormInfo] = useState([]);
-
     useEffect(() => {
         axios.get(
             `http://localhost:8000/user/allusers/?token=${localStorage.getItem("token")}`
@@ -50,19 +49,6 @@ export default function Admin({openState, onToggle})
             console.log("Error getting classes");
             console.log(error);
         })
-        if (userHasPerm("can_create_forms")) {
-            axios.get(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`
-            )
-            .then((response) => {
-                console.log(response.data);
-                setFormInfo(response.data.forms);
-            })
-            .catch((error) => {
-                console.log("Error getting user forms");
-                console.log(error);
-            })
-        }
       }, [user]);
 
     var userMap = "";
@@ -139,7 +125,7 @@ export default function Admin({openState, onToggle})
                         </TabList>
                         
                         <TabPanels>
-                            <TabPanel>
+                            <TabPanel> {/* User Tab */}
                                 <div id="user-crud">
                                     <VStack
                                     alignItems={"stretch"}
@@ -164,31 +150,8 @@ export default function Admin({openState, onToggle})
                                     </VStack>
                                 </div>
                             </TabPanel>
-                            <TabPanel>
-                                <div id="form-crud">
-                                    <VStack
-                                        alignItems={"stretch"}
-                                    >
-                                    {userHasPerm("can_read_forms") ?
-                                        <>
-                                            <Heading
-                                                color="brand.black"
-                                                textAlign="left"
-                                                m="1rem"
-                                            >
-                                                Admin Forms
-                                                <CreateFormButton />
-                                                <SearchBar data={formInfo} searchField={"name"} setFilteredData={setFilterFormInfo} />
-                                            </Heading>
-                                            {filterFormInfo.map( (item) => {
-                                                return <FormInfoCard formData={item} />
-                                            })}
-                                        </>
-                                    :
-                                        <></>
-                                    }
-                                    </VStack>
-                                </div>
+                            <TabPanel> {/* Form Tab */}
+                                <FormCRUD />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>

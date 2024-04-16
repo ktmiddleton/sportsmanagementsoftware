@@ -8,6 +8,7 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@ch
 import { Field } from "formik";
 import TrueFalseQuestion from "../questions/TrueFalseQuestion";
 import { useNavigate } from "react-router-dom";
+import ConfirmCheckbox from "../questions/ConfirmCheckbox";
 
 function CreateClubSportForm({ teamData, isOpen, onClose }) {
 
@@ -71,12 +72,13 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
                                     spacing="2rem"
                                     width="100%"
                                 > 
-                                    <TrueFalseQuestion 
+                                    <ConfirmCheckbox 
                                         fieldName="confirmation" 
-                                        label="Confirm Deletion" 
+                                        label="Confirm Deletion"
+                                        checkboxLabel="Click here to ensure you wish to delete the club sport"
                                         placeHolder=" "
                                         required={true}
-                                        trueOptionRequired={true}
+                                        trueRequired={true}
                                         formikProps={formikProps}
                                     />
                                 </VStack>
