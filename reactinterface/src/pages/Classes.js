@@ -12,17 +12,21 @@ import '../css/calendar.css';
 import axios from "axios";
 import CreateClassButton from "../components/permissions/CreateClassButton";
 import ClassCard from "../components/ClassCard";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from '@fullcalendar/interaction';
 
 
-export default function Classes({isOpen, onToggle}) 
+export default function Classes({isOpen, onToggle, date, setDate}) 
 {
 
     // Saved as a date object, for calendar
-    const [dateState, setDateState] = useState(new Date())
-    const changeDate = (e) => 
-    {
-      setDateState(e) 
-    }
+    // const [date, setDate] = useState(new Date())
+    // const changeDate = (e) => 
+    // {
+    //   setDate(e) 
+    // }
 
     const [classes, setClasses] = useState([]);
     const [classesLoaded, setClassesLoaded] = useState(false);
@@ -46,7 +50,7 @@ export default function Classes({isOpen, onToggle})
     var classesMap = "";
 
     classesMap = classes.map( (item) => { 
-    if (new Date(item.class_time).getDate() == dateState.getDate()) // TODO: Want to turn this into a reuseable event button component.
+    if (new Date(item.class_time).getDate() == date.getDate()) // TODO: Want to turn this into a reuseable event button component.
         // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
          return <ClassCard classData={item} /> 
     return <></>
@@ -132,7 +136,26 @@ export default function Classes({isOpen, onToggle})
                     >
                         Look for a Class
                     </Heading>
-                    <Calendar className="calendar-large" value={dateState} onChange={changeDate}/>
+                    <Box
+                        h="auto"
+                        w="100%"
+                        >
+                            {console.log(date)}
+                            <FullCalendar
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            headerToolbar={{
+                                left: 'prev,next',
+                                right: 'title',
+                            }}
+                            initialView='timeGridWeek'
+                            selectable={true}
+                            selectMirror={true}
+                            dayMaxEvents={true}
+                            initialEvents={classesMap} // alternatively, use the `events` setting to fetch from a feed
+                            select={setDate}
+                            />
+                        </Box>
+                    {/* <Calendar className="calendar-large" value={date} onChange={setDate}/> */}
                 </Stack>
             </GridItem>
         </Grid>

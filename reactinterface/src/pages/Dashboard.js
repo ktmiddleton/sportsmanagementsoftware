@@ -6,15 +6,26 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import ClassCard from "../components/ClassCard";
+import FormCard from "../components/FormCard";
 import { useUser } from "../components/UserContext";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from '@fullcalendar/interaction';
+import { formatDate } from '@fullcalendar/core';
 
-function Dashboard({isOpen, onToggle}) {
-    const [registeredTeams, setRegisteredTeams] = useState([]);
+function Dashboard({isOpen, onToggle, date, setDate}) {
+    // Whether data is loaded for placeholders
     const [clubSportsLoaded, setClubSportsLoaded] = useState(false);
     const [intramuralTeamsLoaded, setIntramuralTeamsLoaded] = useState(false);
     const [classesLoaded, setClassesLoaded] = useState(false);
+    const [formsLoaded, setFormsLoaded] = useState(false);
 
+    // Actual Data
     const [registeredClasses, setRegisteredClasses] = useState([]);
+    const [registeredTeams, setRegisteredTeams] = useState([]);
+    const [registeredForms, setRegisteredForms] = useState([]);
+    
 
     useEffect(() => {
         setRegisteredTeams([])
@@ -53,7 +64,19 @@ function Dashboard({isOpen, onToggle}) {
             console.log("Error getting users Classes");
             console.log(error);
         });
+        axios.get( // Get Forms
+            `http://localhost:8000/forms/?username=${localStorage.getItem("username")}&token=${localStorage.getItem("token")}`
+        )
+        .then((response) => {
+            setRegisteredForms(response.data.forms);
+            setFormsLoaded(true);
+        })
+        .catch((error) => {
+            console.log("Error getting users Forms");
+            console.log(error);
+        });
     }, []);
+
 
     return (
         <div className="dashboard">
@@ -88,8 +111,10 @@ function Dashboard({isOpen, onToggle}) {
                             Your Teams
                         </Heading>
                         <Wrap
-                            m="2rem"
-                            spacing="1rem"
+                            // m="2rem"
+                            // spacing="1rem"
+                            w="100%"
+                            justify="space-between"
                         >
                             {registeredTeams.map((item, index) => (
                                 <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
@@ -161,26 +186,53 @@ function Dashboard({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={"sidebar"}>
-                        <Grid
-                            bg="brand.hover.houndsGrey"
-                            h="100vh"
-                            w="100%"
+                    <VStack
+                        align={"baseline"}
+                        bg="brand.houndsGrey"
+                        h="100vh"
+                    >
+                        <Heading
+                            color="brand.brightGreen"
+                            textAlign="left"
+                            m="1rem"
                         >
-                            <Heading
-                                color="brand.brightGreen"
-                                textAlign="left"
-                                m="1rem"
-                            >
-                                Upcoming
-                            </Heading>
-                            <Heading
-                                color="brand.brightGreen"
-                                textAlign="left"
-                                m="1rem"
-                            >
-                                TODO
-                            </Heading>
-                        </Grid>
+                            Upcoming
+                        </Heading>
+                        <Box
+                        h="auto"
+                        w="100%"
+                        >
+                            {console.log(date)}
+                            <FullCalendar
+                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                            headerToolbar={{
+                                left: 'prev,next',
+                                right: 'title',
+                            }}
+                            initialView='timeGridWeek'
+                            selectable={true}
+                            selectMirror={true}
+                            dayMaxEvents={true}
+                            initialEvents={registeredClasses} // alternatively, use the `events` setting to fetch from a feed
+                            select={setDate}
+                            />
+                        </Box>
+                        <Heading
+                            color="brand.brightGreen"
+                            textAlign="left"
+                            m="1rem"
+                        >
+                            TODO
+                        </Heading>
+                        <Wrap
+                        m="2rem"
+                        spacing="1rem"
+                        >
+                            {registeredForms.map((item, index) => (
+                                <FormCard key={index} formData={item}/>
+                            ))}
+                        </Wrap>
+                    </VStack>
                 </GridItem>
             </Grid>
         </div>
