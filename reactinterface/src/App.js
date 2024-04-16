@@ -18,6 +18,7 @@ import axios from 'axios';
 import { UserProvider } from './components/UserContext';
 import ClassPage from './pages/ClassPage';
 import IntramuralSportPage from './pages/IntramuralSportPage';
+import moment from "moment";
 
 
 // --loyola-green:#005a3c;
@@ -175,6 +176,8 @@ const theme = extendTheme({
 
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
+  const [date, setDate] = useState(moment(new Date()));
+
 
   // useEffect(() => {
   //   // axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
@@ -200,9 +203,9 @@ function App() {
       <UserProvider>
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
-            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle}/>} />
+            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>} />
             <Route path='/login' element={<Login />} />
-            <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>}/>
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsports' element={<ClubSports isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsportteam/:teamId' element={<ClubSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
@@ -210,7 +213,7 @@ function App() {
             <Route path='/intramuralsportteam/:teamId' element={<IntramuralSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/class/:classId' element={<ClassPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
-            <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
+            <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/admin' element={<Admin openState={isOpen} onToggle={onToggle} />}/>
           </Routes>
