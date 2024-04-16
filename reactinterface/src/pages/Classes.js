@@ -16,21 +16,20 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from '@fullcalendar/interaction';
+import { toMoment, toMomentDuration } from '@fullcalendar/moment';
+import '../css/calendar.css'
 
 
 export default function Classes({isOpen, onToggle, date, setDate}) 
 {
 
-    // Saved as a date object, for calendar
-    // const [date, setDate] = useState(new Date())
-    // const changeDate = (e) => 
-    // {
-    //   setDate(e) 
-    // }
-
     const [classes, setClasses] = useState([]);
     const [classesLoaded, setClassesLoaded] = useState(false);
 
+    function handleDateClick(arg) 
+    {
+        setDate(arg.date)
+    }
 
     useEffect(() => {
         axios.get(
@@ -136,26 +135,7 @@ export default function Classes({isOpen, onToggle, date, setDate})
                     >
                         Look for a Class
                     </Heading>
-                    <Box
-                        h="auto"
-                        w="100%"
-                        >
-                            {console.log(date)}
-                            <FullCalendar
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                            headerToolbar={{
-                                left: 'prev,next',
-                                right: 'title',
-                            }}
-                            initialView='timeGridWeek'
-                            selectable={true}
-                            selectMirror={true}
-                            dayMaxEvents={true}
-                            initialEvents={classesMap} // alternatively, use the `events` setting to fetch from a feed
-                            select={setDate}
-                            />
-                        </Box>
-                    {/* <Calendar className="calendar-large" value={date} onChange={setDate}/> */}
+                    <Calendar className="calendar-large" value={date} onChange={setDate}/>
                 </Stack>
             </GridItem>
         </Grid>
