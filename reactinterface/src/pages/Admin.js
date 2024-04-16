@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { useDisclosure, IconButton, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Tabs, TabList, TabPanels, TabPanel, Tab } from "@chakra-ui/react";
+import { useDisclosure, IconButton, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Tabs, TabList, TabPanels, TabPanel, Tab, Table, Thead, Tr, Th, Tbody, Td, ButtonGroup } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -19,6 +19,8 @@ import DeleteUserForm from "../components/permissions/forms/DeleteUserForm"
 import CreateFormButton from "../components/permissions/CreateFormButton";
 import FormInfoCard from "../components/FormInfoCard";
 import SearchBar from "../components/SearchBar";
+import EditFormButton from "../components/permissions/EditFormButton";
+import DeleteFormButton from "../components/permissions/DeleteFormButton";
 
 const GROUP_NAME = "admin"
 
@@ -139,7 +141,7 @@ export default function Admin({openState, onToggle})
                         </TabList>
                         
                         <TabPanels>
-                            <TabPanel>
+                            <TabPanel> {/* User Tab */}
                                 <div id="user-crud">
                                     <VStack
                                     alignItems={"stretch"}
@@ -164,7 +166,7 @@ export default function Admin({openState, onToggle})
                                     </VStack>
                                 </div>
                             </TabPanel>
-                            <TabPanel>
+                            <TabPanel> {/* Form Tab */}
                                 <div id="form-crud">
                                     <VStack
                                         alignItems={"stretch"}
@@ -177,12 +179,47 @@ export default function Admin({openState, onToggle})
                                                 m="1rem"
                                             >
                                                 Admin Forms
+                                            </Heading>
+                                            <HStack
+                                                width="100%"
+                                            >
                                                 <CreateFormButton />
                                                 <SearchBar data={formInfo} searchField={"name"} setFilteredData={setFilterFormInfo} />
-                                            </Heading>
-                                            {filterFormInfo.map( (item) => {
+                                            </HStack>
+                                            <Table size="lg">
+                                                <Thead>
+                                                    <Tr>
+                                                        <Th>Id</Th>
+                                                        <Th>Form Name</Th>
+                                                        <Th>Form Assigned On</Th>
+                                                        <Th>Actions</Th>
+                                                    </Tr>
+                                                </Thead>
+                                                <Tbody>
+                                                    {filterFormInfo.map( (item) => {
+                                                        return (
+                                                            <Tr>
+                                                                <Td>{item.id}</Td>
+                                                                <Td>{item.name}</Td>
+                                                                <Td>
+                                                                    <Text>{item.clubsport_join ? "Joining Club Sport" : ""}</Text>
+                                                                    <Text>{item.class_join ? "Joining Class" : ""}</Text>
+                                                                    <Text>{item.intramural_team_join ? "Joining Intramural Team" : ""}</Text>
+                                                                </Td>
+                                                                <Td>
+                                                                    <ButtonGroup>
+                                                                        <EditFormButton formData={item} />
+                                                                        <DeleteFormButton pk={item.id} />
+                                                                    </ButtonGroup>
+                                                                </Td>
+                                                            </Tr>
+                                                        )
+                                                    })}
+                                                </Tbody>
+                                            </Table>
+                                            {/* {filterFormInfo.map( (item) => {
                                                 return <FormInfoCard formData={item} />
-                                            })}
+                                            })} */}
                                         </>
                                     :
                                         <></>

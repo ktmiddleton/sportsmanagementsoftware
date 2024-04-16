@@ -78,29 +78,13 @@ export default function Forms({isOpen, onToggle})
                 <VStack
                  alignItems={"stretch"}
                 >
-                    {userHasPerm(VIEW_FORM_INFO_TEMPLATE_PERM) ?
-                        <>
-                            <Heading
-                            color="brand.black"
-                            textAlign="left"
-                            m="1rem"
-                        >
-                            Admin Forms
-                            <CreateFormButton />
-                        </Heading>
-                        {formInfo.map( (item) => {
-                            return <FormInfoCard formData={item} />
-                        })}
-                        </>
-                    :
-                        <></>
-                    }
                     <Heading
                     color="brand.black"
                     textAlign="left"
                     m="1rem"
                     >
                         My Forms
+                        <CreateFormButton />
                     </Heading>
                     {forms.map( (item) => {
                         return <FormCard formData={item} />
