@@ -9,6 +9,8 @@ import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 
 function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
+    mode = (mode === undefined ? "create" : mode); // Make sure mode is create if not specified
+
     const toast = useToast()
 
     const submitForm = (formValues) => {
@@ -86,7 +88,7 @@ function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>{mode == "create" ? "Create" : "Update"} Club Sport Team</ModalHeader>
+                            <ModalHeader>{mode === "create" ? "Create" : "Update"} Club Sport Team</ModalHeader>
                             
                             <ModalCloseButton />
 
