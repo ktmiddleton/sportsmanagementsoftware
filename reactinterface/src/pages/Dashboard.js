@@ -101,14 +101,14 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                         <Heading
                             color="brand.black"
                             textAlign="left"
-                            m="1rem"
+                            padding="1rem"
                         >
                             Your Teams
                         </Heading>
                         <Wrap
-                            // m="2rem"
-                            // spacing="1rem"
-                            w="100%"
+                            padding="2rem"
+                            spacing="1rem"
+                            width="100%"
                             justify="space-between"
                         >
                             {registeredTeams.map((item, index) => (
@@ -134,12 +134,12 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                         <Heading
                             color="brand.black"
                             textAlign="left"
-                            m="1rem"
+                            padding="1rem"
                         >
                             Your Classes
                         </Heading>
                         <Wrap
-                            m="2rem"
+                            padding="2rem"
                             spacing="1rem"
                         >
                             {registeredClasses.map((item, index) => (
@@ -194,11 +194,11 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                             TODO
                         </Heading>
                         <Wrap
-                        m="2rem"
-                        spacing="1rem"
+                            m="2rem"
+                            spacing="1rem"
                         >
                             {registeredForms.map((item, index) => (
-                                <FormCard key={index} formData={item}/>
+                                (!item.completed ? <FormCard key={index} formData={item}/> : <></>)
                             ))}
                         </Wrap>
                     </VStack>
