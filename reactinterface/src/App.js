@@ -19,6 +19,7 @@ import { UserProvider } from './components/UserContext';
 import ClassPage from './pages/ClassPage';
 import IntramuralSportPage from './pages/IntramuralSportPage';
 import moment from "moment";
+import Profile from "./pages/Profile";
 
 
 // --loyola-green:#005a3c;
@@ -216,6 +217,7 @@ function App() {
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/admin' element={<Admin openState={isOpen} onToggle={onToggle} />}/>
+            <Route path='/profile' element={<Profile isOpen={isOpen} onToggle={onToggle}/>}/>
           </Routes>
         </ChakraProvider>
       </UserProvider>

@@ -20,7 +20,7 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
         ).then((response) => {
             console.log(response)
             isOpen = !isOpen;
-            // window.location.reload();
+            window.location.reload();
             toast({
                 title: 'User successfully edited.',
                 description: "You've successfully edited the user: " + formValues.name + ".",
