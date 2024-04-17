@@ -8,11 +8,7 @@ import axios from "axios";
 import ClassCard from "../components/ClassCard";
 import FormCard from "../components/FormCard";
 import { useUser } from "../components/UserContext";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from '@fullcalendar/interaction';
-import { formatDate } from '@fullcalendar/core';
+import Calendar from 'react-calendar';
 
 function Dashboard({isOpen, onToggle, date, setDate}) {
     // Whether data is loaded for placeholders
@@ -25,7 +21,6 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
     const [registeredClasses, setRegisteredClasses] = useState([]);
     const [registeredTeams, setRegisteredTeams] = useState([]);
     const [registeredForms, setRegisteredForms] = useState([]);
-    
 
     useEffect(() => {
         setRegisteredTeams([])
@@ -191,32 +186,6 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                         bg="brand.houndsGrey"
                         h="100vh"
                     >
-                        <Heading
-                            color="brand.brightGreen"
-                            textAlign="left"
-                            m="1rem"
-                        >
-                            Upcoming
-                        </Heading>
-                        <Box
-                        h="auto"
-                        w="100%"
-                        >
-                            {console.log(date)}
-                            <FullCalendar
-                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                            headerToolbar={{
-                                left: 'prev,next',
-                                right: 'title',
-                            }}
-                            initialView='timeGridWeek'
-                            selectable={true}
-                            selectMirror={true}
-                            dayMaxEvents={true}
-                            initialEvents={registeredClasses} // alternatively, use the `events` setting to fetch from a feed
-                            select={setDate}
-                            />
-                        </Box>
                         <Heading
                             color="brand.brightGreen"
                             textAlign="left"
