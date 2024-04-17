@@ -9,6 +9,7 @@ import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 import IntegerQuestion from "../questions/IntegerQuestion";
 import DateTimeQuestion from "../questions/DateTimeQuestion";
+import DeleteClassButton from "../DeleteClassButton";
 
 /*
     mode: {"create", "update"} <-- undefined defaults to create
@@ -154,7 +155,7 @@ function CreateClassForm({ isOpen, onClose, initialValues, mode, pk }) {
                                 >
                                     {mode === "create" ? "Submit" : "Update"}
                                 </Button>
-                                {/* {mode === "update" ? <DeleteFormButton pk={pk} /> : <></>} */}
+                                {mode === "update" ? <DeleteClassButton pk={pk} /> : <></>}
                             </ModalFooter>
                         </ModalContent>
                     </Modal>
