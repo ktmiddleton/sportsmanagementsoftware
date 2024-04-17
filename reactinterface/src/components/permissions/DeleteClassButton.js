@@ -5,7 +5,7 @@ import { useUser } from "../UserContext";
 import axios from "axios";
 import DeleteClassForm from "./forms/DeleteClassForm";
 
-const PERM_NAME = "can_delete_classes";
+const PERM_NAME = "can_delete_class";
 
 function DeleteClassButton({pk}) {
 
