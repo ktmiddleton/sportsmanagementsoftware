@@ -45,7 +45,7 @@ function ClubSports({isOpen, onToggle}) {
                     <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                 </GridItem>
 
-                <GridItem area={'main'}>
+                <GridItem area={'main'} >
                     <VStack
                         align={"baseline"}
                     >

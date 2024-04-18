@@ -1,10 +1,10 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
+import { Button, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
@@ -12,24 +12,16 @@ import '../css/calendar.css';
 import axios from "axios";
 import CreateClassButton from "../components/permissions/CreateClassButton";
 import ClassCard from "../components/ClassCard";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from '@fullcalendar/interaction';
-import { toMoment, toMomentDuration } from '@fullcalendar/moment';
 import '../css/calendar.css'
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
 
 export default function Classes({isOpen, onToggle, date, setDate}) 
 {
-
+    
     const [classes, setClasses] = useState([]);
     const [classesLoaded, setClassesLoaded] = useState(false);
-
-    function handleDateClick(arg) 
-    {
-        setDate(arg.date)
-    }
 
     useEffect(() => {
         axios.get(
@@ -48,13 +40,13 @@ export default function Classes({isOpen, onToggle, date, setDate})
 
     var classesMap = "";
 
-    classesMap = classes.map( (item) => { 
-    if (new Date(item.class_time).getDate() == date.getDate()) // TODO: Want to turn this into a reuseable event button component.
-        // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
-         return <ClassCard classData={item} /> 
-    return <></>
-    }
-    )
+    // classesMap = classes.map( (item) => { 
+    // if (new Date(item.class_time).getDate() == date.getDate()) // TODO: Want to turn this into a reuseable event button component.
+    //     // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
+    //      return <ClassCard classData={item} /> 
+    // return <></>
+    // }
+    // )
 
     return (
     <div className="classes">
@@ -135,7 +127,32 @@ export default function Classes({isOpen, onToggle, date, setDate})
                     >
                         Look for a Class
                     </Heading>
-                    <Calendar className="calendar-large" value={date} onChange={setDate}/>
+                    <Box
+                    h="auto"
+                    w="100%"
+                    >
+                        <Calendar
+                            value={date}
+                            onChange={setDate}
+                            shouldHighlightWeekends
+                            colorPrimary="#005a3c" 
+                            calendarClassName="custom-calendar" 
+                            calendarTodayClassName="custom-today-day" 
+                            renderFooter={() => (
+                                <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 2rem' }}>
+                                  <Button
+                                    variant="Register"
+                                    onClick={() => {
+                                      setDate([])
+                                    }}
+                                  >
+                                    Clear
+                                  </Button>
+                                </div>
+                              )}
+                        />
+                        {/* <Calendar className="calendar-large" value={date} onChange={setDate}/> */}
+                    </Box>
                 </Stack>
             </GridItem>
         </Grid>

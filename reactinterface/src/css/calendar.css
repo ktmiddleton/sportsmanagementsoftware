@@ -1,4 +1,4 @@
-.react-calendar {
+/* .react-calendar {
     width: 90%;
     background: white;
     border: 1px solid #a0a096;
@@ -162,4 +162,21 @@
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
+   */
+
+   .custom-calendar {
+    box-shadow: 0 1em 3em rgba(156, 136, 255,0.2);
+  }
   
+  .custom-today-day {
+    color: #4c4c4c !important;
+    border: 1px solid #4c4c4c !important;
+  }
+  
+  .custom-today-day::after {
+    visibility: hidden; /* hide small border under the text */
+  }
+
+  --cl-color-disabled {
+    color: #005a3c;
+}
