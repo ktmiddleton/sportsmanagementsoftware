@@ -56,8 +56,8 @@ function Sidebar({isOpen, onToggle}) {
     return (
         <AnimatePresence>
             <MotionBox
-                width={isOpen ? "50%" : "6rem"}
-                animate={{ width: (isOpen ? "50%" : "6rem") }}
+                width={isOpen ? "18rem" : "6rem"}
+                animate={{ width: (isOpen ? "18rem" : "6rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
             >
                 <Box // Sidebar background
@@ -78,9 +78,9 @@ function Sidebar({isOpen, onToggle}) {
                             _hover={{
                                 background: "none"
                             }}
-                            _focus={{
-                                border: "2px solid white",
-                            }}
+                            // _focus={{
+                            //     border: "2px solid white",
+                            // }}
                             onClick={() => handleToggle()}
                         />
                         <Button
@@ -133,7 +133,7 @@ function Sidebar({isOpen, onToggle}) {
                             <Icon as={FaClipboardList} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Forms
                         </Button>
-                        <Button
+                        {/* <Button
                             onClick={handleNavigate("/schedule")}
                             variant={whichButtonVariant("/schedule")}
                             aria-label='Open Schedule'
@@ -142,7 +142,7 @@ function Sidebar({isOpen, onToggle}) {
                         >
                             <Icon as={GrSchedules} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Schedule
-                        </Button>
+                        </Button> */}
                         {/* Add more Links as needed */}
                     </VStack>
                 </Box>

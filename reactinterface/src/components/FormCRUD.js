@@ -103,7 +103,7 @@ function FormCRUD() {
                         <Tfoot>
                             <IconButton
                                 m="1rem"
-                                aria-label="Next Page"
+                                aria-label="Previous Page"
                                 icon={<ChevronLeftIcon />}
                                 isRound={true}
                                 size="lg"
