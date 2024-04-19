@@ -68,7 +68,7 @@ function FormCRUD() {
                     >
                         <CreateFormButton />
                         {/* <SearchBar data={formInfo} searchField={"name"} setFilteredData={setFilterFormInfo} /> */}
-                        <SearchBar mode="server" endpoint={`forms/?token=${localStorage.getItem("token")}&info=1`} setFilteredData={setFilterFormInfo} setPageData={setPageData} page={pageNumber} />
+                        <SearchBar mode="server" endpoint={`forms/?token=${localStorage.getItem("token")}&info=1`} setFilteredData={setFilterFormInfo} setPageData={setPageData} page={pageNumber} modelType="forms" />
                     </HStack>
                     <Table size="lg">
                         <Thead>

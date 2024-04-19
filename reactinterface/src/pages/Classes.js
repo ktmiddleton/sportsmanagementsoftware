@@ -15,17 +15,18 @@ import axios from "axios";
 import CreateClassButton from "../components/permissions/CreateClassButton";
 import ClassCard from "../components/ClassCard";
 import '../css/calendar.css'
+import { useUser } from "../components/UserContext";
 
 
 export default function Classes({isOpen, onToggle, date, setDate}) 
 {
+    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
     
-    const [classes, setClasses] = useState([]);
     const [classesLoaded, setClassesLoaded] = useState(false);
 
     const [pageNumber, setPageNumber] = useState(1);
     const [pageData, setPageData] = useState();
-    const [filterFormInfo, setFilterFormInfo] = useState([]);
+    const [classes, setClasses] = useState([]);
 
     function incrementPage() {
         if (!(pageData.end_index >= pageData.count)) {
@@ -53,17 +54,9 @@ export default function Classes({isOpen, onToggle, date, setDate})
             console.log("Error getting classes");
             console.log(error);
         })
-      }, []);
+      }, [user]);
 
-    var classesMap = "";
-
-    classesMap = classes.map( (item) => { 
-    // if (new Date(item.class_time).getDate() == date.getDate()) // TODO: Want to turn this into a reuseable event button component.
-        // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
-    return <ClassCard classData={item} /> 
-    // return <></>
-    }
-    )
+      console.log("Here's the classes:" + classes);
 
     return (
     <div className="classes">
@@ -97,9 +90,11 @@ export default function Classes({isOpen, onToggle, date, setDate})
                         >
                             Available Classes
                             <CreateClassButton />
-                            <SearchBar mode="server" endpoint={`classes/`} setFilteredData={setFilterFormInfo} setPageData={setPageData} page={pageNumber} />
+                            <SearchBar mode="server" endpoint={`classes/?`} setFilteredData={setClasses} setPageData={setPageData} page={pageNumber} modelType="classes"/>
                         </Heading>
-                        {classesMap}
+                        {classes?.map( (item) => { 
+                        return <ClassCard classData={item} /> 
+                        })}
                         {classesLoaded ?
                                 <></>
                             :

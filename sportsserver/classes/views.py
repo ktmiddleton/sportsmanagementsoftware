@@ -28,7 +28,7 @@ class ClassesList(APIView):
             pages = Paginator(classes, PAGE_SIZE)
             page = pages.get_page(page_number)
             return Response({"classes": ClassSerializer(page, many=True).data,
-                            "pages": {"start_index": page.start_index(), "end_index": page.end_index()}})
+                            "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count}})
         if class_id != "default_value": # Return a single class based on id
             team = Class.objects.get(pk=class_id)
             serializer = ClassSerializer(team)

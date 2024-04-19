@@ -18,8 +18,9 @@ import axios from "axios";
  * endpoint: A string, like "forms/?token=${localStorage.getItem("token")}&info=1" that has a get endpoint that can recieve a '&search=_input_' parameter
  * | NOTE: Be careful when passing the endpoint and make sure to send any necessary parameters along with it since all this does is append a &search onto it
  * page: An int, uses the &page=_page number_ parameter to return multiple pages of a search
+ * modelType: used to access data for different model types. Examples: form, class, etc.
  */
-function SearchBar({data, searchField, setFilteredData, setPageData, mode, endpoint, page}) {
+function SearchBar({data, searchField, setFilteredData, setPageData, mode, endpoint, page, modelType}) {
 
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -37,8 +38,7 @@ function SearchBar({data, searchField, setFilteredData, setPageData, mode, endpo
         axios.get(
             `http://localhost:8000/${endpoint}&search=${searchTerm}` + (page ? `&page=${page}` : "") // ensure page not undefined
         ).then((response) => {
-            console.log(response.data)
-            setFilteredData(response.data.forms);
+            setFilteredData(response.data[modelType]);
             if (response.data.pages !== undefined && setPageData !== undefined) {
                 setPageData(response.data.pages);
             }

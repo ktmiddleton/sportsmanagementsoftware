@@ -46,7 +46,6 @@ function Sidebar({isOpen, onToggle}) {
             var height = Math.max( body.scrollHeight, body.offsetHeight, 
                                     html.clientHeight, html.scrollHeight, html.offsetHeight );
             setInnerBoxHeight(height);
-            console.log(height + "px");
         };
 
         window.addEventListener('resize', updateInnerBoxHeight);
