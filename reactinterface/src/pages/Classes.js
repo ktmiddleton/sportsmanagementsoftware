@@ -38,21 +38,21 @@ export default function Classes({isOpen, onToggle, date, setDate})
 
     var classesMap = "";
 
-    // classesMap = classes.map( (item) => { 
-    // if (new Date(item.class_time).getDate() == date.getDate()) // TODO: Want to turn this into a reuseable event button component.
-    //     // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
-    //      return <ClassCard classData={item} /> 
-    // return <></>
-    // }
-    // )
+    classesMap = classes.map( (item) => { 
+    if (new Date(item.class_time).getDate() == date.getDate()) // TODO: Want to turn this into a reuseable event button component.
+        // return <ListItem className={item.name} description={item.description} action={item.registered_participants <= item.capacity ? "open" : "full"}/>
+         return <ClassCard classData={item} /> 
+    return <></>
+    }
+    )
 
     return (
     <div className="classes">
         <Grid
-        templateAreas={`"header header header"
-                        "nav main sidebar"`}
+        templateAreas={`"header"
+                        "main"`}
         gridTemplateRows={{base: '10vh 90vh'}}
-        gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
+        // gridTemplateColumns={{base:'1fr 5fr'}} // 11em
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
@@ -63,55 +63,58 @@ export default function Classes({isOpen, onToggle, date, setDate})
             </GridItem>
             <GridItem area={'nav'}>
                 {/* <Navbar activePage={"Classes"}/> */}
-                <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
             </GridItem>
             <GridItem area={'main'}>
-                <VStack
-                 alignItems={"stretch"}
-                >
-                    <Heading
-                    color="brand.black"
-                    textAlign="left"
-                    m="1rem"
+                <HStack align={'baseline'}>
+                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    <VStack
+                    alignItems={"stretch"}
                     >
-                        Available Classes
-                        <CreateClassButton />
-                    </Heading>
-                    {classesMap}
-                    {classesLoaded ?
-                            <></>
-                        :
-                            <Box
-                                className="skeleton-coffin"
-                                width="90%"
-                                height="100%"
-                                alignSelf="center"
-                            >
-                                <Skeleton
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                                <Skeleton // Extra Skeleton looks nice
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                                <Skeleton // Extra Skeleton looks nice
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                                <Skeleton // Extra Skeleton looks nice
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                            </Box>
-                        }
-                </VStack>
+                        <Heading
+                        color="brand.black"
+                        textAlign="left"
+                        m="1rem"
+                        >
+                            Available Classes
+                            <CreateClassButton />
+                        </Heading>
+                        {classesMap}
+                        {classesLoaded ?
+                                <></>
+                            :
+                                <Box
+                                    className="skeleton-coffin"
+                                    width="90%"
+                                    height="100%"
+                                    alignSelf="center"
+                                >
+                                    <Skeleton
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton // Extra Skeleton looks nice
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton // Extra Skeleton looks nice
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton // Extra Skeleton looks nice
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                </Box>
+                            }
+                    </VStack>
+                </HStack>
             </GridItem>
-            <GridItem area={'sidebar'}>
+            {/* <GridItem area={'sidebar'}>
                 <Stack
                 bg="brand.hover.houndsGrey"
                 h="100vh"
@@ -132,7 +135,7 @@ export default function Classes({isOpen, onToggle, date, setDate})
                         <Calendar className="calendar-large" value={date} onChange={setDate}/>
                     </Box>
                 </Stack>
-            </GridItem>
+            </GridItem> */}
         </Grid>
     </div>
     )

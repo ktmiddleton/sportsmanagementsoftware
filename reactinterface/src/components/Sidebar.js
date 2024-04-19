@@ -56,7 +56,7 @@ function Sidebar({isOpen, onToggle}) {
     return (
         <AnimatePresence>
             <MotionBox
-                animate={{ width: (isOpen ? "100%" : "6rem") }}
+                animate={{ width: (isOpen ? "50%" : "6rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
             >
                 <Box // Sidebar background

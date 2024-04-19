@@ -1,4 +1,4 @@
-import { Grid, GridItem, Wrap, Heading, Skeleton, VStack, Box } from "@chakra-ui/react";
+import { HStack, Grid, GridItem, Wrap, Heading, Skeleton, VStack, Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -28,10 +28,10 @@ function ClubSports({isOpen, onToggle}) {
     return (
         <div className="ClubSports">
             <Grid
-            templateAreas={`"header header header"
-                            "nav main main"`}
+            templateAreas={`"header"
+                            "main"`}
             gridTemplateRows={{base: '10vh 90vh'}}
-            gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+            // gridTemplateColumns={{base:'1fr 3fr 2fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -42,52 +42,55 @@ function ClubSports({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'nav'}>
-                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
                 <GridItem area={'main'} >
-                    <VStack
-                        align={"baseline"}
-                    >
-                        <Heading
-                            color="brand.black"
-                            textAlign="left"
-                            m="1rem"
+                    <HStack align={'baseline'}>
+                        <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                        <VStack
+                            align={"baseline"}
                         >
-                            Available Club Sports
-                            <CreateClubSportButton />
-                        </Heading>
-                        <Wrap
-                            spacing="1rem"
-                            m="2rem"
-                            w={"100%"}
-                        >
-                            {clubSports.map((item, index) => (
-                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                            ))}
-                        </Wrap>
-                        {clubSportsLoaded ?
-                            <></>
-                        :
-                            <Box
-                                className="skeleton-coffin"
-                                width="90%"
-                                height="100%"
-                                alignSelf="center"
+                            <Heading
+                                color="brand.black"
+                                textAlign="left"
+                                m="1rem"
                             >
-                                <Skeleton
-                                    isLoaded={clubSportsLoaded}
-                                    height="20vh"
-                                    mb="1%"
-                                />
-                                <Skeleton
-                                    isLoaded={clubSportsLoaded}
-                                    height="20vh"
-                                    mb="1%"
-                                />
-                            </Box>
-                        }
-                    </VStack>
+                                Available Club Sports
+                                <CreateClubSportButton />
+                            </Heading>
+                            <Wrap
+                                spacing="1rem"
+                                m="2rem"
+                                w={"100%"}
+                            >
+                                {clubSports.map((item, index) => (
+                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                ))}
+                            </Wrap>
+                            {clubSportsLoaded ?
+                                <></>
+                            :
+                                <Box
+                                    className="skeleton-coffin"
+                                    width="90%"
+                                    height="100%"
+                                    alignSelf="center"
+                                >
+                                    <Skeleton
+                                        isLoaded={clubSportsLoaded}
+                                        height="20vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton
+                                        isLoaded={clubSportsLoaded}
+                                        height="20vh"
+                                        mb="1%"
+                                    />
+                                </Box>
+                            }
+                        </VStack>
+                    </HStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>

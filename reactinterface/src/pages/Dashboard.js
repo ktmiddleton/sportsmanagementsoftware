@@ -76,10 +76,10 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
     return (
         <div className="dashboard">
             <Grid
-                templateAreas={`"header header header"
-                                "nav main sidebar"`}
+                templateAreas={`"header header"
+                                "main sidebar"`}
                 gridTemplateRows={{base: '10vh 90vh'}}
-                gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+                gridTemplateColumns={{base:'2fr 2fr'}}
                 gap='0'
                 color='blackAlpha.700'
                 fontWeight='bold'
@@ -91,93 +91,96 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
 
                 <GridItem area={'nav'}>
                     {/* <Navbar activePage={"Dashboard"}/> */}
-                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
                 <GridItem area={'main'}>
-                    <VStack
-                        align={"baseline"}
-                    >
-                        <Heading
-                            color="brand.black"
-                            textAlign="left"
-                            padding="1rem"
+                    <HStack align={'baseline'}>
+                        <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                        <VStack
+                            align={"baseline"}
                         >
-                            Your Teams
-                        </Heading>
-                        <Wrap
-                            padding="2rem"
-                            spacing="1rem"
-                            width="100%"
-                            justify="space-between"
-                        >
-                            {registeredTeams.map((item, index) => (
-                                <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                            ))}
-                        </Wrap>
-                        {clubSportsLoaded ?
-                            <></>
-                        :
-                            <Box
-                                className="skeleton-coffin"
-                                width="90%"
-                                height="100%"
-                                alignSelf="center"
+                            <Heading
+                                color="brand.black"
+                                textAlign="left"
+                                padding="1rem"
                             >
-                                <Skeleton
-                                    isLoaded={clubSportsLoaded}
-                                    height="20vh"
-                                    mb="1%"
-                                />
-                            </Box>
-                        }
-                        <Heading
-                            color="brand.black"
-                            textAlign="left"
-                            padding="1rem"
-                        >
-                            Your Classes
-                        </Heading>
-                        <Wrap
-                            padding="2rem"
-                            spacing="1rem"
-                        >
-                            {registeredClasses.map((item, index) => (
-                                <ClassCard key={index} classData={item} />
-                            ))}
-                        </Wrap>
-                        {classesLoaded ?
-                            <></>
-                        :
-                            <Box
-                                className="skeleton-coffin"
-                                width="90%"
-                                height="100%"
-                                alignSelf="center"
+                                Your Teams
+                            </Heading>
+                            <Wrap
+                                padding="2rem"
+                                spacing="1rem"
+                                width="100%"
+                                justify="space-between"
                             >
-                                <Skeleton
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                                <Skeleton // Extra Skeleton looks nice
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                                <Skeleton // Extra Skeleton looks nice
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                                <Skeleton // Extra Skeleton looks nice
-                                    isLoaded={classesLoaded}
-                                    height="10vh"
-                                    mb="1%"
-                                />
-                            </Box>
-                        }
-                    </VStack>
+                                {registeredTeams.map((item, index) => (
+                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                ))}
+                            </Wrap>
+                            {clubSportsLoaded ?
+                                <></>
+                            :
+                                <Box
+                                    className="skeleton-coffin"
+                                    width="90%"
+                                    height="100%"
+                                    alignSelf="center"
+                                >
+                                    <Skeleton
+                                        isLoaded={clubSportsLoaded}
+                                        height="20vh"
+                                        mb="1%"
+                                    />
+                                </Box>
+                            }
+                            <Heading
+                                color="brand.black"
+                                textAlign="left"
+                                padding="1rem"
+                            >
+                                Your Classes
+                            </Heading>
+                            <Wrap
+                                padding="2rem"
+                                spacing="1rem"
+                            >
+                                {registeredClasses.map((item, index) => (
+                                    <ClassCard key={index} classData={item} />
+                                ))}
+                            </Wrap>
+                            {classesLoaded ?
+                                <></>
+                            :
+                                <Box
+                                    className="skeleton-coffin"
+                                    width="90%"
+                                    height="100%"
+                                    alignSelf="center"
+                                >
+                                    <Skeleton
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton // Extra Skeleton looks nice
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton // Extra Skeleton looks nice
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                    <Skeleton // Extra Skeleton looks nice
+                                        isLoaded={classesLoaded}
+                                        height="10vh"
+                                        mb="1%"
+                                    />
+                                </Box>
+                            }
+                        </VStack>
+                    </HStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>
