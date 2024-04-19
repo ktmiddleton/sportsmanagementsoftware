@@ -4,7 +4,7 @@ import SportCard from "../components/SportCard";
 import { Button, Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-// import Calendar from 'react-calendar';
+import Calendar from 'react-calendar';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import Sidebar from "../components/Sidebar";
@@ -13,8 +13,6 @@ import axios from "axios";
 import CreateClassButton from "../components/permissions/CreateClassButton";
 import ClassCard from "../components/ClassCard";
 import '../css/calendar.css'
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Calendar } from "react-modern-calendar-datepicker";
 
 
 export default function Classes({isOpen, onToggle, date, setDate}) 
@@ -131,27 +129,7 @@ export default function Classes({isOpen, onToggle, date, setDate})
                     h="auto"
                     w="100%"
                     >
-                        <Calendar
-                            value={date}
-                            onChange={setDate}
-                            shouldHighlightWeekends
-                            colorPrimary="#005a3c" 
-                            calendarClassName="custom-calendar" 
-                            calendarTodayClassName="custom-today-day" 
-                            renderFooter={() => (
-                                <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 2rem' }}>
-                                  <Button
-                                    variant="Register"
-                                    onClick={() => {
-                                      setDate([])
-                                    }}
-                                  >
-                                    Clear
-                                  </Button>
-                                </div>
-                              )}
-                        />
-                        {/* <Calendar className="calendar-large" value={date} onChange={setDate}/> */}
+                        <Calendar className="calendar-large" value={date} onChange={setDate}/>
                     </Box>
                 </Stack>
             </GridItem>

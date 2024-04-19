@@ -177,7 +177,7 @@ const theme = extendTheme({
 
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState(new Date());
 
 
   // useEffect(() => {

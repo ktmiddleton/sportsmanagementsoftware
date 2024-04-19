@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import EditUserForm from "../components/permissions/forms/EditUserForm";
 import DeleteUserForm from "../components/permissions/forms/DeleteUserForm";
-
 import { useUser } from "../components/UserContext";
 
 function Profile({isOpen, onToggle}) {
