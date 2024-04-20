@@ -1,4 +1,5 @@
-import {Badge, Flex, Avatar, Box, Text, Heading, HStack, VStack, Spacer, Button, Card, Image, CardBody, CardFooter, Stack, useToast, CircularProgress, CircularProgressLabel} from "@chakra-ui/react";
+import {Stat, StatLabel, StatNumber, Badge, Flex, Avatar, Box, Text, Heading, HStack, VStack, Spacer, Button, Card, Image, CardBody, CardFooter, Stack, useToast, CircularProgress, CircularProgressLabel} from "@chakra-ui/react";
+import {CalendarIcon, TimeIcon} from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useUser } from "./UserContext";
 import axios from "axios";
@@ -118,6 +119,7 @@ export default function ClassCard({classData, image}) {
                     <CardBody>
                         <Stack
                             direction="row"
+                            spacing={'16'}
                         >
                             <VStack
                                 alignItems="flex-start"
@@ -134,6 +136,26 @@ export default function ClassCard({classData, image}) {
                                         return (<Text key={index}>{item.username}</Text>)
                                     })}
                                 </Text>
+                            </VStack>
+                            <VStack mx={'4'}>
+                                <Stat>
+                                    <StatLabel>
+                                        Class Day
+                                    </StatLabel>
+                                    <StatNumber>
+                                        {new Date(classData.class_time).toLocaleDateString('default')} <CalendarIcon/>
+                                    </StatNumber>
+                                </Stat>
+                            </VStack>
+                            <VStack mx={'4'}>
+                                <Stat>
+                                    <StatLabel>
+                                        Class Time
+                                    </StatLabel>
+                                    <StatNumber>
+                                        {new Date(classData.class_time).toLocaleTimeString('default')} <TimeIcon/>
+                                    </StatNumber>
+                                </Stat>
                             </VStack>
                         </Stack>
                     </CardBody>
