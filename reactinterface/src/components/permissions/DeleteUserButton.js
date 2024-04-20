@@ -3,11 +3,11 @@ import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { useUser } from "../UserContext";
 import axios from "axios";
-import DeleteFormForm from "./forms/DeleteFormForm";
+import DeleteUserForm from "./forms/DeleteUserForm";
 
-const PERM_NAME = "can_delete_forms";
+const PERM_NAME = "can_delete_users";
 
-function DeleteFormButton({pk}) {
+function DeleteUserButton({username}) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -22,8 +22,8 @@ function DeleteFormButton({pk}) {
 
     return (
         userHasPerm(PERM_NAME) ?
-            <div className="delete-form-button">
-                <Tooltip hasArrow label='Delete Form' bg='gray.300' color='black'>
+            <div className="delete-user-button">
+                <Tooltip hasArrow label='Delete User' bg='gray.300' color='black'>
                     <IconButton
                         m="1rem"
                         aria-label="Delete"
@@ -34,11 +34,11 @@ function DeleteFormButton({pk}) {
                         onClick={buttonClick} // Define your click event handler
                     />
                 </Tooltip>
-                <DeleteFormForm pk={pk} isOpen={isOpen} onClose={onClose} />
+                <DeleteUserForm username={username} isOpen={isOpen} onClose={onClose} />
             </div>
         :
             <></>
     );
 }
 
-export default DeleteFormButton;
+export default DeleteUserButton;

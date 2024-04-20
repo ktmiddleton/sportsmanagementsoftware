@@ -22,6 +22,7 @@ import SearchBar from "../components/SearchBar";
 import EditFormButton from "../components/permissions/EditFormButton";
 import DeleteFormButton from "../components/permissions/DeleteFormButton";
 import FormCRUD from "../components/FormCRUD";
+import UserCRUD from "../components/UserCRUD";
 
 const GROUP_NAME = "admin"
 
@@ -43,7 +44,7 @@ export default function Admin({openState, onToggle})
             `http://localhost:8000/user/allusers/?token=${localStorage.getItem("token")}`
         )
         .then((response) => {
-            setUserList(response.data.userList);
+            setUserList(response.data.data);
         })
         .catch((error) => {
             console.log("Error getting classes");
@@ -128,7 +129,8 @@ export default function Admin({openState, onToggle})
                             
                             <TabPanels>
                                 <TabPanel> {/* User Tab */}
-                                    <div id="user-crud">
+                                    <UserCRUD/>
+                                    {/* <div id="user-crud">
                                         <VStack
                                         alignItems={"stretch"}
                                         >
@@ -150,7 +152,7 @@ export default function Admin({openState, onToggle})
                                             {userMap}
                                             <CreateUserForm isOpen={isOpenCreate} onClose={onCloseCreate}/>
                                         </VStack>
-                                    </div>
+                                    </div> */}
                                 </TabPanel>
                                 <TabPanel> {/* Form Tab */}
                                     <FormCRUD />
