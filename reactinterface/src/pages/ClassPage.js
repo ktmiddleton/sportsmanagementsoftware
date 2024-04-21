@@ -159,7 +159,7 @@ function ClassPage({isOpen, onToggle}) {
                             templateRows={{base: '1fr 1fr'}}
                             templateColumns={{base: '1fr 1fr'}}
                             gap="1rem"
-                            p="1rem"
+                            // p="1rem"
                         >
                             <GridItem
                                 rowSpan={2}
