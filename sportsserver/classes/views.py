@@ -84,7 +84,7 @@ class ClassesList(APIView):
         try:
             AuthUser = Token.objects.get(key=token).user
             class_ = Class.objects.get(pk=class_id)
-            if AuthUser.has_perm('user.can_update_classes'):
+            if AuthUser.has_perm('user.can_update_class'):
                 if ("members" in request.data):
                     request.data.pop("members") # TODO: Quick fix don't need to pass members or instructors it messes up serialization
                 if ("instructors" in request.data):
