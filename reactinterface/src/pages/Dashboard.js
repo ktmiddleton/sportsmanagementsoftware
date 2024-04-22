@@ -10,7 +10,7 @@ import FormCard from "../components/FormCard";
 import { useUser } from "../components/UserContext";
 import Calendar from 'react-calendar';
 
-function Dashboard({isOpen, onToggle, date, setDate}) {
+function Dashboard({isOpen, onToggle}) {
     // Whether data is loaded for placeholders
     const [clubSportsLoaded, setClubSportsLoaded] = useState(false);
     const [intramuralTeamsLoaded, setIntramuralTeamsLoaded] = useState(false);
