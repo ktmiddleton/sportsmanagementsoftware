@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "./UserContext";
 import axios from "axios";
 import { ButtonGroup, HStack, Heading, IconButton, Table, Tbody, Td, Text, Tfoot, Th, Thead, Tr, VStack } from "@chakra-ui/react";
-import CreateFormButton from "./permissions/CreateFormButton";
 import SearchBar from "./SearchBar";
 import EditFormButton from "./permissions/EditFormButton";
 import DeleteFormButton from "./permissions/DeleteFormButton";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import CreateUserButton from "./permissions/CreateUserButton";
+import EditUserButton from "./permissions/EditUserButton";
+import DeleteUserButton from "./permissions/DeleteUserButton";
 
-function FormCRUD() {
+function UserCRUD() {
 
     const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
-    const [formInfo, setFormInfo] = useState([]);
+    // const [formInfo, setFormInfo] = useState([]);
 
-    const [filterFormInfo, setFilterFormInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
     const [pageData, setPageData] = useState();
     const [pageNumber, setPageNumber] = useState(1);
 
@@ -33,13 +35,13 @@ function FormCRUD() {
     }
 
     useEffect(() => {
-        if (userHasPerm("can_create_forms")) {
+        if (userHasPerm("can_create_users")) {
             axios.get(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`
+                `http://localhost:8000/user/allusers/?token=${localStorage.getItem("token")}`
             )
             .then((response) => {
                 console.log(response.data);
-                setFormInfo(response.data.forms);
+                setUserInfo(response.data.data);
                 setPageData(response.data.pages);
             })
             .catch((error) => {
@@ -50,50 +52,51 @@ function FormCRUD() {
     }, [user]);
 
     return (
-        <div id="form-crud">
+        <div id="user-crud">
             <VStack
                 alignItems={"stretch"}
             >
-            {userHasPerm("can_read_forms") ?
+            {userHasPerm("can_view_users") ?
                 <>
                     <Heading
                         color="brand.black"
                         textAlign="left"
                         m="1rem"
                     >
-                        Admin Forms
+                        User Administration
                     </Heading>
                     <HStack
                         width="100%"
                     >
-                        <CreateFormButton />
+                        <CreateUserButton />
                         {/* <SearchBar data={formInfo} searchField={"name"} setFilteredData={setFilterFormInfo} /> */}
-                        <SearchBar mode="server" endpoint={`forms/?token=${localStorage.getItem("token")}&info=1`} setFilteredData={setFilterFormInfo} setPageData={setPageData} page={pageNumber} modelType="forms" />
+                        <SearchBar mode="server" endpoint={`user/allusers/?token=${localStorage.getItem("token")}`} setFilteredData={setUserInfo} setPageData={setPageData} page={pageNumber} modelType="data" />
                     </HStack>
                     <Table size="lg">
                         <Thead>
                             <Tr>
                                 <Th>Id</Th>
-                                <Th>Form Name</Th>
-                                <Th>Form Assigned On</Th>
+                                <Th>First Name</Th>
+                                <Th>Last Name</Th>
+                                <Th>Username</Th>
+                                <Th>Email</Th>
                                 <Th>Actions</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {filterFormInfo.map( (item) => {
+                            {console.log(userInfo)}
+                            {userInfo?.map( (item) => {
                                 return (
                                     <Tr>
                                         <Td>{item.id}</Td>
-                                        <Td>{item.name}</Td>
-                                        <Td>
-                                            <Text>{item.clubsport_join ? "Joining Club Sport" : ""}</Text>
-                                            <Text>{item.class_join ? "Joining Class" : ""}</Text>
-                                            <Text>{item.intramural_team_join ? "Joining Intramural Team" : ""}</Text>
-                                        </Td>
+                                        <Td>{item.first_name}</Td>
+                                        <Td>{item.last_name}</Td>
+                                        <Td>{item.username}</Td>
+                                        <Td>{item.email}</Td>
                                         <Td>
                                             <ButtonGroup>
-                                                <EditFormButton formData={item} />
-                                                <DeleteFormButton pk={item.id} />
+                                                <EditUserButton username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name}/>
+                                                <DeleteUserButton username={item.username}/>
                                             </ButtonGroup>
                                         </Td>
                                     </Tr>
@@ -134,4 +137,4 @@ function FormCRUD() {
 
 }
 
-export default FormCRUD;
+export default UserCRUD;

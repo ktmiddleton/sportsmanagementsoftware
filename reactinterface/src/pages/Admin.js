@@ -22,6 +22,7 @@ import SearchBar from "../components/SearchBar";
 import EditFormButton from "../components/permissions/EditFormButton";
 import DeleteFormButton from "../components/permissions/DeleteFormButton";
 import FormCRUD from "../components/FormCRUD";
+import UserCRUD from "../components/UserCRUD";
 
 const GROUP_NAME = "admin"
 
@@ -43,7 +44,7 @@ export default function Admin({openState, onToggle})
             `http://localhost:8000/user/allusers/?token=${localStorage.getItem("token")}`
         )
         .then((response) => {
-            setUserList(response.data.userList);
+            setUserList(response.data.data);
         })
         .catch((error) => {
             console.log("Error getting classes");
@@ -97,10 +98,10 @@ export default function Admin({openState, onToggle})
     userHasGroup(GROUP_NAME) ? 
         <div className="admin">
             <Grid
-            templateAreas={`"header header header"
-                            "nav main main"`}
+            templateAreas={`"header"
+                            "main"`}
             gridTemplateRows={{base: '10vh 90vh'}}
-            gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
+            // gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -111,50 +112,54 @@ export default function Admin({openState, onToggle})
                 </GridItem>
                 <GridItem area={'nav'}>
                     {/* <Navbar activePage={"Classes"}/> */}
-                    <Sidebar isOpen={openState} onToggle={onToggle}/>
+                    
                 </GridItem>
                 <GridItem area={'main'}>
-                    <Tabs size="lg" variant="enclosed" colorScheme="green" m="1rem">
-                        <TabList>
-                            <Tab>
-                                Users
-                            </Tab>
-                            <Tab>
-                                Forms
-                            </Tab>
-                        </TabList>
-                        
-                        <TabPanels>
-                            <TabPanel> {/* User Tab */}
-                                <div id="user-crud">
-                                    <VStack
-                                    alignItems={"stretch"}
-                                    >
-                                        <Heading
-                                        color="brand.black"
-                                        textAlign="left"
-                                        m="1rem"
-                                        >All Users
-                                        </Heading>
-                                        <IconButton
+                    <HStack align={"baseline"}>
+                        <Sidebar isOpen={openState} onToggle={onToggle}/>
+                        <Tabs size="lg" variant="enclosed" colorScheme="green" m="1rem">
+                            <TabList>
+                                <Tab>
+                                    Users
+                                </Tab>
+                                <Tab>
+                                    Forms
+                                </Tab>
+                            </TabList>
+                            
+                            <TabPanels>
+                                <TabPanel> {/* User Tab */}
+                                    <UserCRUD/>
+                                    {/* <div id="user-crud">
+                                        <VStack
+                                        alignItems={"stretch"}
+                                        >
+                                            <Heading
+                                            color="brand.black"
+                                            textAlign="left"
                                             m="1rem"
-                                            aria-label="Add"
-                                            icon={<AddIcon />}
-                                            isRound={true}
-                                            size="lg"
-                                            bg="brand.brightGreen"
-                                            onClick={() => buttonClick()} // Define your click event handler
-                                        />
-                                        {userMap}
-                                        <CreateUserForm isOpen={isOpenCreate} onClose={onCloseCreate}/>
-                                    </VStack>
-                                </div>
-                            </TabPanel>
-                            <TabPanel> {/* Form Tab */}
-                                <FormCRUD />
-                            </TabPanel>
-                        </TabPanels>
-                    </Tabs>
+                                            >All Users
+                                            </Heading>
+                                            <IconButton
+                                                m="1rem"
+                                                aria-label="Add"
+                                                icon={<AddIcon />}
+                                                isRound={true}
+                                                size="lg"
+                                                bg="brand.brightGreen"
+                                                onClick={() => buttonClick()} // Define your click event handler
+                                            />
+                                            {userMap}
+                                            <CreateUserForm isOpen={isOpenCreate} onClose={onCloseCreate}/>
+                                        </VStack>
+                                    </div> */}
+                                </TabPanel>
+                                <TabPanel> {/* Form Tab */}
+                                    <FormCRUD />
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
+                    </HStack>
                 </GridItem>
             </Grid>
         </div>

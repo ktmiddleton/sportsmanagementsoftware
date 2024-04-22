@@ -1,4 +1,4 @@
-import { Grid, GridItem, Wrap, Heading, Spinner } from "@chakra-ui/react";
+import { VStack, HStack, Grid, GridItem, Wrap, Heading, Spinner } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -46,10 +46,10 @@ function IntramuralSportPage({isOpen, onToggle}) {
     return (
         <div className="IntramuralSports">
             <Grid
-            templateAreas={`"header header header"
-                            "nav main main"`}
+            templateAreas={`"header"
+                            "main"`}
             gridTemplateRows={{base: '10vh 90vh'}}
-            gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+            // gridTemplateColumns={{base:'1fr 3fr 2fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -60,30 +60,34 @@ function IntramuralSportPage({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'nav'}>
-                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
                 <GridItem area={'main'}>
-                    <Heading
-                        color="brand.black"
-                        textAlign="left"
-                        m="1rem"
-                    >
-                        Available {sportData ? sportData.name : <Spinner />} Teams
-                        <CreateIntramuralSportTeamButton sportData={sportData}/>
-                    </Heading>
-                    <Wrap
-                        spacing="1rem"
-                        m="2rem"
-                        w={"100%"}
-                    >
-                        {casualTeamData.map((item, index) => (
-                            <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                        ))}
-                        {competitiveTeamData.map((item, index) => (
-                            <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                        ))}
-                    </Wrap>
+                    <HStack align={'baseline'}>
+                        <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                        <VStack>
+                            <Heading
+                                color="brand.black"
+                                textAlign="left"
+                            >
+                                Available {sportData ? sportData.name : <Spinner />} Teams
+                                <CreateIntramuralSportTeamButton sportData={sportData}/>
+                            </Heading>
+                            <Wrap
+                                spacing="1rem"
+                                m="2rem"
+                                w={"100%"}
+                            >
+                                {casualTeamData.map((item, index) => (
+                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                ))}
+                                {competitiveTeamData.map((item, index) => (
+                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                ))}
+                            </Wrap>
+                        </VStack>
+                    </HStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>

@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, CircularProgress, CircularProgressLabel, Grid, GridItem, Heading, Stack, Text, useToast } from "@chakra-ui/react";
+import { HStack, Button, Card, CardBody, CardHeader, CircularProgress, CircularProgressLabel, Grid, GridItem, Heading, Stack, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -96,10 +96,10 @@ function ClassPage({isOpen, onToggle}) {
     return (
         <div className="ClassPage">
             <Grid
-            templateAreas={`"header header header"
-                            "nav main sidebar"`}
+            templateAreas={`"header header"
+                            "main sidebar"`}
             gridTemplateRows={{base: '10vh 90vh'}}
-            gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+            gridTemplateColumns={{base:'2fr 2fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -110,104 +110,107 @@ function ClassPage({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'nav'}>
-                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
                 <GridItem area={'main'}>
-                    <Heading
-                        color="brand.brightGreen"
-                        textAlign="left"
-                        m="1rem"
-                    >
-                        {classData.name}
-                        {/* TODO: Small issue where button appears then disappears quickly */}
-                        {classData.members.some((member) => member.username === localStorage.getItem("username")) ?
-                        // TODO: Need to add leave class button
-                            <Button
-                                m="1rem"
-                                aria-label="Leave Class"
-                                leftIcon={<MinusIcon />}
-                                isRound={true}
-                                size="lg"
-                                variant="submit"
-                                loadingText='Leaving...'
-                                isLoading={joinSubmitting}
-                                onClick={() => leaveClass()}
-                            >
-                                Leave Class
-                            </Button>
-                        :
-                            <Button
-                                m="1rem"
-                                aria-label="Join Class"
-                                leftIcon={<AddIcon />}
-                                isRound={true}
-                                size="lg"
-                                variant="submit"
-                                loadingText='Joining...'
-                                isLoading={joinSubmitting}
-                                onClick={() => registerClass()}
-                            >
-                                Register for Class
-                            </Button>
-                        }
-                        <EditClassButton classData={classData} />
-                    </Heading>
-                    <Grid
-                        templateRows={{base: '1fr 1fr'}}
-                        templateColumns={{base: '1fr 1fr'}}
-                        gap="1rem"
-                        p="1rem"
-                    >
-                        <GridItem
-                            rowSpan={2}
-                            colSpan={1}
+                    <HStack align={'baseline'}>
+                        <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                        <Heading
+                            color="brand.brightGreen"
+                            textAlign="left"
+                            m="1rem"
                         >
-                            <Card>
-                                <CardHeader>
-                                    <Stack
-                                        direction="row"
-                                        alignItems="center"
-                                        justifyContent="center"
-                                    >
-                                        <Heading>Registered</Heading>
-                                        <CircularProgress value={(classData.registered_participants/classData.capacity)*100} color='green.400'>
-                                            <CircularProgressLabel>{classData.registered_participants}/{classData.capacity}</CircularProgressLabel>
-                                        </CircularProgress>
-                                    </Stack>
-                                </CardHeader>
-                                <CardBody
-                                    maxHeight="85vh"
-                                    overflowY="auto"
+                            {classData.name}
+                            {/* TODO: Small issue where button appears then disappears quickly */}
+                            {classData.members.some((member) => member.username === localStorage.getItem("username")) ?
+                            // TODO: Need to add leave class button
+                                <Button
+                                    m="1rem"
+                                    aria-label="Leave Class"
+                                    leftIcon={<MinusIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    variant="submit"
+                                    loadingText='Leaving...'
+                                    isLoading={joinSubmitting}
+                                    onClick={() => leaveClass()}
                                 >
-                                    {classData.members.map((item, index) => {
-                                        return (<Text key={index}>{item.username}</Text>)
-                                    })}
-                                </CardBody>
-                            </Card>
-                        </GridItem>
-                        <GridItem
-                            rowSpan={1}
-                            colSpan={1}
+                                    Leave Class
+                                </Button>
+                            :
+                                <Button
+                                    m="1rem"
+                                    aria-label="Join Class"
+                                    leftIcon={<AddIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    variant="submit"
+                                    loadingText='Joining...'
+                                    isLoading={joinSubmitting}
+                                    onClick={() => registerClass()}
+                                >
+                                    Register for Class
+                                </Button>
+                            }
+                            <EditClassButton classData={classData} />
+                        </Heading>
+                        <Grid
+                            templateRows={{base: '1fr 1fr'}}
+                            templateColumns={{base: '1fr 1fr'}}
+                            gap="1rem"
+                            // p="1rem"
                         >
-                            <Card>
-                                <CardHeader>
-                                    <Heading>Description</Heading>
-                                </CardHeader>
-                                <CardBody>
-                                    <Text>
-                                        {classData.description}
-                                    </Text>
-                                </CardBody>
-                            </Card>
-                        </GridItem>
-                        <GridItem
-                            rowSpan={1}
-                            colSpan={1}
-                        >
+                            <GridItem
+                                rowSpan={2}
+                                colSpan={1}
+                            >
+                                <Card>
+                                    <CardHeader>
+                                        <Stack
+                                            direction="row"
+                                            alignItems="center"
+                                            justifyContent="center"
+                                        >
+                                            <Heading>Registered</Heading>
+                                            <CircularProgress value={(classData.registered_participants/classData.capacity)*100} color='green.400'>
+                                                <CircularProgressLabel>{classData.registered_participants}/{classData.capacity}</CircularProgressLabel>
+                                            </CircularProgress>
+                                        </Stack>
+                                    </CardHeader>
+                                    <CardBody
+                                        maxHeight="85vh"
+                                        overflowY="auto"
+                                    >
+                                        {classData.members.map((item, index) => {
+                                            return (<Text key={index}>{item.username}</Text>)
+                                        })}
+                                    </CardBody>
+                                </Card>
+                            </GridItem>
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
+                                <Card>
+                                    <CardHeader>
+                                        <Heading>Description</Heading>
+                                    </CardHeader>
+                                    <CardBody>
+                                        <Text>
+                                            {classData.description}
+                                        </Text>
+                                    </CardBody>
+                                </Card>
+                            </GridItem>
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
 
-                        </GridItem>
-                    </Grid>
+                            </GridItem>
+                        </Grid>
+                    </HStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>

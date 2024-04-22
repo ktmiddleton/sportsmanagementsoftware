@@ -58,10 +58,10 @@ export default function Forms({isOpen, onToggle})
     return (
     <div className="intramurals">
         <Grid
-        templateAreas={`"header header header"
-                        "nav main main"`}
+        templateAreas={`"header"
+                        "main"`}
         gridTemplateRows={{base: '10vh 90vh'}}
-        gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
+        // gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
@@ -72,24 +72,27 @@ export default function Forms({isOpen, onToggle})
             </GridItem>
             <GridItem area={'nav'}>
                 {/* <Navbar activePage={"Classes"}/> */}
-                <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
             </GridItem>
             <GridItem area={'main'}>
-                <VStack
-                 alignItems={"stretch"}
-                >
-                    <Heading
-                    color="brand.black"
-                    textAlign="left"
-                    m="1rem"
+                <HStack align={'baseline'}>
+                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    <VStack
+                    alignItems={"stretch"}
                     >
-                        My Forms
-                        <CreateFormButton />
-                    </Heading>
-                    {forms.map( (item) => {
-                        return <FormCard formData={item} />
-                    })}
-                </VStack>
+                        <Heading
+                        color="brand.black"
+                        textAlign="left"
+                        m="1rem"
+                        >
+                            My Forms
+                            <CreateFormButton />
+                        </Heading>
+                        {forms.map( (item) => {
+                            return <FormCard formData={item} />
+                        })}
+                    </VStack>
+                </HStack>
             </GridItem>
         </Grid>
     </div>
