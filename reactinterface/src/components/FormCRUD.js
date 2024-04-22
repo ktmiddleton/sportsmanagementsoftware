@@ -101,25 +101,27 @@ function FormCRUD() {
                             })}
                         </Tbody>
                         <Tfoot>
-                            <IconButton
-                                m="1rem"
-                                aria-label="Previous Page"
-                                icon={<ChevronLeftIcon />}
-                                isRound={true}
-                                size="lg"
-                                bg="gray.300"
-                                onClick={() => decrementPage()} // Define your click event handler
-                            />
-                            <IconButton
-                                m="1rem"
-                                aria-label="Next Page"
-                                icon={<ChevronRightIcon />}
-                                isRound={true}
-                                size="lg"
-                                bg="gray.300"
-                                onClick={() => incrementPage()} // Define your click event handler
-                            />
-                            {pageData ? <Text>Showing {pageData.start_index}-{pageData.end_index} of {pageData.count}</Text> : <></>}
+                            <HStack>
+                                <IconButton
+                                    m="1rem"
+                                    aria-label="Previous Page"
+                                    icon={<ChevronLeftIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    bg="gray.300"
+                                    onClick={() => decrementPage()} // Define your click event handler
+                                />
+                                {pageData ? <Text>Showing {pageData.start_index}-{pageData.end_index} of {pageData.count}</Text> : <></>}
+                                <IconButton
+                                    m="1rem"
+                                    aria-label="Next Page"
+                                    icon={<ChevronRightIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    bg="gray.300"
+                                    onClick={() => incrementPage()} // Define your click event handler
+                                />
+                            </HStack>
                         </Tfoot>
                     </Table>
                 </>

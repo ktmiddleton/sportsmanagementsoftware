@@ -169,7 +169,7 @@ class AllUsers(APIView):
                     users = User.objects.filter(username__icontains=search).order_by("id")
                     pages = Paginator(users, PAGE_SIZE)
                     page = pages.get_page(page_number)
-                    return Response({"data": UserSerializer(page, many=True).data, "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count()}})
+                    return Response({"data": UserSerializer(page, many=True).data, "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count}})
                 users = User.objects.all().order_by("id")
                 pages=Paginator(users, PAGE_SIZE)
                 page = pages.get_page(page_number)
