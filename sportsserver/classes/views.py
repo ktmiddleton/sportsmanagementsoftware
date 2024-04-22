@@ -158,8 +158,11 @@ class UserClassesList(APIView):
                 if class_.registered_participants < class_.capacity:
                     class_.members.add(user.pk)
                     return Response(status=status.HTTP_200_OK)
+                elif class_.waitlist_size < class_.waitlist_capacity:
+                    class_.waitlist_members.add(user.pk)
+                    return Response(status=status.HTTP_200_OK)
                 else:
-                    return Response({"error": "Class is full"}, status=status.HTTP_422_UNPROCESSABLE_CONTENT)
+                    return Response({"error": "Class and waitlist are full"}, status=status.HTTP_422_UNPROCESSABLE_CONTENT)
             else:
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         except Token.DoesNotExist:
@@ -177,10 +180,18 @@ class UserClassesList(APIView):
             try:
                 user = Token.objects.get(key=token).user
                 class_ = Class.objects.get(pk=classId)
-                class_.members.remove(user.pk)
-                return Response(status=status.HTTP_200_OK)
+                if class_.members.filter(id=user.pk).exists():
+                    class_.members.remove(user.pk)
+                    return Response(status=status.HTTP_200_OK)
+                elif class_.waitlist_members.filter(id=user.pk).exists():
+                    class_.waitlist_members.remove(user.pk)
+                    return Response(status=status.HTTP_200_OK)
+                else:
+                    return Response({"error": "User not in members or waitlist"}, status=status.HTTP_404_NOT_FOUND)
             except Token.DoesNotExist:
                 return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            except User.DoesNotExist:
+                return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
             except Class.DoesNotExist:
                 return Response({"error": "Class with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
         else:

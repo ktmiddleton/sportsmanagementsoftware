@@ -1,4 +1,4 @@
-import { HStack, Button, Card, CardBody, CardHeader, CircularProgress, CircularProgressLabel, Grid, GridItem, Heading, Stack, Text, useToast } from "@chakra-ui/react";
+import { HStack, Button, Card, CardBody, CardHeader, CircularProgress, CircularProgressLabel, Grid, GridItem, Heading, Stack, Text, useToast, Spinner, Skeleton } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -8,6 +8,7 @@ import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
 import EditClassButton from "../components/permissions/EditClassButton";
+import DeleteClassButton from "../components/permissions/DeleteClassButton";
 
 function ClassPage({isOpen, onToggle}) {
 
@@ -17,7 +18,7 @@ function ClassPage({isOpen, onToggle}) {
 
     const [joinSubmitting, setJoinSubmitting] = useState(false);
 
-    const [classData, setClassData] = useState({ members: [] });
+    const [classData, setClassData] = useState();
     const [classLoaded, setClassLoaded] = useState(false);
 
     useEffect(() => {
@@ -93,6 +94,97 @@ function ClassPage({isOpen, onToggle}) {
         }, 1000);
     }
 
+    function getRegistrationButton() {
+        console.log(classData)
+        if (!classData) {
+            return <></>;
+        }
+        // Check if user in members
+        if (classData.members.some((member) => member.username === localStorage.getItem("username"))) {
+            return (
+                <Button
+                    m="1rem"
+                    aria-label="Leave Class"
+                    leftIcon={<MinusIcon />}
+                    isRound={true}
+                    size="lg"
+                    variant="submit"
+                    loadingText='Leaving...'
+                    isLoading={joinSubmitting}
+                    onClick={() => leaveClass()}
+                >
+                    Leave Class
+                </Button>
+            );
+        // Check if user in waitlist
+        } else if (classData.waitlist_members.some((member) => member.username === localStorage.getItem("username"))) {
+            return (
+                <Button
+                    m="1rem"
+                    aria-label="Leave Waitlist"
+                    leftIcon={<MinusIcon />}
+                    isRound={true}
+                    size="lg"
+                    variant="submit"
+                    loadingText='Leaving...'
+                    isLoading={joinSubmitting}
+                    onClick={() => leaveClass()}
+                >
+                    Leave Waitlist
+                </Button>
+            )
+        // Check if class is full
+        } else if (classData.registered_participants < classData.capacity) {
+            return (
+                <Button
+                    m="1rem"
+                    aria-label="Join Class"
+                    leftIcon={<AddIcon />}
+                    isRound={true}
+                    size="lg"
+                    variant="submit"
+                    loadingText='Joining...'
+                    isLoading={joinSubmitting}
+                    onClick={() => registerClass()}
+                >
+                    Register for Class
+                </Button>
+            );
+        // Check if waitlist is not full
+        } else if (classData.waitlist_size < classData.waitlist_capacity) {
+            return (
+                <Button
+                    m="1rem"
+                    aria-label="Join Waitlist"
+                    leftIcon={<AddIcon />}
+                    isRound={true}
+                    size="lg"
+                    variant="submit"
+                    loadingText='Joining...'
+                    isLoading={joinSubmitting}
+                    onClick={() => registerClass()}
+                >
+                    Join Waitlist
+                </Button>
+            );
+        // Everything is filled :(
+        } else {
+            return (
+                <Button
+                    m="1rem"
+                    aria-label="Join Waitlist"
+                    isRound={true}
+                    size="lg"
+                    variant="full"
+                    isLoading={joinSubmitting}
+                    disabled={true}
+                >
+                    Join Waitlist
+                </Button>
+            );
+        }
+    }
+
     return (
         <div className="ClassPage">
             <Grid
@@ -116,98 +208,136 @@ function ClassPage({isOpen, onToggle}) {
                 <GridItem area={'main'}>
                     <HStack align={'baseline'}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
-                        <Heading
-                            color="brand.brightGreen"
-                            textAlign="left"
-                            m="1rem"
-                        >
-                            {classData.name}
-                            {/* TODO: Small issue where button appears then disappears quickly */}
-                            {classData.members.some((member) => member.username === localStorage.getItem("username")) ?
-                            // TODO: Need to add leave class button
-                                <Button
-                                    m="1rem"
-                                    aria-label="Leave Class"
-                                    leftIcon={<MinusIcon />}
-                                    isRound={true}
-                                    size="lg"
-                                    variant="submit"
-                                    loadingText='Leaving...'
-                                    isLoading={joinSubmitting}
-                                    onClick={() => leaveClass()}
-                                >
-                                    Leave Class
-                                </Button>
-                            :
-                                <Button
-                                    m="1rem"
-                                    aria-label="Join Class"
-                                    leftIcon={<AddIcon />}
-                                    isRound={true}
-                                    size="lg"
-                                    variant="submit"
-                                    loadingText='Joining...'
-                                    isLoading={joinSubmitting}
-                                    onClick={() => registerClass()}
-                                >
-                                    Register for Class
-                                </Button>
-                            }
-                            <EditClassButton classData={classData} />
-                        </Heading>
                         <Grid
                             templateRows={{base: '1fr 1fr'}}
-                            templateColumns={{base: '1fr 1fr'}}
+                            templateColumns={{base: '1fr 1fr 1fr'}}
                             gap="1rem"
                             // p="1rem"
                         >
                             <GridItem
-                                rowSpan={2}
+                                rowSpan={1}
                                 colSpan={1}
                             >
-                                <Card>
-                                    <CardHeader>
-                                        <Stack
-                                            direction="row"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                        >
-                                            <Heading>Registered</Heading>
-                                            <CircularProgress value={(classData.registered_participants/classData.capacity)*100} color='green.400'>
-                                                <CircularProgressLabel>{classData.registered_participants}/{classData.capacity}</CircularProgressLabel>
-                                            </CircularProgress>
-                                        </Stack>
-                                    </CardHeader>
-                                    <CardBody
-                                        maxHeight="85vh"
-                                        overflowY="auto"
-                                    >
-                                        {classData.members.map((item, index) => {
-                                            return (<Text key={index}>{item.username}</Text>)
-                                        })}
-                                    </CardBody>
-                                </Card>
+                                <Heading
+                                    color="brand.brightGreen"
+                                    textAlign="left"
+                                    m="1rem"
+                                >
+                                    {classData ?
+                                        <>
+                                            {/* TODO: Small issue where button appears then disappears quickly */}
+                                            {classData.name}
+                                            {getRegistrationButton()}
+                                            <EditClassButton classData={classData} />
+                                            <DeleteClassButton pk={classData.id} />
+                                        </>
+                                    :
+                                        <Spinner />
+                                    }
+                                </Heading>
                             </GridItem>
                             <GridItem
                                 rowSpan={1}
                                 colSpan={1}
                             >
-                                <Card>
-                                    <CardHeader>
-                                        <Heading>Description</Heading>
-                                    </CardHeader>
-                                    <CardBody>
-                                        <Text>
-                                            {classData.description}
-                                        </Text>
-                                    </CardBody>
-                                </Card>
+                                {classData ?
+                                    <>
+                                        <Card>
+                                            <CardHeader>
+                                                <Stack
+                                                    direction="row"
+                                                    alignItems="center"
+                                                    justifyContent="center"
+                                                >
+                                                    <Heading>Registered</Heading>
+                                                    <CircularProgress value={(classData.registered_participants/classData.capacity)*100} color='green.400'>
+                                                        <CircularProgressLabel>{classData.registered_participants}/{classData.capacity}</CircularProgressLabel>
+                                                    </CircularProgress>
+                                                </Stack>
+                                            </CardHeader>
+                                            <CardBody
+                                                maxHeight="85vh"
+                                                overflowY="auto"
+                                            >
+                                                {classData.members.map((item, index) => {
+                                                    return (<Text key={index}>{item.username}</Text>)
+                                                })}
+                                            </CardBody>
+                                        </Card>
+                                        <Card>
+                                            <Stack
+                                                direction="row"
+                                                alignItems="center"
+                                                justifyContent="center"
+                                            >
+                                                <Heading>Waitlist</Heading>
+                                                <CircularProgress value={(classData.waitlist_size/classData.waitlist_capacity)*100} color='yellow.300'>
+                                                    <CircularProgressLabel>{classData.waitlist_size}/{classData.waitlist_capacity}</CircularProgressLabel>
+                                                </CircularProgress>
+                                            </Stack>
+                                        </Card>
+                                    </>
+                                :
+                                    
+                                    <Skeleton
+                                        isLoaded={classData}
+                                        width="20vw"
+                                        height="20vh"
+                                    />
+                                }
                             </GridItem>
                             <GridItem
                                 rowSpan={1}
                                 colSpan={1}
                             >
-
+                                {classData ?
+                                    <Card>
+                                        <CardHeader>
+                                            <Heading>Description</Heading>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <Text>
+                                                {classData.description}
+                                            </Text>
+                                        </CardBody>
+                                    </Card>
+                                :
+                                    <Skeleton
+                                        isLoaded={classData}
+                                        width="20vw"
+                                        height="20vh"
+                                    />
+                                }
+                            </GridItem>
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
+                                <Skeleton
+                                    isLoaded={classData}
+                                    width="20vw"
+                                    height="20vh"
+                                />
+                            </GridItem>
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
+                                <Skeleton
+                                    isLoaded={classData}
+                                    width="20vw"
+                                    height="20vh"
+                                />
+                            </GridItem>
+                            <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
+                                <Skeleton
+                                    isLoaded={classData}
+                                    width="20vw"
+                                    height="20vh"
+                                />
                             </GridItem>
                         </Grid>
                     </HStack>
