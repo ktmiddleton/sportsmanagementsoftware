@@ -111,7 +111,7 @@ function Dashboard({isOpen, onToggle}) {
                                 padding="2rem"
                                 spacing="1rem"
                                 width="100%"
-                                justify="space-between"
+                                justify="left"
                             >
                                 {registeredTeams.map((item, index) => (
                                     <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
