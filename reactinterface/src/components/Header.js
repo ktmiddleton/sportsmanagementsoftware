@@ -44,7 +44,9 @@ export default function Header(props)
     return (
     <div>
         <Flex
-        pos="sticky"
+        // pos="absolute"
+        // top="0vh"
+        // left="0vh"
         justify="justify"
         align="center"
         h="10vh"

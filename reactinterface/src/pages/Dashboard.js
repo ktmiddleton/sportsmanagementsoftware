@@ -79,7 +79,7 @@ function Dashboard({isOpen, onToggle}) {
                 templateAreas={`"header header"
                                 "main sidebar"`}
                 gridTemplateRows={{base: '10vh 90vh'}}
-                gridTemplateColumns={{base:'2fr 2fr'}}
+                gridTemplateColumns={{base:'2fr 1fr'}}
                 gap='0'
                 color='blackAlpha.700'
                 fontWeight='bold'
@@ -94,7 +94,7 @@ function Dashboard({isOpen, onToggle}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
+                <GridItem area={'main'} height="90vh" overflowY="scroll">
                     <HStack align={'baseline'}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         <VStack
@@ -187,7 +187,7 @@ function Dashboard({isOpen, onToggle}) {
                     <VStack
                         align={"baseline"}
                         bg="brand.houndsGrey"
-                        h="100vh"
+                        h="90vh"
                     >
                         <Heading
                             color="brand.brightGreen"

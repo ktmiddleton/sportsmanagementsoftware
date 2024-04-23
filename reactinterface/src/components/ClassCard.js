@@ -119,7 +119,7 @@ export default function ClassCard({classData, image}) {
                     <CardBody>
                         <Stack
                             direction="row"
-                            spacing={'16'}
+                            justifyContent="space-around"
                         >
                             <VStack
                                 alignItems="flex-start"
@@ -137,22 +137,22 @@ export default function ClassCard({classData, image}) {
                                     })}
                                 </Text>
                             </VStack>
-                            <VStack mx={'4'}>
+                            <VStack>
                                 <Stat>
                                     <StatLabel>
                                         Class Day
                                     </StatLabel>
-                                    <StatNumber>
+                                    <StatNumber fontSize="1rem">
                                         {new Date(classData.class_time).toLocaleDateString('default')} <CalendarIcon/>
                                     </StatNumber>
                                 </Stat>
                             </VStack>
-                            <VStack mx={'4'}>
+                            <VStack>
                                 <Stat>
                                     <StatLabel>
                                         Class Time
                                     </StatLabel>
-                                    <StatNumber>
+                                    <StatNumber fontSize="1rem">
                                         {new Date(classData.class_time).toLocaleTimeString('default')} <TimeIcon/>
                                     </StatNumber>
                                 </Stat>
