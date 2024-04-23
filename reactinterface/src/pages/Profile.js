@@ -64,98 +64,90 @@ function Profile({isOpen, onToggle}) {
                     <HStack align={'baseline'}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         {/* <VStack> */}
-                            <Card
-                            // m={"1rem"}
-                            >
-                                <CardHeader>
-                                    <HStack>
-                                        <Heading>Your Profile</Heading>
-                                        <Tooltip hasArrow label='Edit Account Details' bg='gray.300' color='black'>
-                                            <IconButton
-                                                m="1rem"
-                                                aria-label="Edit"
-                                                icon={<EditIcon />}
-                                                isRound={true}
-                                                size="lg"
-                                                bg="brand.brightGreen"
-                                                onClick={onOpenEdit} // Define your click event handler
-                                            />
-                                        </Tooltip>
-                                        <Tooltip hasArrow label='Delete Account' bg='gray.300' color='black'>
-                                            <IconButton
-                                                m="1rem"
-                                                aria-label="Add"
-                                                icon={<DeleteIcon />}
-                                                isRound={true}
-                                                size="lg"
-                                                bg="brand.red"
-                                                onClick={onOpenDelete} // Define your click event handler
-                                            />
-                                        </Tooltip>
-                                    </HStack>
-                                </CardHeader>
-                                <CardBody
-                                    h="auto"
-                                    w="80vw"
-                                    overflowY="auto"
+                        <VStack>
+                            <HStack>
+                                <Heading
+                                p={"4"}
+                                >Your Profile</Heading>
+                                <Tooltip hasArrow label='Edit Account Details' bg='gray.300' color='black'>
+                                    <IconButton
+                                        m="1rem"
+                                        aria-label="Edit"
+                                        icon={<EditIcon />}
+                                        isRound={true}
+                                        size="lg"
+                                        bg="brand.brightGreen"
+                                        onClick={onOpenEdit} // Define your click event handler
+                                    />
+                                </Tooltip>
+                                <Tooltip hasArrow label='Delete Account' bg='gray.300' color='black'>
+                                    <IconButton
+                                        m="1rem"
+                                        aria-label="Add"
+                                        icon={<DeleteIcon />}
+                                        isRound={true}
+                                        size="lg"
+                                        bg="brand.red"
+                                        onClick={onOpenDelete} // Define your click event handler
+                                    />
+                                </Tooltip>
+                            </HStack>
+                            <HStack>
+                                <VStack
+                                alignItems={"baseline"}
                                 >
-                                    <HStack>
-                                        <VStack
-                                        alignItems={"baseline"}
+                                    <Heading
+                                    textAlign={"left"}
+                                    p={"4"}
+                                    >
+                                        First Name
+                                    </Heading>
+                                        <Text
+                                        fontSize={"20"}
+                                        p={"4"}
                                         >
-                                            <Heading
-                                            textAlign={"left"}
-                                            p={"4"}
-                                            >
-                                                First Name
-                                            </Heading>
-                                                <Text
-                                                fontSize={"20"}
-                                                p={"4"}
-                                                >
-                                                    {userData.first_name}
-                                                </Text>
-                                            <Heading
-                                            textAlign={"left"}
-                                            p={"4"}
-                                            >
-                                                Last Name
-                                            </Heading>
-                                                <Text
-                                                fontSize={"20"}
-                                                p={"4"}
-                                                >
-                                                    {userData.last_name}
-                                                </Text>
-                                            <Heading
-                                            textAlign={"left"}
-                                            p={"4"}
-                                            >
-                                                Email
-                                            </Heading>
-                                                <Text
-                                                fontSize={"20"}
-                                                p={"4"}
-                                                >
-                                                    {userData.email}
-                                                </Text>
-                                            <Heading
-                                            textAlign={"left"}
-                                            p={"4"}
-                                            >
-                                                Username
-                                            </Heading>
-                                                <Text
-                                                fontSize={"20"}
-                                                p={"4"}
-                                                >
-                                                    {userData.username}
-                                                </Text>
-                                        </VStack>
-                                        <Spacer/>
-                                    </HStack>
-                                </CardBody>
-                            </Card>
+                                            {userData.first_name}
+                                        </Text>
+                                    <Heading
+                                    textAlign={"left"}
+                                    p={"4"}
+                                    >
+                                        Last Name
+                                    </Heading>
+                                        <Text
+                                        fontSize={"20"}
+                                        p={"4"}
+                                        >
+                                            {userData.last_name}
+                                        </Text>
+                                    <Heading
+                                    textAlign={"left"}
+                                    p={"4"}
+                                    >
+                                        Email
+                                    </Heading>
+                                        <Text
+                                        fontSize={"20"}
+                                        p={"4"}
+                                        >
+                                            {userData.email}
+                                        </Text>
+                                    <Heading
+                                    textAlign={"left"}
+                                    p={"4"}
+                                    >
+                                        Username
+                                    </Heading>
+                                        <Text
+                                        fontSize={"20"}
+                                        p={"4"}
+                                        >
+                                            {userData.username}
+                                        </Text>
+                                </VStack>
+                                <Spacer/>
+                            </HStack>
+                        </VStack>
                         {/* </VStack> */}
                     </HStack>
                 </GridItem>
