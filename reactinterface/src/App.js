@@ -177,7 +177,6 @@ const theme = extendTheme({
 
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
-  const [date, setDate] = useState(new Date());
 
 
   // useEffect(() => {
@@ -204,9 +203,9 @@ function App() {
       <UserProvider>
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
-            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>} />
+            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle} />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>}/>
+            <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsports' element={<ClubSports isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/clubsportteam/:teamId' element={<ClubSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
@@ -214,7 +213,7 @@ function App() {
             <Route path='/intramuralsportteam/:teamId' element={<IntramuralSportTeamPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/class/:classId' element={<ClassPage isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/forms' element={<Forms isOpen={isOpen} onToggle={onToggle} />}/>
-            <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} date={date} setDate={setDate}/>}/>
+            <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/admin' element={<Admin openState={isOpen} onToggle={onToggle} />}/>
             <Route path='/profile' element={<Profile isOpen={isOpen} onToggle={onToggle}/>}/>

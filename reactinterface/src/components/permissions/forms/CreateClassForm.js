@@ -120,7 +120,13 @@ function CreateClassForm({ isOpen, onClose, initialValues, mode, pk }) {
                                     <IntegerQuestion
                                         fieldName="capacity"
                                         placeHolder={0}
-                                        label="Capacity"
+                                        label="Class Capacity"
+                                        formikProps={formikProps}
+                                    />
+                                    <IntegerQuestion
+                                        fieldName="waitlist_capacity"
+                                        placeHolder={0}
+                                        label="Waitlist Capacity"
                                         formikProps={formikProps}
                                     />
                                     <DateTimeQuestion

@@ -41,7 +41,7 @@ function UserCRUD() {
             )
             .then((response) => {
                 console.log(response.data);
-                setUserInfo(response.data.users);
+                setUserInfo(response.data.data);
                 setPageData(response.data.pages);
             })
             .catch((error) => {
@@ -70,7 +70,7 @@ function UserCRUD() {
                     >
                         <CreateUserButton />
                         {/* <SearchBar data={formInfo} searchField={"name"} setFilteredData={setFilterFormInfo} /> */}
-                        <SearchBar mode="server" endpoint={`forms/?token=${localStorage.getItem("token")}&info=1`} setFilteredData={setUserInfo} setPageData={setPageData} page={pageNumber} modelType="forms" />
+                        <SearchBar mode="server" endpoint={`user/allusers/?token=${localStorage.getItem("token")}`} setFilteredData={setUserInfo} setPageData={setPageData} page={pageNumber} modelType="data" />
                     </HStack>
                     <Table size="lg">
                         <Thead>
@@ -84,6 +84,7 @@ function UserCRUD() {
                             </Tr>
                         </Thead>
                         <Tbody>
+                            {console.log(userInfo)}
                             {userInfo?.map( (item) => {
                                 return (
                                     <Tr>
@@ -103,25 +104,27 @@ function UserCRUD() {
                             })}
                         </Tbody>
                         <Tfoot>
-                            <IconButton
-                                m="1rem"
-                                aria-label="Previous Page"
-                                icon={<ChevronLeftIcon />}
-                                isRound={true}
-                                size="lg"
-                                bg="gray.300"
-                                onClick={() => decrementPage()} // Define your click event handler
-                            />
-                            <IconButton
-                                m="1rem"
-                                aria-label="Next Page"
-                                icon={<ChevronRightIcon />}
-                                isRound={true}
-                                size="lg"
-                                bg="gray.300"
-                                onClick={() => incrementPage()} // Define your click event handler
-                            />
-                            {pageData ? <Text>Showing {pageData.start_index}-{pageData.end_index} of {pageData.count}</Text> : <></>}
+                            <HStack>
+                                <IconButton
+                                    m="1rem"
+                                    aria-label="Previous Page"
+                                    icon={<ChevronLeftIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    bg="gray.300"
+                                    onClick={() => decrementPage()} // Define your click event handler
+                                />
+                                {pageData ? <Text>Showing {pageData.start_index}-{pageData.end_index} of {pageData.count}</Text> : <></>}
+                                <IconButton
+                                    m="1rem"
+                                    aria-label="Next Page"
+                                    icon={<ChevronRightIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    bg="gray.300"
+                                    onClick={() => incrementPage()} // Define your click event handler
+                                />
+                            </HStack>
                         </Tfoot>
                     </Table>
                 </>

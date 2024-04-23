@@ -10,7 +10,7 @@ import FormCard from "../components/FormCard";
 import { useUser } from "../components/UserContext";
 import Calendar from 'react-calendar';
 
-function Dashboard({isOpen, onToggle, date, setDate}) {
+function Dashboard({isOpen, onToggle}) {
     // Whether data is loaded for placeholders
     const [clubSportsLoaded, setClubSportsLoaded] = useState(false);
     const [intramuralTeamsLoaded, setIntramuralTeamsLoaded] = useState(false);
@@ -79,7 +79,7 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                 templateAreas={`"header header"
                                 "main sidebar"`}
                 gridTemplateRows={{base: '10vh 90vh'}}
-                gridTemplateColumns={{base:'2fr 2fr'}}
+                gridTemplateColumns={{base:'2fr 1fr'}}
                 gap='0'
                 color='blackAlpha.700'
                 fontWeight='bold'
@@ -94,7 +94,7 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
+                <GridItem area={'main'} height="90vh" overflowY="scroll">
                     <HStack align={'baseline'}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         <VStack
@@ -111,7 +111,7 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                                 padding="2rem"
                                 spacing="1rem"
                                 width="100%"
-                                justify="space-between"
+                                justify="left"
                             >
                                 {registeredTeams.map((item, index) => (
                                     <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
@@ -187,7 +187,7 @@ function Dashboard({isOpen, onToggle, date, setDate}) {
                     <VStack
                         align={"baseline"}
                         bg="brand.houndsGrey"
-                        h="100vh"
+                        h="90vh"
                     >
                         <Heading
                             color="brand.brightGreen"

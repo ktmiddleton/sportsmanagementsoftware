@@ -44,12 +44,14 @@ export default function Header(props)
     return (
     <div>
         <Flex
-            pos="sticky"
-            justify="justify"
-            align="center"
-            h="5vh"
-            w="100vw"
-            bg="brand.loyolaGreen"
+        // pos="absolute"
+        // top="0vh"
+        // left="0vh"
+        justify="justify"
+        align="center"
+        h="10vh"
+        w="100vw"
+        bg="brand.loyolaGreen"
         >
             <div className="headerlogo"
             style={{marginLeft: "5vh"}}

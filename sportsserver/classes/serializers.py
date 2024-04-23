@@ -11,6 +11,7 @@ class ClassSerializer(serializers.ModelSerializer):
     
     members = MemberSerializer(many=True, required=False)
     instructors = MemberSerializer(many=True, required=False)
+    waitlist_members = MemberSerializer(many=True, required=False)
     
     class Meta:
         model = Class

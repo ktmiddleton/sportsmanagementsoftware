@@ -58,12 +58,16 @@ function Sidebar({isOpen, onToggle}) {
                 width={isOpen ? "18rem" : "6rem"}
                 animate={{ width: (isOpen ? "18rem" : "6rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
+                position="sticky"
+                top="0vh"
+                // left="0vh"
+                // mr="20px"
             >
                 <Box // Sidebar background
                     as="aside"
                     w={{ base: "100%" }}
                     bg="brand.darkGrey"
-                    h={innerBoxHeight}
+                    h="90vh"//{innerBoxHeight}
                     // p="3px"
                 >
                     <VStack align="stretch" spacing="0px">

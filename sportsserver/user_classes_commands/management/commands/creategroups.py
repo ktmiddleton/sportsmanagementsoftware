@@ -165,7 +165,7 @@ class Command(BaseCommand):
                 admin.permissions.add(create_users, view_users, update_users, delete_users,
                                       promote_admin, promote_captain, promote_instructor, promote_referee,
                                       create_club_team, view_club_team, update_club_team, delete_club_team,
-                                      create_intramural_team, view_club_team, update_club_team, delete_intramural_team,
+                                      create_intramural_team, view_intramural_team, update_intramural_team, delete_intramural_team,
                                       join_team,
                                       create_league,
                                       create_class, view_class, update_class, delete_class,

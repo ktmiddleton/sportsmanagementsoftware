@@ -18,7 +18,7 @@ import '../css/calendar.css'
 import { useUser } from "../components/UserContext";
 
 
-export default function Classes({isOpen, onToggle, date, setDate}) 
+export default function Classes({isOpen, onToggle})
 {
     const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
     
