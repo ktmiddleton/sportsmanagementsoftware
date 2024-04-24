@@ -89,6 +89,8 @@ class ClassesList(APIView):
                     request.data.pop("members") # TODO: Quick fix don't need to pass members or instructors it messes up serialization
                 if ("instructors" in request.data):
                     request.data.pop("instructors")
+                if ("waitlist_members" in request.data):
+                    request.data.pop("waitlist_members")
                 serializer = ClassSerializer(class_, data=request.data, partial=True)
                 if serializer.is_valid():
                     serializer.save()

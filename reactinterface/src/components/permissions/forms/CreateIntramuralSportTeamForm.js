@@ -9,7 +9,8 @@ import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 import DateTimeQuestion from "../questions/DateTimeQuestion";
 
-function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData }) {
+function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData, initialValues, mode, pk}) {
+    mode = (mode === undefined ? "create" : mode); // Make sure mode is create if not specified
 
     const toast = useToast()
 
@@ -17,37 +18,64 @@ function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData }) {
         console.log(formValues)
         let data = {
             ...formValues,
-            sport: sportData.id,
-            token: localStorage.getItem("token")
         }
-        axios.post(
-            `http://localhost:8000/intramurals/teams/`,
-            data
-        ).then((response) => {
-            isOpen = !isOpen;
-            window.location.reload();
-            toast({
-                title: 'Team successfully created.',
-                description: "You've successfully created the team: " + formValues.name + ".",
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
-        }).catch((error) => {
-            toast({
-                title: 'Failed to create team.',
-                description: "You've encountered an error creating the team " + error.response.data.error,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            })
-            console.error(error);
-        });
+        if (mode === "create") {
+            data["sport"] = sportData.id
+        }
+        if (mode === "create") {
+            axios.post(
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?token=${localStorage.getItem("token")}`,
+                data
+            ).then((response) => {
+                isOpen = !isOpen;
+                window.location.reload();
+                toast({
+                    title: 'Team successfully created.',
+                    description: "You've successfully created the team: " + formValues.name + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to create team.',
+                    description: "You've encountered an error creating the team " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        } else if (mode === "update") {
+            axios.patch(
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?token=${localStorage.getItem("token")}&teamId=${pk}`,
+                data
+            ).then((response) => {
+                isOpen = !isOpen;
+                window.location.reload();
+                toast({
+                    title: 'Team successfully updated.',
+                    description: "You've successfully updated the team: " + formValues.name + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to update team.',
+                    description: "You've encountered an error updating the team " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        }
     }
 
     return (
         <Formik
-            initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
+            initialValues={{...initialValues}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
                 console.log(values);
                 submitForm(values);
@@ -64,7 +92,7 @@ function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Create Intramural Sport</ModalHeader>
+                            <ModalHeader>{mode === "create" ? "Create" : "Update"} Intramural Sport</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -121,7 +149,7 @@ function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData }) {
                                     isLoading={formikProps.isSubmitting}
                                     onClick={formikProps.handleSubmit}
                                 >
-                                    Submit
+                                    {mode == "create" ? "Submit" : "Update"}
                                 </Button>
                             </ModalFooter>
                         </ModalContent>

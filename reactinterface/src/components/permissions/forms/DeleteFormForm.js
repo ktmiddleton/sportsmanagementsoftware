@@ -18,7 +18,7 @@ function DeleteFormForm({ pk, isOpen, onClose }) {
         console.log(formValues)
         if (formValues.confirmation) {
             axios.delete(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&formId=${pk}&info=1`
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/?token=${localStorage.getItem("token")}&formId=${pk}&info=1`
             ).then((response) => {
                 isOpen = !isOpen;
                 toast({

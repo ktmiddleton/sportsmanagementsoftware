@@ -15,7 +15,7 @@ export default function ClassCard({classData, image}) {
 
     function register(event) {
         event.stopPropagation(); // Prevent the outter button from being clicked that navigates to other page
-        axios.post(`http://localhost:8000/classes/userclasses/?token=${localStorage.getItem("token")}`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/?token=${localStorage.getItem("token")}`,
             {
                 classId: classData.id
             }
@@ -119,11 +119,12 @@ export default function ClassCard({classData, image}) {
                     <CardBody>
                         <Stack
                             direction="row"
-                            spacing={'16'}
+                            justifyContent="space-between"
                         >
                             <VStack
                                 alignItems="flex-start"
                                 spacing="2px"
+                                width="70%"
                             >
                                 <Heading textAlign="left" size="md">{classData.name}</Heading>
 
@@ -137,26 +138,32 @@ export default function ClassCard({classData, image}) {
                                     })}
                                 </Text>
                             </VStack>
-                            <VStack mx={'4'}>
-                                <Stat>
-                                    <StatLabel>
-                                        Class Day
-                                    </StatLabel>
-                                    <StatNumber>
-                                        {new Date(classData.class_time).toLocaleDateString('default')} <CalendarIcon/>
-                                    </StatNumber>
-                                </Stat>
-                            </VStack>
-                            <VStack mx={'4'}>
-                                <Stat>
-                                    <StatLabel>
-                                        Class Time
-                                    </StatLabel>
-                                    <StatNumber>
-                                        {new Date(classData.class_time).toLocaleTimeString('default')} <TimeIcon/>
-                                    </StatNumber>
-                                </Stat>
-                            </VStack>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                justifyContent="space-between"
+                            >
+                                <VStack>
+                                    <Stat>
+                                        <StatLabel>
+                                            Class Day
+                                        </StatLabel>
+                                        <StatNumber fontSize="1rem">
+                                            {new Date(classData.class_time).toLocaleDateString('default')} <CalendarIcon/>
+                                        </StatNumber>
+                                    </Stat>
+                                </VStack>
+                                <VStack>
+                                    <Stat>
+                                        <StatLabel>
+                                            Class Time
+                                        </StatLabel>
+                                        <StatNumber fontSize="1rem">
+                                            {new Date(classData.class_time).toLocaleTimeString('default')} <TimeIcon/>
+                                        </StatNumber>
+                                    </Stat>
+                                </VStack>
+                            </Stack>
                         </Stack>
                     </CardBody>
 

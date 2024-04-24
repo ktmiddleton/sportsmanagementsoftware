@@ -10,7 +10,7 @@ import TrueFalseQuestion from "../questions/TrueFalseQuestion";
 import { useNavigate } from "react-router-dom";
 import ConfirmCheckbox from "../questions/ConfirmCheckbox";
 
-function CreateClubSportForm({ teamData, isOpen, onClose }) {
+function DeleteIntramuralSportTeamForm({ teamData, isOpen, onClose }) {
 
     const toast = useToast()
 
@@ -20,10 +20,10 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
         console.log(formValues)
         if (formValues.confirmation === true) {
             axios.delete(
-                `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
             ).then((response) => {
                 isOpen = !isOpen;
-                navigate("/clubsports");
+                navigate("/intramural");
                 toast({
                     title: 'Team Successfully deleted.',
                     description: "You've successfully deleted team: " + teamData.id + ".",
@@ -63,7 +63,7 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Delete Club Sport Team</ModalHeader>
+                            <ModalHeader>Delete Intramural Sport Team</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -75,7 +75,7 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
                                     <ConfirmCheckbox 
                                         fieldName="confirmation" 
                                         label="Confirm Deletion"
-                                        checkboxLabel="Click here to ensure you wish to delete the club sport"
+                                        checkboxLabel="Click here to ensure you wish to delete the intramural sport"
                                         placeHolder=" "
                                         required={true}
                                         trueRequired={true}
@@ -105,4 +105,4 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
     );
 }
 
-export default CreateClubSportForm;
+export default DeleteIntramuralSportTeamForm;

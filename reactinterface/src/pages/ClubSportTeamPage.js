@@ -30,7 +30,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     useEffect(() => {
         console.log("plonk")
         axios.get(
-            `http://localhost:8000/clubsports/?teamId=${teamId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?teamId=${teamId}`
         )
         .then((response) => {
             setTeamData(response.data);
@@ -43,7 +43,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     }, [user]);
 
     function joinTeam() {
-        axios.post(`http://localhost:8000/clubsports/userteams/`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/`,
             {
                 token: localStorage.getItem("token"),
                 teamId: teamData.id
@@ -75,7 +75,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     }
 
     function leaveTeam() {
-        axios.delete(`http://localhost:8000/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
+        axios.delete(`${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
         .then((response) => {
             window.location.reload();
             toast({
@@ -106,7 +106,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
             <Grid
             templateAreas={`"header header"
                             "main sidebar"`}
-            gridTemplateRows={{base: '10vh 90vh'}}
+            gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
             gridTemplateColumns={{base:'2fr 2fr'}}
             gap='0'
             color='blackAlpha.700'
@@ -121,8 +121,8 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
-                    <HStack align={'baseline'}>
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         <Heading
                             color="brand.brightGreen"

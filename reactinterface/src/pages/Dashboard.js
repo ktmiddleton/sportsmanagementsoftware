@@ -25,7 +25,7 @@ function Dashboard({isOpen, onToggle}) {
     useEffect(() => {
         setRegisteredTeams([])
         axios.get( // Get Club Sports
-            `http://localhost:8000/clubsports/userteams/?username=${localStorage.getItem("username")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
@@ -37,7 +37,7 @@ function Dashboard({isOpen, onToggle}) {
         });
 
         axios.get( // Get Intramural Sports
-            `http://localhost:8000/intramurals/userteams/?username=${localStorage.getItem("username")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/userteams/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
@@ -49,7 +49,7 @@ function Dashboard({isOpen, onToggle}) {
         });
 
         axios.get( // Get Classes
-            `http://localhost:8000/classes/userclasses/?username=${localStorage.getItem("username")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredClasses(response.data);
@@ -60,7 +60,7 @@ function Dashboard({isOpen, onToggle}) {
             console.log(error);
         });
         axios.get( // Get Forms
-            `http://localhost:8000/forms/?username=${localStorage.getItem("username")}&token=${localStorage.getItem("token")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/?username=${localStorage.getItem("username")}&token=${localStorage.getItem("token")}`
         )
         .then((response) => {
             setRegisteredForms(response.data.forms);
@@ -78,8 +78,8 @@ function Dashboard({isOpen, onToggle}) {
             <Grid
                 templateAreas={`"header header"
                                 "main sidebar"`}
-                gridTemplateRows={{base: '10vh 90vh'}}
-                gridTemplateColumns={{base:'2fr 2fr'}}
+                gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
+                gridTemplateColumns={{base:'2fr 1fr'}}
                 gap='0'
                 color='blackAlpha.700'
                 fontWeight='bold'
@@ -94,11 +94,12 @@ function Dashboard({isOpen, onToggle}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
-                    <HStack align={'baseline'}>
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         <VStack
                             align={"baseline"}
+                            width="100%"
                         >
                             <Heading
                                 color="brand.black"
@@ -111,10 +112,17 @@ function Dashboard({isOpen, onToggle}) {
                                 padding="2rem"
                                 spacing="1rem"
                                 width="100%"
-                                justify="space-between"
+                                justify="left"
                             >
                                 {registeredTeams.map((item, index) => (
-                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                    <SportCard
+                                        key={index}
+                                        width={"350px"}
+                                        image=""
+                                        header={item.name}
+                                        description={item.description}
+                                        teamObject={item}
+                                    />
                                 ))}
                             </Wrap>
                             {clubSportsLoaded ?
@@ -122,7 +130,7 @@ function Dashboard({isOpen, onToggle}) {
                             :
                                 <Box
                                     className="skeleton-coffin"
-                                    width="90%"
+                                    width="100%"
                                     height="100%"
                                     alignSelf="center"
                                 >
@@ -153,7 +161,7 @@ function Dashboard({isOpen, onToggle}) {
                             :
                                 <Box
                                     className="skeleton-coffin"
-                                    width="90%"
+                                    width="100%"
                                     height="100%"
                                     alignSelf="center"
                                 >
@@ -187,7 +195,8 @@ function Dashboard({isOpen, onToggle}) {
                     <VStack
                         align={"baseline"}
                         bg="brand.houndsGrey"
-                        h="100vh"
+                        h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}
+                        overflowY="auto"
                     >
                         <Heading
                             color="brand.brightGreen"
@@ -199,6 +208,9 @@ function Dashboard({isOpen, onToggle}) {
                         <Wrap
                             m="2rem"
                             spacing="1rem"
+                            background={process.env.REACT_APP_PAGE_BACKGROUND}
+                            p="2%"
+                            borderRadius="8px"
                         >
                             {registeredForms.map((item, index) => (
                                 (!item.completed ? <FormCard key={index} formData={item}/> : <></>)

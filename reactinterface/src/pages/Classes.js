@@ -42,7 +42,7 @@ export default function Classes({isOpen, onToggle})
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/classes/`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/`
         )
         .then((response) => {
             console.log(response.data)
@@ -63,7 +63,7 @@ export default function Classes({isOpen, onToggle})
         <Grid
         templateAreas={`"header"
                         "main"`}
-        gridTemplateRows={{base: '10vh 90vh'}}
+        gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
         // gridTemplateColumns={{base:'1fr 5fr'}} // 11em
         gap='0'
         color='blackAlpha.700'
@@ -77,11 +77,12 @@ export default function Classes({isOpen, onToggle})
                 {/* <Navbar activePage={"Classes"}/> */}
                 {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
             </GridItem>
-            <GridItem area={'main'}>
-                <HStack align={'baseline'}>
+            <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                     <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                     <VStack
-                    alignItems={"stretch"}
+                        alignItems={"stretch"}
+                        width="100%"
                     >
                         <Heading
                         color="brand.black"
@@ -100,7 +101,7 @@ export default function Classes({isOpen, onToggle})
                             :
                                 <Box
                                     className="skeleton-coffin"
-                                    width="90%"
+                                    width="100%"
                                     height="100%"
                                     alignSelf="center"
                                 >

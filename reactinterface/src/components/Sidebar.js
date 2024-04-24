@@ -18,7 +18,7 @@ const MotionBox = motion(Box);
 function Sidebar({isOpen, onToggle}) {
     const navigate = useNavigate();
     const location = useLocation();
-    const [innerBoxHeight, setInnerBoxHeight] = useState("90vh");
+    const [innerBoxHeight, setInnerBoxHeight] = useState(process.env.REACT_APP_MAIN_PAGE_HEIGHT);
 
     function handleNavigate(path) {
         return () => navigate(path);
@@ -58,12 +58,16 @@ function Sidebar({isOpen, onToggle}) {
                 width={isOpen ? "18rem" : "6rem"}
                 animate={{ width: (isOpen ? "18rem" : "6rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
+                position="sticky"
+                top="0vh"
+                // left="0vh"
+                // mr="20px"
             >
                 <Box // Sidebar background
                     as="aside"
                     w={{ base: "100%" }}
                     bg="brand.darkGrey"
-                    h={innerBoxHeight}
+                    h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}//{innerBoxHeight}
                     // p="3px"
                 >
                     <VStack align="stretch" spacing="0px">

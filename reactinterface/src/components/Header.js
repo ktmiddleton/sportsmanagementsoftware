@@ -13,9 +13,9 @@ import {
     HStack,
     Spacer,
     Button,
-    MenuItem
+    MenuItem,
+    Image
 } from '@chakra-ui/react'
-import { ReactComponent as LoyolaMDLogo } from '../assets/LoyolaMDLogo.svg';
 import { FaUserCircle } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { RiAdminFill } from "react-icons/ri";
@@ -44,24 +44,37 @@ export default function Header(props)
     return (
     <div>
         <Flex
-        pos="sticky"
+        // pos="absolute"
+        // top="0vh"
+        // left="0vh"
         justify="justify"
         align="center"
-        h="10vh"
+        h="5vh"
         w="100vw"
         bg="brand.loyolaGreen"
         >
-            <div className="headerlogo">
-                <IconButton 
+            <div className="headerlogo"
+            style={{marginLeft: "5vh"}}
+            >
+                {/* <IconButton 
                 aria-label='Home'
-                as={LoyolaMDLogo} 
                 boxSize={64} 
                 ml={5}
                 color={"brand.white"}
                 bg={"transparent"}
                 _hover={{textDecor: 'none', backgroundColor:"transparent"}}
                 onClick={handleNavigate("/")}
-                />
+                /> */}
+                <Link
+                    href="/"
+                    height="4vh"
+                >
+                    <Image
+                        src="./Loyola Fit Logo White-01.png"
+                        alt="Loyola Fit Logo"
+                        boxSize="inherit"
+                    />
+                </Link>
             </div>
             <Spacer/>
             <div className="headerbuttons">
@@ -71,8 +84,8 @@ export default function Header(props)
                         <IconButton 
                             aria-label="Administration"
                             as={RiAdminFill}
-                            boxSize={16}
-                            mr={5}
+                            boxSize={"5vh"}
+                            mr={"1rem"}
                             color={"brand.white"}
                             bg={"brand.loyolaGreen"}
                             onClick={handleNavigate("/admin")}
@@ -83,8 +96,8 @@ export default function Header(props)
                         <IconButton
                             aria-label='Settings'
                             as={IoSettingsSharp} 
-                            boxSize={16}
-                            mr={5}
+                            boxSize={"5vh"}
+                            mr={"1rem"}
                             color={"brand.white"}
                             bg={"brand.loyolaGreen"}
                             onClick={handleNavigate("/settings")}
@@ -95,8 +108,8 @@ export default function Header(props)
                                 as={IconButton}
                                 aria-label='Profile'
                                 icon={<FaUserCircle size={"100%"} />}
-                                boxSize={16}
-                                mr={10}
+                                boxSize={"5vh"}
+                                mr={"2rem"}
                                 color={"brand.white"}
                                 bg={"brand.loyolaGreen"}
                                 // onClick={handleNavigate("/profile")}

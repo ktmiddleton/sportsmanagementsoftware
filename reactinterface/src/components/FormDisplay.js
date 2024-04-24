@@ -22,7 +22,7 @@ function FormDisplay({ formData, isOpen, onClose }) {
             ...formValues
         }
         axios.post(
-            `http://localhost:8000/forms/complete/?token=${localStorage.getItem("token")}&formId=${formData.id}`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/complete/?token=${localStorage.getItem("token")}&formId=${formData.id}`,
             data
         ).then((response) => {
             isOpen = !isOpen;
