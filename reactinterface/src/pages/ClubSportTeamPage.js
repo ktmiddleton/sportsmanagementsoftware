@@ -1,4 +1,4 @@
-import { HStack, Button, ButtonGroup, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast } from "@chakra-ui/react";
+import { HStack, Button, ButtonGroup, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast, Wrap } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -107,7 +107,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
             templateAreas={`"header header"
                             "main sidebar"`}
             gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
-            gridTemplateColumns={{base:'2fr 2fr'}}
+            gridTemplateColumns={{base:'2fr 1fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -127,7 +127,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                         <Heading
                             color="brand.brightGreen"
                             textAlign="left"
-                            m="1rem"
+                            // m="1rem"
                         >
                             {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
                             {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
@@ -167,16 +167,16 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                 <EditClubSportButton teamData={teamData}/>
                             </ButtonGroup>
                         </Heading>
-                        <Grid
-                            templateRows={{base: '1fr 1fr'}}
-                            templateColumns={{base: '1fr 1fr'}}
+                        <Wrap
+                            // templateRows={{base: '1fr 1fr'}}
+                            // templateColumns={{base: '1fr 1fr'}}
                             gap="1rem"
-                            p="1rem"
+                            // p="1rem"
                         >
-                            <GridItem
+                            {/* <GridItem
                                 rowSpan={2}
                                 colSpan={1}
-                            >
+                            > */}
                                 <Card>
                                     <CardHeader>
                                         <Heading>Roster</Heading>
@@ -190,11 +190,11 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                         })}
                                     </CardBody>
                                 </Card>
-                            </GridItem>
-                            <GridItem
+                            {/* </GridItem> */}
+                            {/* <GridItem
                                 rowSpan={1}
                                 colSpan={1}
-                            >
+                            > */}
                                 <Card>
                                     <CardHeader>
                                         <Heading>Description</Heading>
@@ -205,21 +205,21 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                         </Text>
                                     </CardBody>
                                 </Card>
-                            </GridItem>
-                            <GridItem
+                            {/* </GridItem> */}
+                            {/* <GridItem
                                 rowSpan={1}
                                 colSpan={1}
                             >
 
-                            </GridItem>
-                        </Grid>
+                            </GridItem> */}
+                        </Wrap>
                     </HStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>
                     <Grid
                         bg="brand.hover.houndsGrey"
-                        h="100vh"
+                        h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}
                         w="100%"
                     >
                         <Heading

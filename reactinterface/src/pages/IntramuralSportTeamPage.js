@@ -135,7 +135,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
             templateAreas={`"header header"
                             "main sidebar"`}
             gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
-            gridTemplateColumns={{base:'2fr 2fr'}}
+            gridTemplateColumns={{base:'2fr 1fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -157,7 +157,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
                                 <Heading
                                     color="brand.brightGreen"
                                     textAlign="left"
-                                    m="1rem"
+                                    // m="1rem"
                                 >
                                     {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
                                     {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
@@ -200,7 +200,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
                 <GridItem area={"sidebar"}>
                     <Grid
                         bg="brand.hover.houndsGrey"
-                        h="100vh"
+                        h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}
                         w="100%"
                     >
                         <Heading

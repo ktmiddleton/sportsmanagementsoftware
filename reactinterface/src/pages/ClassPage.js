@@ -188,10 +188,10 @@ function ClassPage({isOpen, onToggle}) {
     return (
         <div className="ClassPage">
             <Grid
-            templateAreas={`"header header"
-                            "main sidebar"`}
+            templateAreas={`"header"
+                            "main"`}
             gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
-            gridTemplateColumns={{base:'2fr 2fr'}}
+            // gridTemplateColumns={{base:'2fr 1fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -343,7 +343,7 @@ function ClassPage({isOpen, onToggle}) {
                     </HStack>
                 </GridItem>
 
-                <GridItem area={"sidebar"}>
+                {/* <GridItem area={"sidebar"}>
                     <Grid
                         bg="brand.hover.houndsGrey"
                         h="100vh"
@@ -364,7 +364,7 @@ function ClassPage({isOpen, onToggle}) {
                             TODO
                         </Heading>
                     </Grid>
-                </GridItem>
+                </GridItem> */}
             </Grid>
         </div>
     )

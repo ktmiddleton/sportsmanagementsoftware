@@ -73,7 +73,7 @@ function IntramuralSportPage({isOpen, onToggle}) {
                                 "content-header content-header content-header"
                                 "content-main-left divider content-main-right"
                             `}
-                            templateRows={{base: "10% 90%"}}
+                            templateRows={{base: "20% 80%"}}
                             templateColumns={{base: "45% 10% 45%"}}
                             overflowX="hidden"
                             overflowY="auto"
