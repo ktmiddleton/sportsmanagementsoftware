@@ -119,10 +119,10 @@ export default function Admin({openState, onToggle})
                         <Sidebar isOpen={openState} onToggle={onToggle}/>
                         <Tabs size="lg" variant="enclosed" colorScheme="green" m="1rem">
                             <TabList>
-                                <Tab>
+                                <Tab background="brand.white">
                                     Users
                                 </Tab>
-                                <Tab>
+                                <Tab background="brand.white">
                                     Forms
                                 </Tab>
                             </TabList>

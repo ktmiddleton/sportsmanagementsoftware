@@ -96,6 +96,7 @@ function SearchBar({data, searchField, setFilteredData, setPageData, mode, endpo
                     }}
                     onChange={handleChange}
                     placeholder="Search"
+                    background="brand.white"
                 />
                 {mode === "server" ?
                     <InputRightElement>
