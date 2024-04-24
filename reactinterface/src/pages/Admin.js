@@ -100,7 +100,7 @@ export default function Admin({openState, onToggle})
             <Grid
             templateAreas={`"header"
                             "main"`}
-            gridTemplateRows={{base: '10vh 90vh'}}
+            gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
             // gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
             gap='0'
             color='blackAlpha.700'
@@ -114,8 +114,8 @@ export default function Admin({openState, onToggle})
                     {/* <Navbar activePage={"Classes"}/> */}
                     
                 </GridItem>
-                <GridItem area={'main'}>
-                    <HStack align={"baseline"}>
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={"baseline"} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={openState} onToggle={onToggle}/>
                         <Tabs size="lg" variant="enclosed" colorScheme="green" m="1rem">
                             <TabList>

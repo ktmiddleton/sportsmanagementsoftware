@@ -45,7 +45,7 @@ function Profile({isOpen, onToggle}) {
             <Grid
             templateAreas={`"header"
                             "main"`}
-            gridTemplateRows={{base: '10vh 90vh'}}
+            gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
             // gridTemplateColumns={{base:'1fr 5fr'}}
             gap='0'
             color='blackAlpha.700'
@@ -60,8 +60,8 @@ function Profile({isOpen, onToggle}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
-                    <HStack align={'baseline'}>
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         {/* <VStack> */}
                         <VStack>

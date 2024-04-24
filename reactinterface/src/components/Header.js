@@ -49,7 +49,7 @@ export default function Header(props)
         // left="0vh"
         justify="justify"
         align="center"
-        h="10vh"
+        h="5vh"
         w="100vw"
         bg="brand.loyolaGreen"
         >

@@ -1,4 +1,4 @@
-import { VStack, HStack, Grid, GridItem, Wrap, Heading, Spinner } from "@chakra-ui/react";
+import { VStack, HStack, Grid, GridItem, Wrap, Heading, Spinner, Divider, Center } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -46,14 +46,14 @@ function IntramuralSportPage({isOpen, onToggle}) {
     return (
         <div className="IntramuralSports">
             <Grid
-            templateAreas={`"header"
-                            "main"`}
-            gridTemplateRows={{base: '10vh 90vh'}}
-            // gridTemplateColumns={{base:'1fr 3fr 2fr'}}
-            gap='0'
-            color='blackAlpha.700'
-            fontWeight='bold'
-            overflowX="hidden"
+                templateAreas={`"header"
+                                "main"`}
+                gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
+                // gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+                gap='0'
+                color='blackAlpha.700'
+                fontWeight='bold'
+                overflowX="hidden"
             >
                 <GridItem area={'header'}>
                     <Header buttons={true}/>
@@ -63,10 +63,77 @@ function IntramuralSportPage({isOpen, onToggle}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
-                    <HStack align={'baseline'}>
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
-                        <VStack>
+                        <Grid
+                            width="100%"
+                            height="100%"
+                            templateAreas={`
+                                "content-header content-header content-header"
+                                "content-main-left divider content-main-right"
+                            `}
+                            templateRows={{base: "20% 80%"}}
+                            templateColumns={{base: "45% 10% 45%"}}
+                            overflowX="hidden"
+                            overflowY="hidden"
+                        >
+                            <GridItem area="content-header">
+                                <Heading
+                                    color="brand.black"
+                                    textAlign="left"
+                                >
+                                    Available {sportData ? sportData.name : <Spinner />} Teams
+                                    <CreateIntramuralSportTeamButton sportData={sportData}/>
+                                </Heading>
+                            </GridItem>
+                            <GridItem area="content-main-left">
+                                <Heading color="brand.darkGrey" textAlign="left"> Casual </Heading>
+                                <Wrap
+                                    padding="2rem"
+                                    spacing="1rem"
+                                    m="2rem"
+                                    w="100%"
+                                >
+                                    {casualTeamData.map((item, index) => (
+                                        <SportCard
+                                            key={index}
+                                            width={"350px"}
+                                            image=""
+                                            header={item.name}
+                                            description={item.description}
+                                            teamObject={item}
+                                        />
+                                    ))}
+                                </Wrap>
+                            </GridItem>
+                            <GridItem area="divider">
+                                <Center height='100%'>
+                                    <Divider borderColor="black" orientation='vertical' />
+                                </Center>
+                            </GridItem>
+                            <GridItem area="content-main-right">
+                                <Heading color="brand.darkGrey" textAlign="left"> Competitive </Heading>
+                                <Wrap
+                                    padding="2rem"
+                                    spacing="1rem"
+                                    m="2rem"
+                                    w="100%"
+                                >
+                                    {competitiveTeamData.map((item, index) => (
+                                        <SportCard
+                                        key={index}
+                                        width={"350px"}
+                                        image=""
+                                        header={item.name}
+                                        description={item.description}
+                                        teamObject={item}
+                                    />
+                                    ))}
+                                </Wrap>
+                            </GridItem>
+                        </Grid>
+                        {/* <VStack>
                             <Heading
                                 color="brand.black"
                                 textAlign="left"
@@ -74,19 +141,58 @@ function IntramuralSportPage({isOpen, onToggle}) {
                                 Available {sportData ? sportData.name : <Spinner />} Teams
                                 <CreateIntramuralSportTeamButton sportData={sportData}/>
                             </Heading>
-                            <Wrap
-                                spacing="1rem"
-                                m="2rem"
-                                w={"100%"}
+                            <HStack
+                                align={"baseline"}
+                                width="100%"
                             >
-                                {casualTeamData.map((item, index) => (
-                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                                ))}
-                                {competitiveTeamData.map((item, index) => (
-                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
-                                ))}
-                            </Wrap>
-                        </VStack>
+                                <VStack
+                                    align={"baseline"}
+                                    width="100%"
+                                >
+                                    <Heading color="brand.darkGrey" textAlign="left"> Casual </Heading>
+                                    <Wrap
+                                        padding="2rem"
+                                        spacing="1rem"
+                                        m="2rem"
+                                        w="100%"
+                                    >
+                                        {casualTeamData.map((item, index) => (
+                                            <SportCard
+                                                key={index}
+                                                width={"350px"}
+                                                image=""
+                                                header={item.name}
+                                                description={item.description}
+                                                teamObject={item}
+                                            />
+                                        ))}
+                                    </Wrap>
+                                </VStack>
+                                <VStack
+                                    align={"baseline"}
+                                    width="100%"
+                                >
+                                    <Heading color="brand.darkGrey" textAlign="left"> Competitive </Heading>
+                                    <Wrap
+                                        padding="2rem"
+                                        spacing="1rem"
+                                        m="2rem"
+                                        w="100%"
+                                    >
+                                        {competitiveTeamData.map((item, index) => (
+                                            <SportCard
+                                            key={index}
+                                            width={"350px"}
+                                            image=""
+                                            header={item.name}
+                                            description={item.description}
+                                            teamObject={item}
+                                        />
+                                        ))}
+                                    </Wrap>
+                                </VStack>
+                            </HStack>
+                        </VStack> */}
                     </HStack>
                 </GridItem>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -18,6 +18,7 @@ export default function Intramurals({isOpen, onToggle})
 {
 
     const [intramurals, setIntramurals] = useState([]);
+    const [intramuralsLoaded, setIntramuralsLoaded] = useState(false);
 
     useEffect(() => {
         axios.get(
@@ -26,6 +27,7 @@ export default function Intramurals({isOpen, onToggle})
         .then((response) => {
             console.log(response.data);
             setIntramurals(response.data.IntramuralSports);
+            setIntramuralsLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting intramural sports");
@@ -38,7 +40,7 @@ export default function Intramurals({isOpen, onToggle})
         <Grid
         templateAreas={`"header"
                         "main"`}
-        gridTemplateRows={{base: '10vh 90vh'}}
+        gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
         // gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
         gap='0'
         color='blackAlpha.700'
@@ -52,11 +54,12 @@ export default function Intramurals({isOpen, onToggle})
                 {/* <Navbar activePage={"Classes"}/> */}
                 {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
             </GridItem>
-            <GridItem area={'main'}>
-                <HStack align={'baseline'}>
+            <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                     <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                     <VStack
-                    alignItems={"stretch"}
+                        alignItems={"stretch"}
+                        width="100%"
                     >
                         <Heading
                         color="brand.black"
@@ -70,6 +73,37 @@ export default function Intramurals({isOpen, onToggle})
                             // return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
                             return <IntramuralCard sportData={item} />
                         })}
+                        {intramuralsLoaded ?
+                            <></>
+                        :
+                            <Box
+                                className="skeleton-coffin"
+                                width="100%"
+                                height="100%"
+                                alignSelf="center"
+                            >
+                                <Skeleton
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                            </Box>
+                        }
                     </VStack>
                 </HStack>
             </GridItem>

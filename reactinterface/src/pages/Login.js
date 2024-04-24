@@ -58,7 +58,7 @@ function Login() {
             <Grid
                 templateAreas={`"header header"
                                 "main main"`}
-                gridTemplateRows={{base: '10vh 90vh'}}
+                gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
                 gridTemplateColumns={{base:'1fr'}}
                 gap='0'
                 color='blackAlpha.700'

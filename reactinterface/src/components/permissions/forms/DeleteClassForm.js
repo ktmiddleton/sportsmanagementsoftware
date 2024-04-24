@@ -18,7 +18,7 @@ function DeleteClassForm({ pk, isOpen, onClose }) {
 
     const submitForm = (formValues) => {
         console.log(formValues)
-        if (formValues.confirmation === "true") {
+        if (formValues.confirmation === true) {
             axios.delete(
                 `http://localhost:8000/classes/?classId=${pk}&token=${localStorage.getItem("token")}`
             ).then((response) => {

@@ -78,7 +78,7 @@ function Dashboard({isOpen, onToggle}) {
             <Grid
                 templateAreas={`"header header"
                                 "main sidebar"`}
-                gridTemplateRows={{base: '10vh 90vh'}}
+                gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
                 gridTemplateColumns={{base:'2fr 1fr'}}
                 gap='0'
                 color='blackAlpha.700'
@@ -94,11 +94,12 @@ function Dashboard({isOpen, onToggle}) {
                     {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'} height="90vh" overflowY="scroll">
-                    <HStack align={'baseline'}>
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
                         <VStack
                             align={"baseline"}
+                            width="100%"
                         >
                             <Heading
                                 color="brand.black"
@@ -114,7 +115,14 @@ function Dashboard({isOpen, onToggle}) {
                                 justify="left"
                             >
                                 {registeredTeams.map((item, index) => (
-                                    <SportCard key={index} image="" header={item.name} description={item.description} teamObject={item} />
+                                    <SportCard
+                                        key={index}
+                                        width={"350px"}
+                                        image=""
+                                        header={item.name}
+                                        description={item.description}
+                                        teamObject={item}
+                                    />
                                 ))}
                             </Wrap>
                             {clubSportsLoaded ?
@@ -122,7 +130,7 @@ function Dashboard({isOpen, onToggle}) {
                             :
                                 <Box
                                     className="skeleton-coffin"
-                                    width="90%"
+                                    width="100%"
                                     height="100%"
                                     alignSelf="center"
                                 >
@@ -153,7 +161,7 @@ function Dashboard({isOpen, onToggle}) {
                             :
                                 <Box
                                     className="skeleton-coffin"
-                                    width="90%"
+                                    width="100%"
                                     height="100%"
                                     alignSelf="center"
                                 >
@@ -187,7 +195,7 @@ function Dashboard({isOpen, onToggle}) {
                     <VStack
                         align={"baseline"}
                         bg="brand.houndsGrey"
-                        h="90vh"
+                        h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}
                     >
                         <Heading
                             color="brand.brightGreen"
