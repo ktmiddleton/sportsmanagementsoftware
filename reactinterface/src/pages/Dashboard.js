@@ -196,6 +196,7 @@ function Dashboard({isOpen, onToggle}) {
                         align={"baseline"}
                         bg="brand.houndsGrey"
                         h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}
+                        overflowY="auto"
                     >
                         <Heading
                             color="brand.brightGreen"
@@ -207,6 +208,9 @@ function Dashboard({isOpen, onToggle}) {
                         <Wrap
                             m="2rem"
                             spacing="1rem"
+                            background={process.env.REACT_APP_PAGE_BACKGROUND}
+                            p="2%"
+                            borderRadius="8px"
                         >
                             {registeredForms.map((item, index) => (
                                 (!item.completed ? <FormCard key={index} formData={item}/> : <></>)

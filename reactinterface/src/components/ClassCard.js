@@ -119,11 +119,12 @@ export default function ClassCard({classData, image}) {
                     <CardBody>
                         <Stack
                             direction="row"
-                            justifyContent="space-around"
+                            justifyContent="space-between"
                         >
                             <VStack
                                 alignItems="flex-start"
                                 spacing="2px"
+                                width="70%"
                             >
                                 <Heading textAlign="left" size="md">{classData.name}</Heading>
 
@@ -137,26 +138,32 @@ export default function ClassCard({classData, image}) {
                                     })}
                                 </Text>
                             </VStack>
-                            <VStack>
-                                <Stat>
-                                    <StatLabel>
-                                        Class Day
-                                    </StatLabel>
-                                    <StatNumber fontSize="1rem">
-                                        {new Date(classData.class_time).toLocaleDateString('default')} <CalendarIcon/>
-                                    </StatNumber>
-                                </Stat>
-                            </VStack>
-                            <VStack>
-                                <Stat>
-                                    <StatLabel>
-                                        Class Time
-                                    </StatLabel>
-                                    <StatNumber fontSize="1rem">
-                                        {new Date(classData.class_time).toLocaleTimeString('default')} <TimeIcon/>
-                                    </StatNumber>
-                                </Stat>
-                            </VStack>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                justifyContent="space-between"
+                            >
+                                <VStack>
+                                    <Stat>
+                                        <StatLabel>
+                                            Class Day
+                                        </StatLabel>
+                                        <StatNumber fontSize="1rem">
+                                            {new Date(classData.class_time).toLocaleDateString('default')} <CalendarIcon/>
+                                        </StatNumber>
+                                    </Stat>
+                                </VStack>
+                                <VStack>
+                                    <Stat>
+                                        <StatLabel>
+                                            Class Time
+                                        </StatLabel>
+                                        <StatNumber fontSize="1rem">
+                                            {new Date(classData.class_time).toLocaleTimeString('default')} <TimeIcon/>
+                                        </StatNumber>
+                                    </Stat>
+                                </VStack>
+                            </Stack>
                         </Stack>
                     </CardBody>
 
