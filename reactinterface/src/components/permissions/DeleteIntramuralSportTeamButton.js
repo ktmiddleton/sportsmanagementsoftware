@@ -22,7 +22,7 @@ function DeleteIntramuralSportTeamButton({ teamData }) {
     return (
         userHasPerm(PERM_NAME) ?
             <div className="delete-intramural-sport-button">
-                <Tooltip hasArrow label='Delete Intramural Sport' bg='gray.300' color='black'>
+                <Tooltip hasArrow label='Delete Intramural Sport Team' bg='gray.300' color='black'>
                     <IconButton
                         m="1rem"
                         aria-label="Add"
