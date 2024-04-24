@@ -93,7 +93,8 @@ export default function Header(props)
                         /> 
                         : 
                         <></>}
-                        <IconButton
+                        {/* TODO: CODE FOR SETTINGS GEAR BELOW, WILL BE ADDED LATER ON */}
+                        {/* <IconButton
                             aria-label='Settings'
                             as={IoSettingsSharp} 
                             boxSize={"5vh"}
@@ -102,7 +103,7 @@ export default function Header(props)
                             bg={"brand.loyolaGreen"}
                             onClick={handleNavigate("/settings")}
                             _hover={{textDecor: 'none', backgroundColor:"brand.hover.loyolaGreen"}}
-                        />
+                        /> */}
                         <Menu>
                             <MenuButton
                                 as={IconButton}

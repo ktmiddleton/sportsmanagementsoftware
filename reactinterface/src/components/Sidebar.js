@@ -55,8 +55,8 @@ function Sidebar({isOpen, onToggle}) {
     return (
         <AnimatePresence>
             <MotionBox
-                width={isOpen ? "18rem" : "6rem"}
-                animate={{ width: (isOpen ? "18rem" : "6rem") }}
+                width={isOpen ? "15rem" : "5rem"}
+                animate={{ width: (isOpen ? "15rem" : "5rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
                 position="sticky"
                 top="0vh"
@@ -70,13 +70,13 @@ function Sidebar({isOpen, onToggle}) {
                     h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}//{innerBoxHeight}
                     // p="3px"
                 >
-                    <VStack align="stretch" spacing="0px">
+                    <VStack align="flex-start" spacing="0px">
                         {/* Sidebar content here */}
                         <IconButton
                             background="none"
                             color="brand.white"
                             boxSize={"6rem"}
-                            icon={<FiMenu size={"3rem"} />}
+                            icon={<FiMenu size={"2rem"} />}
                             borderRadius="0px"
                             _hover={{
                                 background: "none"
@@ -93,7 +93,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={TfiDashboard} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={TfiDashboard} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Dashboard
                         </Button>
                         <Button
@@ -103,7 +103,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={IoFitness} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={IoFitness} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Classes
                         </Button>
                         <Button
@@ -113,7 +113,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={FaFootballBall} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={FaFootballBall} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Intramural
                         </Button>
                         <Button
@@ -123,7 +123,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={PiBarbellFill} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={PiBarbellFill} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Club Sports
                         </Button>
                         <Button
@@ -133,7 +133,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={FaClipboardList} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={FaClipboardList} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Forms
                         </Button>
                         {/* <Button

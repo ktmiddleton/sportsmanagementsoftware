@@ -9,6 +9,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import CreateUserButton from "./permissions/CreateUserButton";
 import EditUserButton from "./permissions/EditUserButton";
 import DeleteUserButton from "./permissions/DeleteUserButton";
+import ChangeUserClassButton from "./permissions/ChangeUserClassButton";
 
 function UserCRUD() {
 
@@ -86,21 +87,47 @@ function UserCRUD() {
                         <Tbody>
                             {console.log(userInfo)}
                             {userInfo?.map( (item) => {
-                                return (
-                                    <Tr>
-                                        <Td>{item.id}</Td>
-                                        <Td>{item.first_name}</Td>
-                                        <Td>{item.last_name}</Td>
-                                        <Td>{item.username}</Td>
-                                        <Td>{item.email}</Td>
-                                        <Td>
-                                            <ButtonGroup>
-                                                <EditUserButton username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name}/>
-                                                <DeleteUserButton username={item.username}/>
-                                            </ButtonGroup>
-                                        </Td>
-                                    </Tr>
-                                )
+                            var userGroups = [];
+                                    
+                            for (let i =0; i < item.groups.length; i++) 
+                            {
+                                if (item.groups[i].name == "admin")
+                                {
+                                    userGroups.push("admin");
+                                }
+                                if (item.groups[i].name == "instructor")
+                                {
+                                    userGroups.push("instructor");
+                                }
+                                if (item.groups[i].name == "referee")
+                                {
+                                    userGroups.push("referee");
+                                }
+                                if (item.groups[i].name == "captain")
+                                {
+                                    userGroups.push("captain");
+                                }
+                                if (item.groups[i].name == "user") 
+                                {
+                                    userGroups.push("user");
+                                }
+                            }
+                            return (
+                                <Tr>
+                                    <Td>{item.id}</Td>
+                                    <Td>{item.first_name}</Td>
+                                    <Td>{item.last_name}</Td>
+                                    <Td>{item.username}</Td>
+                                    <Td>{item.email}</Td>
+                                    <Td>
+                                        <ButtonGroup>
+                                            <EditUserButton username={item.username} email={item.email} first_name={item.first_name} last_name={item.last_name}/>
+                                            <ChangeUserClassButton username={item.username} groups={userGroups}/>
+                                            <DeleteUserButton username={item.username}/>
+                                        </ButtonGroup>
+                                    </Td>
+                                </Tr>
+                            )
                             })}
                         </Tbody>
                         <Tfoot>
