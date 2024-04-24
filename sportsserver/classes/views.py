@@ -24,7 +24,7 @@ class ClassesList(APIView):
         page_number = request.GET.get("page", 1)
         class_id = request.GET.get("classId","default_value")
         if search != "default_value":
-            classes = Class.objects.filter(name__icontains=search).order_by("class_time")
+            classes = Class.objects.filter(name__icontains=search).order_by("-class_time")
             pages = Paginator(classes, PAGE_SIZE)
             page = pages.get_page(page_number)
             return Response({"classes": ClassSerializer(page, many=True).data,
@@ -34,7 +34,7 @@ class ClassesList(APIView):
             serializer = ClassSerializer(team)
             return Response(serializer.data)
         else: # Return all classes
-            classes = Class.objects.all().order_by("class_time")
+            classes = Class.objects.all().order_by("-class_time")
             pages = Paginator(classes, PAGE_SIZE)
             page = pages.get_page(page_number)
             return Response({"classes":  ClassSerializer(page, many=True).data, "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count}})
