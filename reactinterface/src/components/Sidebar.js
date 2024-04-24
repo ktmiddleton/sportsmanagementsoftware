@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Flex, Icon, IconButton, Text, VStack, background, useDisclosure } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
@@ -18,6 +18,7 @@ const MotionBox = motion(Box);
 function Sidebar({isOpen, onToggle}) {
     const navigate = useNavigate();
     const location = useLocation();
+    const [innerBoxHeight, setInnerBoxHeight] = useState(process.env.REACT_APP_MAIN_PAGE_HEIGHT);
 
     function handleNavigate(path) {
         return () => navigate(path);
@@ -36,35 +37,53 @@ function Sidebar({isOpen, onToggle}) {
         onToggle();
     }
 
+    useEffect(() => {
+        const updateInnerBoxHeight = () => {
+            var body = document.body,
+            html = document.documentElement;
+
+            // TODO: NEED TO EXTEND SIDEBAR TO BOTTOM OF PAGE
+            var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                                    html.clientHeight, html.scrollHeight, html.offsetHeight );
+            setInnerBoxHeight(height);
+        };
+
+        window.addEventListener('resize', updateInnerBoxHeight);
+        updateInnerBoxHeight();
+    }, [])
+
     return (
         <AnimatePresence>
             <MotionBox
-                animate={{ width: (isOpen ? "100%" : "6rem") }}
+                width={isOpen ? "15rem" : "5rem"}
+                animate={{ width: (isOpen ? "15rem" : "5rem") }}
                 transition={{ duration: 0.5, type: "spring" }}
-                minHeight="100vh"
-                h="100%"
+                position="sticky"
+                top="0vh"
+                // left="0vh"
+                // mr="20px"
             >
                 <Box // Sidebar background
                     as="aside"
                     w={{ base: "100%" }}
                     bg="brand.darkGrey"
-                    h="100%"
+                    h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}//{innerBoxHeight}
                     // p="3px"
                 >
-                    <VStack align="stretch" spacing="0px">
+                    <VStack align="flex-start" spacing="0px">
                         {/* Sidebar content here */}
                         <IconButton
                             background="none"
                             color="brand.white"
                             boxSize={"6rem"}
-                            icon={<FiMenu size={"3rem"} />}
+                            icon={<FiMenu size={"2rem"} />}
                             borderRadius="0px"
                             _hover={{
                                 background: "none"
                             }}
-                            _focus={{
-                                border: "2px solid white",
-                            }}
+                            // _focus={{
+                            //     border: "2px solid white",
+                            // }}
                             onClick={() => handleToggle()}
                         />
                         <Button
@@ -74,7 +93,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={TfiDashboard} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={TfiDashboard} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Dashboard
                         </Button>
                         <Button
@@ -84,7 +103,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={IoFitness} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={IoFitness} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Classes
                         </Button>
                         <Button
@@ -94,7 +113,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={FaFootballBall} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={FaFootballBall} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Intramural
                         </Button>
                         <Button
@@ -104,7 +123,7 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={PiBarbellFill} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={PiBarbellFill} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Club Sports
                         </Button>
                         <Button
@@ -114,10 +133,10 @@ function Sidebar({isOpen, onToggle}) {
                             justifyContent={"flex-start"}
                             overflow={"hidden"}
                         >
-                            <Icon as={FaClipboardList} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
+                            <Icon as={FaClipboardList} boxSize={"2rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Forms
                         </Button>
-                        <Button
+                        {/* <Button
                             onClick={handleNavigate("/schedule")}
                             variant={whichButtonVariant("/schedule")}
                             aria-label='Open Schedule'
@@ -126,7 +145,7 @@ function Sidebar({isOpen, onToggle}) {
                         >
                             <Icon as={GrSchedules} boxSize={"3rem"} color={"brand.white"} mr={"1.5rem"} ml={"0.5rem"} />
                             Schedule
-                        </Button>
+                        </Button> */}
                         {/* Add more Links as needed */}
                     </VStack>
                 </Box>

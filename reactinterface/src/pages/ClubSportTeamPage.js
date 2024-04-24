@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast } from "@chakra-ui/react";
+import { HStack, Button, ButtonGroup, Card, CardBody, CardHeader, Grid, GridItem, Heading, Text, useToast, Wrap } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -7,8 +7,12 @@ import { useParams } from "react-router-dom";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteClubSportButton from "../components/permissions/DeleteClubSportButton";
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
+import EditClubSportButton from "../components/permissions/EditClubSportButton";
+import { useUser } from "../components/UserContext";
 
 function ClubSportTeamPage({isOpen, onToggle}) {
+
+    const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
     let { teamId } = useParams()
 
@@ -26,7 +30,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     useEffect(() => {
         console.log("plonk")
         axios.get(
-            `http://localhost:8000/clubsports/?teamId=${teamId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?teamId=${teamId}`
         )
         .then((response) => {
             setTeamData(response.data);
@@ -36,10 +40,10 @@ function ClubSportTeamPage({isOpen, onToggle}) {
             console.log("Error getting Club Sport team");
             console.log(error);
         })
-    }, []);
+    }, [user]);
 
     function joinTeam() {
-        axios.post(`http://localhost:8000/clubsports/userteams/`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/`,
             {
                 token: localStorage.getItem("token"),
                 teamId: teamData.id
@@ -71,7 +75,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     }
 
     function leaveTeam() {
-        axios.delete(`http://localhost:8000/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
+        axios.delete(`${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
         .then((response) => {
             window.location.reload();
             toast({
@@ -100,10 +104,10 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     return (
         <div className="ClubSportTeamPage">
             <Grid
-            templateAreas={`"header header header"
-                            "nav main sidebar"`}
-            gridTemplateRows={{base: '10vh 90vh'}}
-            gridTemplateColumns={{base:'1fr 3fr 2fr'}}
+            templateAreas={`"header header"
+                            "main sidebar"`}
+            gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
+            gridTemplateColumns={{base:'2fr 1fr'}}
             gap='0'
             color='blackAlpha.700'
             fontWeight='bold'
@@ -114,102 +118,108 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                 </GridItem>
 
                 <GridItem area={'nav'}>
-                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
                 </GridItem>
 
-                <GridItem area={'main'}>
-                    <Heading
-                        color="brand.brightGreen"
-                        textAlign="left"
-                        m="1rem"
-                    >
-                        {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
-                        {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
-                        {/* TODO: Small issue where button appears then disappears quickly */}
-                        {teamData.members.some((member) => member.username === localStorage.getItem("username")) ?
-                            <Button
-                                m="1rem"
-                                aria-label="Leave Team"
-                                leftIcon={<MinusIcon />}
-                                isRound={true}
-                                size="lg"
-                                variant="submit"
-                                loadingText='Leaving...'
-                                isLoading={joinSubmitting}
-                                onClick={() => leaveTeam()}
-                            >
-                                Leave Team
-                            </Button>
-                        :
-                            <Button
-                                m="1rem"
-                                aria-label="Join Team"
-                                leftIcon={<AddIcon />}
-                                isRound={true}
-                                size="lg"
-                                variant="submit"
-                                loadingText='Joining...'
-                                isLoading={joinSubmitting}
-                                onClick={() => joinTeam()}
-                            >
-                                Join Team
-                            </Button>
-                        }
-                        <PromoteCaptainButton teamData={teamData} />
-                        <DeleteClubSportButton teamData={teamData} />
-                    </Heading>
-                    <Grid
-                        templateRows={{base: '1fr 1fr'}}
-                        templateColumns={{base: '1fr 1fr'}}
-                        gap="1rem"
-                        p="1rem"
-                    >
-                        <GridItem
-                            rowSpan={2}
-                            colSpan={1}
+                <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                    <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
+                        <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                        <Heading
+                            color="brand.brightGreen"
+                            textAlign="left"
+                            // m="1rem"
                         >
-                            <Card>
-                                <CardHeader>
-                                    <Heading>Roster</Heading>
-                                </CardHeader>
-                                <CardBody
-                                    maxHeight="85vh"
-                                    overflowY="auto"
+                            {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
+                            {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
+                            {/* TODO: Small issue where button appears then disappears quickly */}
+                            {teamData.members.some((member) => member.username === localStorage.getItem("username")) ?
+                                <Button
+                                    m="1rem"
+                                    aria-label="Leave Team"
+                                    leftIcon={<MinusIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    variant="submit"
+                                    loadingText='Leaving...'
+                                    isLoading={joinSubmitting}
+                                    onClick={() => leaveTeam()}
                                 >
-                                    {teamData.members.map((item, index) => {
-                                        return (<Text key={index}>{item.username}</Text>)
-                                    })}
-                                </CardBody>
-                            </Card>
-                        </GridItem>
-                        <GridItem
-                            rowSpan={1}
-                            colSpan={1}
+                                    Leave Team
+                                </Button>
+                            :
+                                <Button
+                                    m="1rem"
+                                    aria-label="Join Team"
+                                    leftIcon={<AddIcon />}
+                                    isRound={true}
+                                    size="lg"
+                                    variant="submit"
+                                    loadingText='Joining...'
+                                    isLoading={joinSubmitting}
+                                    onClick={() => joinTeam()}
+                                >
+                                    Join Team
+                                </Button>
+                            }
+                            <ButtonGroup isAttached>
+                                <PromoteCaptainButton teamData={teamData} />
+                                <DeleteClubSportButton teamData={teamData} />
+                                <EditClubSportButton teamData={teamData}/>
+                            </ButtonGroup>
+                        </Heading>
+                        <Wrap
+                            // templateRows={{base: '1fr 1fr'}}
+                            // templateColumns={{base: '1fr 1fr'}}
+                            gap="1rem"
+                            // p="1rem"
                         >
-                            <Card>
-                                <CardHeader>
-                                    <Heading>Description</Heading>
-                                </CardHeader>
-                                <CardBody>
-                                    <Text>
-                                        {teamData.description}
-                                    </Text>
-                                </CardBody>
-                            </Card>
-                        </GridItem>
-                        <GridItem
-                            rowSpan={1}
-                            colSpan={1}
-                        >
+                            {/* <GridItem
+                                rowSpan={2}
+                                colSpan={1}
+                            > */}
+                                <Card>
+                                    <CardHeader>
+                                        <Heading>Roster</Heading>
+                                    </CardHeader>
+                                    <CardBody
+                                        maxHeight="85vh"
+                                        overflowY="auto"
+                                    >
+                                        {teamData.members.map((item, index) => {
+                                            return (<Text key={index}>{item.username}</Text>)
+                                        })}
+                                    </CardBody>
+                                </Card>
+                            {/* </GridItem> */}
+                            {/* <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            > */}
+                                <Card>
+                                    <CardHeader>
+                                        <Heading>Description</Heading>
+                                    </CardHeader>
+                                    <CardBody>
+                                        <Text>
+                                            {teamData.description}
+                                        </Text>
+                                    </CardBody>
+                                </Card>
+                            {/* </GridItem> */}
+                            {/* <GridItem
+                                rowSpan={1}
+                                colSpan={1}
+                            >
 
-                        </GridItem>
-                    </Grid>
+                            </GridItem> */}
+                        </Wrap>
+                    </HStack>
                 </GridItem>
 
                 <GridItem area={"sidebar"}>
                     <Grid
                         bg="brand.hover.houndsGrey"
-                        h="100vh"
+                        h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}
                         w="100%"
                     >
                         <Heading

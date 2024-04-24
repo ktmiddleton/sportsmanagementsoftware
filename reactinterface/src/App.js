@@ -18,6 +18,8 @@ import axios from 'axios';
 import { UserProvider } from './components/UserContext';
 import ClassPage from './pages/ClassPage';
 import IntramuralSportPage from './pages/IntramuralSportPage';
+import moment from "moment";
+import Profile from "./pages/Profile";
 
 
 // --loyola-green:#005a3c;
@@ -176,8 +178,9 @@ const theme = extendTheme({
 function App() {
   const { isOpen, onToggle } = useDisclosure({defaultIsOpen: true})
 
+
   // useEffect(() => {
-  //   // axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
+  //   // axios.get(`${process.env.REACT_APP_DJANGO_SERVER_URL}/user/getuserusername/?username=${localStorage.getItem("username")}`)
   //   // .then((response) => {
   //   //   console.log(response);
   //   // })
@@ -200,7 +203,7 @@ function App() {
       <UserProvider>
         <ChakraProvider theme={theme}>
           <Routes> {/* Add routes to pages below */}
-            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle}/>} />
+            <Route path='/' element={<Dashboard isOpen={isOpen} onToggle={onToggle} />} />
             <Route path='/login' element={<Login />} />
             <Route path='/classes' element={<Classes isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/intramural' element={<Intramural isOpen={isOpen} onToggle={onToggle} />}/>
@@ -213,6 +216,7 @@ function App() {
             <Route path='/schedule' element={<Schedule isOpen={isOpen} onToggle={onToggle} />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/admin' element={<Admin openState={isOpen} onToggle={onToggle} />}/>
+            <Route path='/profile' element={<Profile isOpen={isOpen} onToggle={onToggle}/>}/>
           </Routes>
         </ChakraProvider>
       </UserProvider>

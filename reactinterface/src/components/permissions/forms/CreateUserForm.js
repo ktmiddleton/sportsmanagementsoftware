@@ -15,7 +15,7 @@ export default function CreateUserForm({ isOpen, onClose }) {
     const submitForm = (formValues) => {
         let data = {email: formValues.email, username: formValues.username, password: formValues.password, first_name: formValues.firstname, last_name: formValues.lastname};
         axios.post(
-            `http://localhost:8000/user/register/`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/register/`,
             data
         ).then((response) => {
             isOpen = !isOpen;
@@ -48,6 +48,7 @@ export default function CreateUserForm({ isOpen, onClose }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

@@ -81,12 +81,12 @@ class IntramuralSportTeamList(APIView):
         "sport": #,
         "registration": "open",
         "team_type": "casual",
-        "token": ""
     }
+    intramurals/teams/?token=_token_
     """
     # Requires permisssion can_create_intramural_team
     def post(self, request):
-        token = request.data.get("token")
+        token = request.GET.get("token")
         try:
             user = Token.objects.get(key=token).user
             if user.has_perm("user.can_create_intramural_team"):
@@ -99,6 +99,71 @@ class IntramuralSportTeamList(APIView):
                 return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         except Token.DoesNotExist:
             return Response({"error": "Token does not exist: " + token}, status=status.HTTP_404_NOT_FOUND)
+    
+    """
+    data format:
+    {
+        "name": "",
+        "description": "A great _sport_ team.",
+        "sport": #,
+        "registration": "open",
+        "team_type": "casual",
+        "token": ""
+    }
+    intramurals/teams/?teamId=_team id_&token=_token_
+    """
+    # Requires permisssion can_update_intramural_team
+    def patch(self, request):
+        token = request.GET.get("token", "default_value")
+        team_id = request.GET.get("teamId", "default_value")
+        try:
+            user = Token.objects.get(key=token).user
+            team = IntramuralSportTeam.objects.get(pk=team_id)
+            if user.has_perm("user.can_update_intramural_team"):
+                if ("members" in request.data):
+                    request.data.pop("members") # TODO: Quick fix don't need to pass members or captains it messes up serialization
+                if ("captains" in request.data):
+                    request.data.pop("captains")
+                serializer = IntramuralSportTeamSerializer(team, data=request.data, partial=True)
+                if serializer.is_valid(): 
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        except IntramuralSportTeam.DoesNotExist:
+            return Response({"error": "Team with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        except User.DoesNotExist:
+            Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+    """
+    Deletes an intramural sports team
+    data format:
+    intramurals/teams/?teamId=_team id_&token=_token_
+    """
+    # Requires permission can_delete_club_team
+    def delete(self, request):
+        teamId = request.GET.get("teamId","default_value")
+        token = request.GET.get("token","default_value")
+        if teamId != "default_value" and token != "default_value":
+            try:
+                user = Token.objects.get(key=token).user
+                if user.has_perm("user.can_delete_intramural_team"):
+                    team = IntramuralSportTeam.objects.get(pk=teamId)
+                    team.delete()
+                    return Response(status=status.HTTP_200_OK)
+                else:
+                    return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+            except Token.DoesNotExist:
+                return Response({"error": "Token does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            except IntramuralSportTeam.DoesNotExist:
+                return Response({"error": "Team with specified id does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            except User.DoesNotExist:
+                return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "Must specify both teamId and token"}, status=status.HTTP_400_BAD_REQUEST)
     
 class UserTeamsList(APIView):
     """
@@ -136,7 +201,7 @@ class UserTeamsList(APIView):
                 return Response(status=status.HTTP_201_CREATED)
             else:
                 return Response({"error": "Unable to join this team", "registration": team.registration}, status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
+        except Token.DoesNotExist:
             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         except IntramuralSportTeam.DoesNotExist:
             return Response({"error": "Intramural sports team does not exist"}, status=status.HTTP_404_NOT_FOUND)

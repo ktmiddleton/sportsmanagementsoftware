@@ -13,8 +13,9 @@ function CreateClubSportButton() {
 
     const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
-    function buttonClick() {
+    function buttonClick(event) {
         if (userHasPerm(PERM_NAME)) {
+            event.stopPropagation();
             onOpen();
         }
     }
@@ -30,10 +31,10 @@ function CreateClubSportButton() {
                         isRound={true}
                         size="lg"
                         bg="brand.brightGreen"
-                        onClick={() => buttonClick()} // Define your click event handler
+                        onClick={buttonClick} // Define your click event handler
                     />
                 </Tooltip>
-                <CreateClubSportForm isOpen={isOpen} onClose={onClose} />
+                <CreateClubSportForm isOpen={isOpen} onClose={onClose} mode="create" />
             </div>
         :
             <></>

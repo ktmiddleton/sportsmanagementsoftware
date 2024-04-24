@@ -1,6 +1,6 @@
 import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@chakra-ui/react";
 import { Field } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 
 /**
  * Serves as a formik text question
@@ -23,6 +23,8 @@ function TextQuestion({ fieldName, placeHolder, label, formikProps, required  })
         }
         return error
     }
+    
+    console.log(formikProps.values)
 
     return (
         <Field name={fieldName} validate={validateQuestion}>

@@ -9,8 +9,13 @@ import { Field } from "formik";
 import DropdownQuestion from "../questions/DropdownQuestion";
 import IntegerQuestion from "../questions/IntegerQuestion";
 import DateTimeQuestion from "../questions/DateTimeQuestion";
+import DeleteClassButton from "../DeleteClassButton";
 
-function CreateClassForm({ isOpen, onClose }) {
+/*
+    mode: {"create", "update"} <-- undefined defaults to create
+*/
+function CreateClassForm({ isOpen, onClose, initialValues, mode, pk }) {
+    mode = (mode === undefined ? "create" : mode); // Make sure mode is create if not specified
 
     const toast = useToast()
 
@@ -18,36 +23,61 @@ function CreateClassForm({ isOpen, onClose }) {
         console.log(formValues)
         let data = {
             ...formValues,
-            token: localStorage.getItem("token")
         }
-        axios.post(
-            `http://localhost:8000/classes/`,
-            data
-        ).then((response) => {
-            isOpen = !isOpen;
-            window.location.reload();
-            toast({
-                title: 'Class successfully created.',
-                description: "You've successfully created the class: " + formValues.name + ".",
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
-        }).catch((error) => {
-            toast({
-                title: 'Failed to create class.',
-                description: "You've encountered an error creating the class " + error.response.data.error,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            })
-            console.error(error);
-        });
+        if (mode === "create") {
+            axios.post(
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/?token=${localStorage.getItem("token")}`,
+                data
+            ).then((response) => {
+                isOpen = !isOpen;
+                window.location.reload();
+                toast({
+                    title: 'Class successfully created.',
+                    description: "You've successfully created the class: " + formValues.name + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to create class.',
+                    description: "You've encountered an error creating the class " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        } else if (mode === "update") {
+            axios.patch(
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/?token=${localStorage.getItem("token")}&classId=${pk}`,
+                data
+            ).then((response) => {
+                isOpen = !isOpen;
+                window.location.reload();
+                toast({
+                    title: 'Class successfully updated.',
+                    description: "You've successfully updated the class: " + formValues.name + ".",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }).catch((error) => {
+                toast({
+                    title: 'Failed to update class.',
+                    description: "You've encountered an error updating the class " + error.response.data.error,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                console.error(error);
+            });
+        }
     }
 
     return (
         <Formik
-            initialValues={{}} // ABSOLUTELY NECESSARY DO NOT REMOVE
+            initialValues={{...initialValues}} // ABSOLUTELY NECESSARY DO NOT REMOVE
             onSubmit={(values, actions) => {
                 console.log(values);
                 submitForm(values);
@@ -55,6 +85,7 @@ function CreateClassForm({ isOpen, onClose }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 
@@ -63,7 +94,7 @@ function CreateClassForm({ isOpen, onClose }) {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Create Class</ModalHeader>
+                            <ModalHeader>{mode === "create" ? "Create" : "Update"} Class</ModalHeader>
                             
                             <ModalCloseButton />
 
@@ -89,7 +120,13 @@ function CreateClassForm({ isOpen, onClose }) {
                                     <IntegerQuestion
                                         fieldName="capacity"
                                         placeHolder={0}
-                                        label="Capacity"
+                                        label="Class Capacity"
+                                        formikProps={formikProps}
+                                    />
+                                    <IntegerQuestion
+                                        fieldName="waitlist_capacity"
+                                        placeHolder={0}
+                                        label="Waitlist Capacity"
                                         formikProps={formikProps}
                                     />
                                     <DateTimeQuestion
@@ -122,8 +159,9 @@ function CreateClassForm({ isOpen, onClose }) {
                                     isLoading={formikProps.isSubmitting}
                                     onClick={formikProps.handleSubmit}
                                 >
-                                    Submit
+                                    {mode === "create" ? "Submit" : "Update"}
                                 </Button>
+                                {mode === "update" ? <DeleteClassButton pk={pk} /> : <></>}
                             </ModalFooter>
                         </ModalContent>
                     </Modal>

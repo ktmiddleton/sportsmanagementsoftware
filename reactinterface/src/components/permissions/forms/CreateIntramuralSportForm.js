@@ -20,7 +20,7 @@ function CreateIntramuralSportForm({ isOpen, onClose }) {
             token: localStorage.getItem("token")
         }
         axios.post(
-            `http://localhost:8000/intramurals/`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/`,
             data
         ).then((response) => {
             isOpen = !isOpen;
@@ -54,6 +54,7 @@ function CreateIntramuralSportForm({ isOpen, onClose }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

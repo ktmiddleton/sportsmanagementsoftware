@@ -134,6 +134,24 @@ class Command(BaseCommand):
                         codename='can_administer_game',
                         name='Can administer game',
                         content_type=user_type)
+
+                ### Forms
+                create_forms = Permission.objects.create(
+                        codename='can_create_forms',
+                        name='Can create forms',
+                        content_type=user_type)
+                update_forms = Permission.objects.create(
+                        codename='can_update_forms',
+                        name='Can update forms',
+                        content_type=user_type)
+                read_forms = Permission.objects.create(
+                        codename='can_read_forms',
+                        name='Can read forms',
+                        content_type=user_type)
+                delete_forms = Permission.objects.create(
+                        codename='can_delete_forms',
+                        name='Can delete forms',
+                        content_type=user_type)
                 ### End Permissions
                 # TODO: Other permissions likely needed: can_promote_captain, can_promote_referee, can_promote_instructor
                 # can_modify_league, can_modify_..., can_view_..., etc.
@@ -147,16 +165,19 @@ class Command(BaseCommand):
                 admin.permissions.add(create_users, view_users, update_users, delete_users,
                                       promote_admin, promote_captain, promote_instructor, promote_referee,
                                       create_club_team, view_club_team, update_club_team, delete_club_team,
-                                      create_intramural_team, view_club_team, update_club_team, delete_intramural_team,
+                                      create_intramural_team, view_intramural_team, update_intramural_team, delete_intramural_team,
                                       join_team,
                                       create_league,
                                       create_class, view_class, update_class, delete_class,
                                       join_class,
-                                      create_game, administer_game)
+                                      create_game, administer_game, 
+                                      create_forms, update_forms, read_forms, delete_forms)
                 
                 captain, created_captain = Group.objects.get_or_create(name='captain')
                 # Add permissions to captain group here
-                captain.permissions.add(create_intramural_team, promote_captain, view_club_team, update_club_team, delete_intramural_team)
+                captain.permissions.add(create_intramural_team, view_intramural_team, update_intramural_team, delete_intramural_team,
+                                        promote_captain,
+                                        view_club_team, update_club_team)
                 
                 guest, created_guest = Group.objects.get_or_create(name='guest')
                 # Add permissions to guest group here

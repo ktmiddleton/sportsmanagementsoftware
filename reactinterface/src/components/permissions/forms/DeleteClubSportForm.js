@@ -8,6 +8,7 @@ import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup } from "@ch
 import { Field } from "formik";
 import TrueFalseQuestion from "../questions/TrueFalseQuestion";
 import { useNavigate } from "react-router-dom";
+import ConfirmCheckbox from "../questions/ConfirmCheckbox";
 
 function CreateClubSportForm({ teamData, isOpen, onClose }) {
 
@@ -17,9 +18,9 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
 
     const submitForm = (formValues) => {
         console.log(formValues)
-        if (formValues.confirmation === "true") {
+        if (formValues.confirmation === true) {
             axios.delete(
-                `http://localhost:8000/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
             ).then((response) => {
                 isOpen = !isOpen;
                 navigate("/clubsports");
@@ -53,6 +54,7 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 
@@ -70,12 +72,13 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
                                     spacing="2rem"
                                     width="100%"
                                 > 
-                                    <TrueFalseQuestion 
+                                    <ConfirmCheckbox 
                                         fieldName="confirmation" 
-                                        label="Confirm Deletion" 
+                                        label="Confirm Deletion"
+                                        checkboxLabel="Click here to ensure you wish to delete the club sport"
                                         placeHolder=" "
                                         required={true}
-                                        trueOptionRequired={true}
+                                        trueRequired={true}
                                         formikProps={formikProps}
                                     />
                                 </VStack>

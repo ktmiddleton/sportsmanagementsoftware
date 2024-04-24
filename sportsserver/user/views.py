@@ -15,6 +15,11 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.core.exceptions import PermissionDenied
 import json
 from django.contrib.auth.models import Group
+from django.core.paginator import Paginator
+
+
+# Number of items to return per query
+PAGE_SIZE = 6
 
 # Create your views here.
 
@@ -87,6 +92,8 @@ class UserGet(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
     
     """
     /user/getuser/?token=_token_&username=_username_
@@ -115,6 +122,8 @@ class UserGet(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
     
     """
     data format (url):
@@ -134,6 +143,8 @@ class UserGet(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
             
         
 class AllUsers(APIView):
@@ -141,19 +152,33 @@ class AllUsers(APIView):
     Get ALL user's information.
     data format (url):
     user/allusers/?token=_token_
+
+    Filter users with search:
+    user/allusers/?token=_token_&search=_search name_
     MUST BE ADMIN TO USE.
     """
 
     def get(self, request):
         token = request.GET.get("token", "default_value")
+        search = request.GET.get("search", "default_value")
+        page_number = request.GET.get("page", 1)
         try: 
-            user = Token.objects.get(key=token).user
-            if user.has_perm('user.can_create_users') and user.has_perm('user.can_view_users') and user.has_perm('user.can_update_users') and user.has_perm('user.can_delete_users'):
-                users = User.objects.all()
-                return Response({"userList": UserSerializer(users, many=True).data})
+            AuthUser = Token.objects.get(key=token).user
+            if AuthUser.has_perm('user.can_create_users') and AuthUser.has_perm('user.can_view_users') and AuthUser.has_perm('user.can_update_users') and AuthUser.has_perm('user.can_delete_users'):
+                if search != "default_value":
+                    users = User.objects.filter(username__icontains=search).order_by("id")
+                    pages = Paginator(users, PAGE_SIZE)
+                    page = pages.get_page(page_number)
+                    return Response({"data": UserSerializer(page, many=True).data, "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count}})
+                users = User.objects.all().order_by("id")
+                pages=Paginator(users, PAGE_SIZE)
+                page = pages.get_page(page_number)
+                return Response({"data": UserSerializer(users, many=True).data, "pages": {"start_index": page.start_index(), "end_index": page.end_index(), "count": page.paginator.count}})
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
         
 class ChangeGroup(APIView):
     """
@@ -180,6 +205,8 @@ class ChangeGroup(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Token.DoesNotExist:
+            return Response({"error": "User with specified token does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
 # class UserGetGroups(APIView):
 #     """

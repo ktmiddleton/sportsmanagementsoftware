@@ -7,7 +7,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(undefined);
 
   function loadUserData() {
-    axios.get(`http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}`)
+    axios.get(`${process.env.REACT_APP_DJANGO_SERVER_URL}/user/getuser/?token=${localStorage.getItem("token")}`)
     .then((response) => {
       console.log(response.data);
       setUser(response.data);

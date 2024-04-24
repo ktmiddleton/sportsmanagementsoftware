@@ -15,11 +15,12 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
     const submitForm = (formValues) => {
         console.log(formValues)
         axios.patch(
-            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`,
+            formValues
         ).then((response) => {
             console.log(response)
             isOpen = !isOpen;
-            // window.location.reload();
+            window.location.reload();
             toast({
                 title: 'User successfully edited.',
                 description: "You've successfully edited the user: " + formValues.name + ".",
@@ -48,6 +49,7 @@ export default function EditUserForm({ isOpen, onClose, username, email, first_n
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "../components/ListItem";
 import SportCard from "../components/SportCard";
-import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer } from "@chakra-ui/react";
+import { Wrap, Text, Stack, Box, Flex, Grid, GridItem, HStack, VStack, Heading, Spacer, Skeleton } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Calendar from 'react-calendar';
@@ -18,14 +18,16 @@ export default function Intramurals({isOpen, onToggle})
 {
 
     const [intramurals, setIntramurals] = useState([]);
+    const [intramuralsLoaded, setIntramuralsLoaded] = useState(false);
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/intramurals/`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/`
         )
         .then((response) => {
             console.log(response.data);
             setIntramurals(response.data.IntramuralSports);
+            setIntramuralsLoaded(true);
         })
         .catch((error) => {
             console.log("Error getting intramural sports");
@@ -36,10 +38,10 @@ export default function Intramurals({isOpen, onToggle})
     return (
     <div className="intramurals">
         <Grid
-        templateAreas={`"header header header"
-                        "nav main main"`}
-        gridTemplateRows={{base: '10vh 90vh'}}
-        gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
+        templateAreas={`"header"
+                        "main"`}
+        gridTemplateRows={{base: `${process.env.REACT_APP_HEADER_HEIGHT} ${process.env.REACT_APP_MAIN_PAGE_HEIGHT}`}}
+        // gridTemplateColumns={{base:'1fr 3fr 2fr'}} // 11em
         gap='0'
         color='blackAlpha.700'
         fontWeight='bold'
@@ -50,25 +52,60 @@ export default function Intramurals({isOpen, onToggle})
             </GridItem>
             <GridItem area={'nav'}>
                 {/* <Navbar activePage={"Classes"}/> */}
-                <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                {/* <Sidebar isOpen={isOpen} onToggle={onToggle}/> */}
             </GridItem>
-            <GridItem area={'main'}>
-                <VStack
-                 alignItems={"stretch"}
-                >
-                    <Heading
-                    color="brand.black"
-                    textAlign="left"
-                    m="1rem"
+            <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
+                <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
+                    <Sidebar isOpen={isOpen} onToggle={onToggle}/>
+                    <VStack
+                        alignItems={"stretch"}
+                        width="100%"
                     >
-                        Intramural Sports
-                        <CreateIntramuralSportButton />
-                    </Heading>
-                    {intramurals.map( (item) => {
-                        // return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
-                        return <IntramuralCard sportData={item} />
-                    })}
-                </VStack>
+                        <Heading
+                        color="brand.black"
+                        textAlign="left"
+                        m="1rem"
+                        >
+                            Intramural Sports
+                            <CreateIntramuralSportButton />
+                        </Heading>
+                        {intramurals.map( (item) => {
+                            // return <ListItem className={item.name} description={item.description} action={new Date(item.registration_deadline) > new Date() ? "registerOpen" : "registerClose"}/>
+                            return <IntramuralCard sportData={item} />
+                        })}
+                        {intramuralsLoaded ?
+                            <></>
+                        :
+                            <Box
+                                className="skeleton-coffin"
+                                width="100%"
+                                height="100%"
+                                alignSelf="center"
+                            >
+                                <Skeleton
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                                <Skeleton // Extra Skeleton looks nice
+                                    isLoaded={intramuralsLoaded}
+                                    height="10vh"
+                                    mb="1%"
+                                />
+                            </Box>
+                        }
+                    </VStack>
+                </HStack>
             </GridItem>
         </Grid>
     </div>

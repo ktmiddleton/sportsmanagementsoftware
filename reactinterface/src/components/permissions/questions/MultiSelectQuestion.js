@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Select, CheckboxGroup, Checkbox } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, Input, InputGroup, Select, CheckboxGroup, Checkbox, Stack, Wrap } from "@chakra-ui/react";
 import { Field } from "formik";
 import React from "react";
 
@@ -20,7 +20,8 @@ import React from "react";
  */
 function MultiSelectQuestion({ fieldName, checkedList, label, options, formikProps, required  }) {
 
-    function validateQuestion(value) {
+    function validateQuestion(value) 
+    {
         let error
         if (!value && required) {
           error = `${label} is required 😱`
@@ -33,13 +34,17 @@ function MultiSelectQuestion({ fieldName, checkedList, label, options, formikPro
             {({ field, form }) => (
             <FormControl isInvalid={form.errors[fieldName] && form.touched[fieldName]}>
                 <FormLabel fontSize="1.5rem">{label}</FormLabel>
-                <CheckboxGroup defaultValue={checkedList}>
-                    {options.map(option => (
-                            <Checkbox isDisabled={option.value == 'user' ? true : false}{...field} key={option.value} value={option.value}>
-                                {option.label}
-                            </Checkbox>
-                        ))}
-                </CheckboxGroup>
+                <Wrap
+                    direction="row"
+                >
+                    <CheckboxGroup defaultValue={checkedList}>
+                        {options.map(option => (
+                                <Checkbox isDisabled={option.value == 'user' ? true : false}{...field} key={option.value} value={option.value}>
+                                    {option.label}
+                                </Checkbox>
+                            ))}
+                    </CheckboxGroup>
+                </Wrap>
                 <FormErrorMessage>{form.errors[fieldName]}</FormErrorMessage>
             </FormControl>
             )}

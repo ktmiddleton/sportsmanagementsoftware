@@ -14,7 +14,7 @@ export default function DeleteUserForm({ isOpen, onClose, username}) {
 
     const submitForm = (formValues) => {
         axios.delete(
-            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/getuser/?token=${localStorage.getItem("token")}&username=${username}`
         ).then((response) => {
             isOpen = !isOpen;
             window.location.reload();
@@ -46,6 +46,7 @@ export default function DeleteUserForm({ isOpen, onClose, username}) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 

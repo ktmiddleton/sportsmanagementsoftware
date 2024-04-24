@@ -12,8 +12,9 @@ function DeleteClubSportButton({ teamData }) {
 
     const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
-    function buttonClick() {
+    function buttonClick(event) {
         if (userHasPerm(PERM_NAME)) {
+            event.stopPropagation();
             onOpen();
         }
     }
@@ -28,8 +29,8 @@ function DeleteClubSportButton({ teamData }) {
                         icon={<DeleteIcon />}
                         isRound={true}
                         size="lg"
-                        bg="brand.brightGreen"
-                        onClick={() => buttonClick()} // Define your click event handler
+                        bg="brand.red"
+                        onClick={buttonClick} // Define your click event handler
                     />
                 </Tooltip>
                 <DeleteClubSportForm teamData={teamData} isOpen={isOpen} onClose={onClose} />

@@ -24,7 +24,7 @@ function PromoteCaptainForm({ teamData, isOpen, onClose }) {
             token: localStorage.getItem("token")
         }
         axios.post(
-            `http://localhost:8000/clubsports/promotecaptain/`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/promotecaptain/`,
             data
         ).then((response) => {
             isOpen = !isOpen;
@@ -58,6 +58,7 @@ function PromoteCaptainForm({ teamData, isOpen, onClose }) {
                 actions.setSubmitting(false)
                 }, 1000);
             }}
+            enableReinitialize
         >
             {(formikProps) => {
 
