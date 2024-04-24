@@ -30,7 +30,7 @@ function DeleteFormButton({pk}) {
                         icon={<DeleteIcon />}
                         isRound={true}
                         size="lg"
-                        bg="brand.brightGreen"
+                        bg="brand.red"
                         onClick={buttonClick} // Define your click event handler
                     />
                 </Tooltip>
