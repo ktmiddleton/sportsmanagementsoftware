@@ -35,7 +35,7 @@ function FormCRUD() {
     useEffect(() => {
         if (userHasPerm("can_create_forms")) {
             axios.get(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/?token=${localStorage.getItem("token")}&info=1`
             )
             .then((response) => {
                 console.log(response.data);

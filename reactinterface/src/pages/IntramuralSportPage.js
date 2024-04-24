@@ -19,7 +19,7 @@ function IntramuralSportPage({isOpen, onToggle}) {
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/intramurals/teams/?sport=${sportId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?sport=${sportId}`
         )
         .then((response) => {
             console.log(response.data)
@@ -31,7 +31,7 @@ function IntramuralSportPage({isOpen, onToggle}) {
             console.log(error);
         })
         axios.get(
-            `http://localhost:8000/intramurals/?sportId=${sportId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/?sportId=${sportId}`
         )
         .then((response) => {
             console.log(response.data);

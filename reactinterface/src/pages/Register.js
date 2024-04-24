@@ -23,7 +23,7 @@ function Register() {
     const submitForm = (formValues) => {
         let data = {email: formValues.email, username: formValues.username, password: formValues.password, first_name: formValues.firstName, last_name: formValues.lastName};
         axios.post(
-            `http://localhost:8000/user/register/`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/register/`,
             data
         ).then((response) => {
             console.log(response.data);

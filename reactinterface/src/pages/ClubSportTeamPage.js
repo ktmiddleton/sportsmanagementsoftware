@@ -30,7 +30,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     useEffect(() => {
         console.log("plonk")
         axios.get(
-            `http://localhost:8000/clubsports/?teamId=${teamId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?teamId=${teamId}`
         )
         .then((response) => {
             setTeamData(response.data);
@@ -43,7 +43,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     }, [user]);
 
     function joinTeam() {
-        axios.post(`http://localhost:8000/clubsports/userteams/`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/`,
             {
                 token: localStorage.getItem("token"),
                 teamId: teamData.id
@@ -75,7 +75,7 @@ function ClubSportTeamPage({isOpen, onToggle}) {
     }
 
     function leaveTeam() {
-        axios.delete(`http://localhost:8000/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
+        axios.delete(`${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
         .then((response) => {
             window.location.reload();
             toast({

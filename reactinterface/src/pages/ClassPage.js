@@ -23,7 +23,7 @@ function ClassPage({isOpen, onToggle}) {
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/classes/?classId=${classId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/?classId=${classId}`
         )
         .then((response) => {
             setClassData(response.data);
@@ -37,7 +37,7 @@ function ClassPage({isOpen, onToggle}) {
     }, []);
 
     function registerClass() {
-        axios.post(`http://localhost:8000/classes/userclasses/?token=${localStorage.getItem("token")}`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/?token=${localStorage.getItem("token")}`,
             {
                 classId: classData.id
             }
@@ -68,7 +68,7 @@ function ClassPage({isOpen, onToggle}) {
     }
 
     function leaveClass() {
-        axios.delete(`http://localhost:8000/classes/userclasses/?classId=${classData.id}&token=${localStorage.getItem("token")}`)
+        axios.delete(`${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/?classId=${classData.id}&token=${localStorage.getItem("token")}`)
         .then((response) => {
             window.location.reload();
             toast({

@@ -15,7 +15,7 @@ export default function ClassCard({classData, image}) {
 
     function register(event) {
         event.stopPropagation(); // Prevent the outter button from being clicked that navigates to other page
-        axios.post(`http://localhost:8000/classes/userclasses/?token=${localStorage.getItem("token")}`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/?token=${localStorage.getItem("token")}`,
             {
                 classId: classData.id
             }

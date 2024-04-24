@@ -17,7 +17,7 @@ function ChangeUserClassForm({ isOpen, onClose, username, groups}) {
     const toast = useToast()
     const submitForm = (formValues) => {
         axios.patch(
-            `http://localhost:8000/user/changegroup/?token=${localStorage.getItem("token")}&username=${username}`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/changegroup/?token=${localStorage.getItem("token")}&username=${username}`,
             formValues
         ).then((response) => {
             console.log(formValues)

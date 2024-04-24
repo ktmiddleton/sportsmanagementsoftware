@@ -24,7 +24,7 @@ function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData, initialValu
         }
         if (mode === "create") {
             axios.post(
-                `http://localhost:8000/intramurals/teams/?token=${localStorage.getItem("token")}`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?token=${localStorage.getItem("token")}`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;
@@ -48,7 +48,7 @@ function CreateIntramuralSportTeamForm({ isOpen, onClose, sportData, initialValu
             });
         } else if (mode === "update") {
             axios.patch(
-                `http://localhost:8000/intramurals/teams/?token=${localStorage.getItem("token")}&teamId=${pk}`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?token=${localStorage.getItem("token")}&teamId=${pk}`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;

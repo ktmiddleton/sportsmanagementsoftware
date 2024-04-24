@@ -30,7 +30,7 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
         }
         if (mode === "create") {
             axios.post(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&info=1`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/?token=${localStorage.getItem("token")}&info=1`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;
@@ -54,7 +54,7 @@ function CreateFormForm({ isOpen, onClose, initialValues, mode, pk }) {
             });
         } else if (mode === "update") {
             axios.patch(
-                `http://localhost:8000/forms/?token=${localStorage.getItem("token")}&formId=${pk}&info=1`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/?token=${localStorage.getItem("token")}&formId=${pk}&info=1`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;

@@ -29,7 +29,7 @@ function Profile({isOpen, onToggle}) {
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/user/getuser/?token=${localStorage.getItem("token")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/getuser/?token=${localStorage.getItem("token")}`
         )
         .then((response) => {
             setUserData(response.data);

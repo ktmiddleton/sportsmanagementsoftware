@@ -13,7 +13,7 @@ function ClubSports({isOpen, onToggle}) {
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/clubsports/`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/`
         )
         .then((response) => {
             setClubSports(response.data.ClubSportsTeams);

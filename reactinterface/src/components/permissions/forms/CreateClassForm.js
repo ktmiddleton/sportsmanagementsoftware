@@ -26,7 +26,7 @@ function CreateClassForm({ isOpen, onClose, initialValues, mode, pk }) {
         }
         if (mode === "create") {
             axios.post(
-                `http://localhost:8000/classes/?token=${localStorage.getItem("token")}`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/?token=${localStorage.getItem("token")}`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;
@@ -50,7 +50,7 @@ function CreateClassForm({ isOpen, onClose, initialValues, mode, pk }) {
             });
         } else if (mode === "update") {
             axios.patch(
-                `http://localhost:8000/classes/?token=${localStorage.getItem("token")}&classId=${pk}`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/?token=${localStorage.getItem("token")}&classId=${pk}`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;

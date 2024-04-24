@@ -26,7 +26,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
     useEffect(() => {
         console.log("plonk")
         axios.get(
-            `http://localhost:8000/intramurals/teams/?teamId=${teamId}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/teams/?teamId=${teamId}`
         )
         .then((response) => {
             setTeamData(response.data);
@@ -39,7 +39,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
     }, []);
 
     function joinTeam() {
-        axios.post(`http://localhost:8000/intramurals/userteams/`,
+        axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/userteams/`,
             {
                 token: localStorage.getItem("token"),
                 teamId: teamData.id
@@ -71,7 +71,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
     }
 
     function leaveTeam() {
-        axios.delete(`http://localhost:8000/intramurals/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
+        axios.delete(`${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/userteams/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`)
         .then((response) => {
             window.location.reload();
             toast({

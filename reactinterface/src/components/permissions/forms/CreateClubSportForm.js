@@ -20,7 +20,7 @@ function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
         }
         if (mode === "create") {
             axios.post(
-                `http://localhost:8000/clubsports/?token=${localStorage.getItem("token")}`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?token=${localStorage.getItem("token")}`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;
@@ -44,7 +44,7 @@ function CreateClubSportForm({ isOpen, onClose, initialValues, mode, pk }) {
             });
         } else if (mode === "update") {
             axios.patch(
-                `http://localhost:8000/clubsports/?token=${localStorage.getItem("token")}&teamId=${pk}`,
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?token=${localStorage.getItem("token")}&teamId=${pk}`,
                 data
             ).then((response) => {
                 isOpen = !isOpen;

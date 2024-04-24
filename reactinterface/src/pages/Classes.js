@@ -42,7 +42,7 @@ export default function Classes({isOpen, onToggle})
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/classes/`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/`
         )
         .then((response) => {
             console.log(response.data)

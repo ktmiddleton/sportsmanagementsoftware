@@ -37,7 +37,7 @@ function UserCRUD() {
     useEffect(() => {
         if (userHasPerm("can_create_users")) {
             axios.get(
-                `http://localhost:8000/user/allusers/?token=${localStorage.getItem("token")}`
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/allusers/?token=${localStorage.getItem("token")}`
             )
             .then((response) => {
                 console.log(response.data);

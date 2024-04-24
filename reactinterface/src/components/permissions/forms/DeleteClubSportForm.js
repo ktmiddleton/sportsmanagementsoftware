@@ -20,7 +20,7 @@ function CreateClubSportForm({ teamData, isOpen, onClose }) {
         console.log(formValues)
         if (formValues.confirmation === true) {
             axios.delete(
-                `http://localhost:8000/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
+                `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/?teamId=${teamData.id}&token=${localStorage.getItem("token")}`
             ).then((response) => {
                 isOpen = !isOpen;
                 navigate("/clubsports");

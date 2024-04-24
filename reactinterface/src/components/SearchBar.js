@@ -36,7 +36,7 @@ function SearchBar({data, searchField, setFilteredData, setPageData, mode, endpo
 
     function searchBackend() {
         axios.get(
-            `http://localhost:8000/${endpoint}&search=${searchTerm}` + (page ? `&page=${page}` : "") // ensure page not undefined
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/${endpoint}&search=${searchTerm}` + (page ? `&page=${page}` : "") // ensure page not undefined
         ).then((response) => {
             setFilteredData(response.data[modelType]); // TODO: Issue with endpoints, there is no reason to be returning the data from an endpoint under some field name. Change endpoints to not return data under a modeltype fieldname.
             if (response.data.pages !== undefined && setPageData !== undefined) {

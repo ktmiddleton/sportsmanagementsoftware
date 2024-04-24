@@ -29,7 +29,7 @@ function Login() {
         let data = {email: formValues.email, password: formValues.password};
         console.log(formValues)
         axios.post(
-            `http://localhost:8000/user/login/`,
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/user/login/`,
             data
         ).then((response) => {
             console.log(response.data);

@@ -77,7 +77,7 @@ export default function FormCard({formData, image}) {
 
     function complete(event) {
         // event.stopPropagation(); // Prevent the outter button from being clicked that navigates to other page
-        // axios.post(`http://localhost:8000/classes/userclasses/`,
+        // axios.post(`${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/`,
         //     {
         //         token: localStorage.getItem("token"),
         //         classId: formData.id

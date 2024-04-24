@@ -180,7 +180,7 @@ function App() {
 
 
   // useEffect(() => {
-  //   // axios.get(`http://localhost:8000/user/getuserusername/?username=${localStorage.getItem("username")}`)
+  //   // axios.get(`${process.env.REACT_APP_DJANGO_SERVER_URL}/user/getuserusername/?username=${localStorage.getItem("username")}`)
   //   // .then((response) => {
   //   //   console.log(response);
   //   // })

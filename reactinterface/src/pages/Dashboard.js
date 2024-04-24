@@ -25,7 +25,7 @@ function Dashboard({isOpen, onToggle}) {
     useEffect(() => {
         setRegisteredTeams([])
         axios.get( // Get Club Sports
-            `http://localhost:8000/clubsports/userteams/?username=${localStorage.getItem("username")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/clubsports/userteams/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
@@ -37,7 +37,7 @@ function Dashboard({isOpen, onToggle}) {
         });
 
         axios.get( // Get Intramural Sports
-            `http://localhost:8000/intramurals/userteams/?username=${localStorage.getItem("username")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/userteams/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredTeams((prevTeams) => [...prevTeams, ...response.data]);
@@ -49,7 +49,7 @@ function Dashboard({isOpen, onToggle}) {
         });
 
         axios.get( // Get Classes
-            `http://localhost:8000/classes/userclasses/?username=${localStorage.getItem("username")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/classes/userclasses/?username=${localStorage.getItem("username")}`
         )
         .then((response) => {
             setRegisteredClasses(response.data);
@@ -60,7 +60,7 @@ function Dashboard({isOpen, onToggle}) {
             console.log(error);
         });
         axios.get( // Get Forms
-            `http://localhost:8000/forms/?username=${localStorage.getItem("username")}&token=${localStorage.getItem("token")}`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/forms/?username=${localStorage.getItem("username")}&token=${localStorage.getItem("token")}`
         )
         .then((response) => {
             setRegisteredForms(response.data.forms);

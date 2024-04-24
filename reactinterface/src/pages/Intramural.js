@@ -22,7 +22,7 @@ export default function Intramurals({isOpen, onToggle})
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8000/intramurals/`
+            `${process.env.REACT_APP_DJANGO_SERVER_URL}/intramurals/`
         )
         .then((response) => {
             console.log(response.data);
