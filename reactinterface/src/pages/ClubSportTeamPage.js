@@ -9,6 +9,7 @@ import DeleteClubSportButton from "../components/permissions/DeleteClubSportButt
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
 import EditClubSportButton from "../components/permissions/EditClubSportButton";
 import { useUser } from "../components/UserContext";
+import TeamClassContainer from "../components/TeamClassContainer";
 
 function ClubSportTeamPage({isOpen, onToggle}) {
 
@@ -124,14 +125,16 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                 <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
                     <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
-                        <Heading
+                        <TeamClassContainer Id={teamId} mode="clubsports"/>
+                        
+                        {/* <Heading
                             color="brand.brightGreen"
                             textAlign="left"
                             // m="1rem"
                         >
-                            {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
+                            TODO: May want to not do this capitlize thing and just return a capitalized version from the backend
                             {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
-                            {/* TODO: Small issue where button appears then disappears quickly */}
+                            TODO: Small issue where button appears then disappears quickly
                             {teamData.members.some((member) => member.username === localStorage.getItem("username")) ?
                                 <Button
                                     m="1rem"
@@ -173,10 +176,10 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                             gap="1rem"
                             // p="1rem"
                         >
-                            {/* <GridItem
+                            <GridItem
                                 rowSpan={2}
                                 colSpan={1}
-                            > */}
+                            >
                                 <Card>
                                     <CardHeader>
                                         <Heading>Roster</Heading>
@@ -190,11 +193,11 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                         })}
                                     </CardBody>
                                 </Card>
-                            {/* </GridItem> */}
-                            {/* <GridItem
+                            </GridItem> 
+                            <GridItem
                                 rowSpan={1}
                                 colSpan={1}
-                            > */}
+                            >
                                 <Card>
                                     <CardHeader>
                                         <Heading>Description</Heading>
@@ -205,14 +208,14 @@ function ClubSportTeamPage({isOpen, onToggle}) {
                                         </Text>
                                     </CardBody>
                                 </Card>
-                            {/* </GridItem> */}
-                            {/* <GridItem
+                             </GridItem>
+                            <GridItem
                                 rowSpan={1}
                                 colSpan={1}
                             >
 
-                            </GridItem> */}
-                        </Wrap>
+                            </GridItem>
+                        </Wrap> */}
                     </HStack>
                 </GridItem>
 

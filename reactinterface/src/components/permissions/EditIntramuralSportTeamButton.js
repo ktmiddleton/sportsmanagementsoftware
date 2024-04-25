@@ -10,7 +10,6 @@ const PERM_NAME = "can_update_intramural_team";
 function EditIntramuralSportTeamButton({teamData}) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    console.log(teamData)
     const { user, loadUserData, userHasGroup, userHasPerm } = useUser();
 
     function buttonClick(event) {

@@ -9,6 +9,7 @@ import DeleteClubSportButton from "../components/permissions/DeleteClubSportButt
 import PromoteCaptainButton from "../components/permissions/PromoteCaptainButton";
 import EditClassButton from "../components/permissions/EditClassButton";
 import DeleteClassButton from "../components/permissions/DeleteClassButton";
+import TeamClassContainer from "../components/TeamClassContainer";
 
 function ClassPage({isOpen, onToggle}) {
 
@@ -208,138 +209,7 @@ function ClassPage({isOpen, onToggle}) {
                 <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
                     <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
-                        <Grid
-                            templateRows={{base: '1fr 1fr'}}
-                            templateColumns={{base: '1fr 1fr 1fr'}}
-                            gap="1rem"
-                            // p="1rem"
-                        >
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                <Heading
-                                    color="brand.brightGreen"
-                                    textAlign="left"
-                                    m="1rem"
-                                >
-                                    {classData ?
-                                        <>
-                                            {/* TODO: Small issue where button appears then disappears quickly */}
-                                            {classData.name}
-                                            {getRegistrationButton()}
-                                            <EditClassButton classData={classData} />
-                                            <DeleteClassButton pk={classData.id} />
-                                        </>
-                                    :
-                                        <Spinner />
-                                    }
-                                </Heading>
-                            </GridItem>
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                {classData ?
-                                    <>
-                                        <Card>
-                                            <CardHeader>
-                                                <Stack
-                                                    direction="row"
-                                                    alignItems="center"
-                                                    justifyContent="center"
-                                                >
-                                                    <Heading>Registered</Heading>
-                                                    <CircularProgress value={(classData.registered_participants/classData.capacity)*100} color='green.400'>
-                                                        <CircularProgressLabel>{classData.registered_participants}/{classData.capacity}</CircularProgressLabel>
-                                                    </CircularProgress>
-                                                </Stack>
-                                            </CardHeader>
-                                            <CardBody
-                                                maxHeight="85vh"
-                                                overflowY="auto"
-                                            >
-                                                {classData.members.map((item, index) => {
-                                                    return (<Text key={index}>{item.username}</Text>)
-                                                })}
-                                            </CardBody>
-                                        </Card>
-                                        <Card>
-                                            <Stack
-                                                direction="row"
-                                                alignItems="center"
-                                                justifyContent="center"
-                                            >
-                                                <Heading>Waitlist</Heading>
-                                                <CircularProgress value={(classData.waitlist_size/classData.waitlist_capacity)*100} color='yellow.300'>
-                                                    <CircularProgressLabel>{classData.waitlist_size}/{classData.waitlist_capacity}</CircularProgressLabel>
-                                                </CircularProgress>
-                                            </Stack>
-                                        </Card>
-                                    </>
-                                :
-                                    
-                                    <Skeleton
-                                        isLoaded={classData}
-                                        width="20vw"
-                                        height="20vh"
-                                    />
-                                }
-                            </GridItem>
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                {classData ?
-                                    <Card>
-                                        <CardHeader>
-                                            <Heading>Description</Heading>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <Text>
-                                                {classData.description}
-                                            </Text>
-                                        </CardBody>
-                                    </Card>
-                                :
-                                    <Skeleton
-                                        isLoaded={classData}
-                                        width="20vw"
-                                        height="20vh"
-                                    />
-                                }
-                            </GridItem>
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                <Skeleton
-                                    isLoaded={classData}
-                                    width="20vw"
-                                    height="20vh"
-                                />
-                            </GridItem>
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                <Skeleton
-                                    isLoaded={classData}
-                                    width="20vw"
-                                    height="20vh"
-                                />
-                            </GridItem>
-                            <GridItem
-                                rowSpan={1}
-                                colSpan={1}
-                            >
-                                <Skeleton
-                                    isLoaded={classData}
-                                    width="20vw"
-                                    height="20vh"
-                                />
-                            </GridItem>
-                        </Grid>
+                        <TeamClassContainer mode={"classes"} Id={classId}/>
                     </HStack>
                 </GridItem>
 

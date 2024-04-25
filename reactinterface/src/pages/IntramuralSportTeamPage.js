@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import DeleteIntramuralSportTeamButton from "../components/permissions/DeleteIntramuralSportTeamButton";
 import EditIntramuralSportTeamButton from "../components/permissions/EditIntramuralSportTeamButton";
+import TeamClassContainer from "../components/TeamClassContainer";
 
 function IntramuralSportTeamPage({isOpen, onToggle}) {
 
@@ -152,14 +153,15 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
                 <GridItem area={'main'} height={process.env.REACT_APP_MAIN_PAGE_HEIGHT} overflowY="auto">
                     <HStack align={'baseline'} background={process.env.REACT_APP_PAGE_BACKGROUND}>
                         <Sidebar isOpen={isOpen} onToggle={onToggle}/>
-                        <VStack>
+                        <TeamClassContainer Id={teamId} mode={"intramurals"}/>
+                        {/* <VStack>
                             {teamData ? 
                                 <Heading
                                     color="brand.brightGreen"
                                     textAlign="left"
                                     // m="1rem"
                                 >
-                                    {/* TODO: May want to not do this capitlize thing and just return a capitalized version from the backend */}
+                                    TODO: May want to not do this capitlize thing and just return a capitalized version from the backend
                                     {capitalizeFirstLetter(teamData.sport_type) + " " + teamData.name}
                                     {getRegistrationButton()}
                                     <DeleteIntramuralSportTeamButton teamData={teamData} />
@@ -193,7 +195,7 @@ function IntramuralSportTeamPage({isOpen, onToggle}) {
                                         </CardBody>
                                     </Card>
                             </Wrap>
-                        </VStack>
+                        </VStack> */}
                     </HStack>
                 </GridItem>
 
