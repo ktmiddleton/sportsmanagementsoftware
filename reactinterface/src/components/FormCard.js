@@ -174,7 +174,7 @@ export default function FormCard({formData, image}) {
                             alignItems="flex-start"
                             spacing="2px"
                         >
-                            <Heading textAlign="left" size="md">{formData.form_info.name}</Heading>
+                            <Heading textAlign="left" size="md" noOfLines={3}>{formData.form_info.name}</Heading>
 
                             <Text textAlign="left" fontSize="sm" noOfLines={1}>
                                 {formData.clubsport ? "Club Team: " + formData.clubsport.name : null}
