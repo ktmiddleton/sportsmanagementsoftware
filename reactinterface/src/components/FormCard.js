@@ -195,7 +195,7 @@ export default function FormCard({formData, image}) {
                     <Stat
                         w="10%"
                     >
-                        <StatLabel>Registration Time Remaining</StatLabel>
+                        <StatLabel>Time Remaining</StatLabel>
                         <StatNumber>
                             {calculateTimeRemaining(formData.deadline)}
                         </StatNumber>
