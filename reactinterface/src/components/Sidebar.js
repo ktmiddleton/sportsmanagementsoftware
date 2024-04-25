@@ -70,7 +70,7 @@ function Sidebar({isOpen, onToggle}) {
                     h={process.env.REACT_APP_MAIN_PAGE_HEIGHT}//{innerBoxHeight}
                     // p="3px"
                 >
-                    <VStack align="flex-start" spacing="0px">
+                    <VStack spacing="0px">
                         {/* Sidebar content here */}
                         <IconButton
                             background="none"
