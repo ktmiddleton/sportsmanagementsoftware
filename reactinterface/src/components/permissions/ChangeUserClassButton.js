@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { AddIcon, EditIcon } from '@chakra-ui/icons';
+import { AddIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { useUser } from "../UserContext";
 import axios from "axios";
@@ -27,7 +27,7 @@ function ChangeUserClassButton({username, groups}) {
                     <IconButton
                         m="1rem"
                         aria-label="Edit"
-                        icon={<EditIcon />}
+                        icon={<SettingsIcon />}
                         isRound={true}
                         size="lg"
                         bg="brand.yellow"
