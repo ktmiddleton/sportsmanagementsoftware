@@ -238,7 +238,7 @@ function Register() {
                                             Register
                                         </Button>
                                         <Text>
-                                            Already have an account? <a href="/login" style={{ color: 'blue' }}>Login</a>
+                                            Already have an account? <Button onClick={() => navigate("/login")} style={{ color: 'blue' }}>Login</Button>
                                         </Text>
                                     </CardFooter>
                                 </Card>

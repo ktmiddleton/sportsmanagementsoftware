@@ -142,7 +142,7 @@ function Login() {
                                             Sign In
                                         </Button>
                                         <Text>
-                                            Don't have an account? <a href="/register" style={{ color: 'blue' }}>Sign up</a>
+                                            Don't have an account? <Button onClick={() => navigate("/register")} style={{ color: 'blue' }}>Sign up</Button>
                                         </Text>
                                     </CardFooter>
                                 </Card>
