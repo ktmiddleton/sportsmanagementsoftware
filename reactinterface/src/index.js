@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode> // TODO: Probably don't want to remove strict mode
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="*" element={ <App /> }>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   // </React.StrictMode>
 );
 
