@@ -1,4 +1,4 @@
-# Sports Management Software
+# LoyolaFit
 
 ## Contributors
 Kobe Middleton
@@ -22,8 +22,9 @@ Information on how to install and run docker desktop can be found below
 #### Linux
 <a href="https://docs.docker.com/desktop/install/linux-install/">Linux Installation Guide</a>
 
-## How to Run
-1. Open the **Docker Desktop** application
+## User Manual
+### Run the application
+1. Open **Docker Desktop** application (User should have this installed)
 2. Clone the project repository using git to a location on your system as desired.
 3. Open a command line/terminal window.
 4. Navigate to the outtermost directory of the project `sportsmanagementsoftware/`
@@ -31,6 +32,51 @@ Information on how to install and run docker desktop can be found below
 6. Now if all goes well you should be able to access the frontent via <a href="https://localhost:3000">localhost:3000</a> and backend endpoints for the API run on <a href="https://localhost:8000">localhost:8000</a>
 7. To take down the application simply do `^c` in the terminal window in which you ran the application
 8. Now run the command `docker compose down --rmi all` this will remove the applications docker images from your system and will allow you to re-run the application with a fresh start
+
+### Setting up an admin account
+1. Run the application following the above steps
+1. First create an account using the registration page, and remember the username you used
+2. Navigate to the following directory in a terminal window: "sportsmanagementsoftware/sportsserver"
+3. Once there, run the following commands:
+  'python manage.py creategroups'
+  'python manage.py makeadmin [admin username]'
+4. Now, run the application as normal, and when you log in to your account you should see the admin panel button appear at the top of the page
+
+### Basic Operations in the Application
+#### Club Teams
+1. An admin user can create club teams.
+2. Navigate to the club sports page using the sidebar.
+3. Click the (+) Button that should appear at the top of the page.
+4. Input team information, and press submit.
+5. Your team should now be displayed on the Club Sports page.
+
+#### Intramural Teams
+1. An admin user can create intramural teams.
+2. Navigate to the intramurals page using the sidebar.
+3. Click the (+) Button that should appear at the top of the page.
+4. Input intramural sports information, and press submit.
+5. Your intramural sport should now be displayed on the intramurals page.
+6. In order to create a team within this sport, click on the sport button that is newly displayed.
+7. Click the (+) Button that should appear at the top of the page.
+8. Input intramural team information, and press submit.
+9. Your team should now be displayed in your intramural sport.
+
+#### Classes
+1. An admin user can create classes.
+2. Navigate to the classes page using the sidebar.
+3. Click the (+) Button that should appear at the top of the page.
+4. Input class information, and press submit.
+5. Your class should now be displayed on the classes page.
+
+#### Forms
+1. An admin user can create signable forms.
+2. Navigate to the admin panel using the admin button on the header navbar at the top of the screen.
+3. Click the forms tab that should appear at the top of the page.
+4. Click the (+) Button.
+5. Input form information (make sure to remember what events you inputed that will assign your form), and press submit.
+6. Your form should now be displayed on the admin form panel.
+7. In order to ensure your form functions properly, complete one of the events that you specified in the form information while making the form.
+8. Your form should now be displayed on the forms page accessible from the sidebar, and on the dashboard.
 
 ## How to Test
 In order to run tests, you must have installed all the requirements to run the app locally outside of a docker container
