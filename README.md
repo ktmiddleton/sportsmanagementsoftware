@@ -1,5 +1,5 @@
 # LoyolaFit
-
+[here](#User-Manual)
 ## Contributors
 Kobe Middleton
 
