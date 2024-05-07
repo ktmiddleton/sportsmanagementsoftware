@@ -2,6 +2,7 @@
 [User Manual](#User-Manual)
 [Description](#Project-Description)
 [Installation](#Installation-Instructions)
+[Testing](#How-to-Test)
 ## Contributors
 Kobe Middleton
 
